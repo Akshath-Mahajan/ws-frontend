@@ -1,10 +1,11 @@
+import { ThemeProvider } from '@material-ui/core';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-
+import main_theme from './themes/base'
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+	<ThemeProvider theme={main_theme}>
+		<App />
+	</ThemeProvider>,
+  	document.getElementById('root')
 );
