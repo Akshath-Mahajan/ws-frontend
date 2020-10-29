@@ -2,9 +2,9 @@ import { ThemeProvider } from '@material-ui/core';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import main_theme from './themes/base'
+import theme from './baseTheme'
 ReactDOM.render(
-	<ThemeProvider theme={main_theme}>
+	<ThemeProvider theme={theme}>
 		<App />
 	</ThemeProvider>,
   	document.getElementById('root')
