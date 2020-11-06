@@ -1,9 +1,11 @@
 import { Divider, IconButton, List, ListItem, ListItemIcon, ListItemText, makeStyles, SwipeableDrawer } from '@material-ui/core'
 import React, { useState } from 'react'
-import AppleIcon from '@material-ui/icons/Apple';
-import AppsIcon from '@material-ui/icons/Apps';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import InfoIcon from '@material-ui/icons/Info';
+import CollectionsIcon from '@material-ui/icons/Collections';
+import WhatshotIcon from '@material-ui/icons/Whatshot';
+import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
 const useStyles = makeStyles((theme)=>({
     drawerHeader: {
         display: 'flex',
@@ -18,39 +20,17 @@ const useStyles = makeStyles((theme)=>({
 		marginRight: theme.spacing(1),
 	},
 	widthAdjust: {
+		width:250,
 		[theme.breakpoints.down('xs')]: {
 			width: '100vw',
 		},
 	}
 }))
 function Drawer(props) {
-	const options = ['All mail', 'Trash', 'Spam']
-	const icons = [<AppleIcon/>, <AppsIcon/>, <AppleIcon/>]
-
+	const options = [['Collection', <CollectionsIcon />], ['Trending', <WhatshotIcon />],['Contact Us', <AlternateEmailIcon />], ['About us', <InfoIcon />],]
 	const [open, setOpen] = useState(false)
-    const toggleDrawer = (status) => setOpen(status) 
+	const toggleDrawer = (status) => setOpen(status)
     const classes = useStyles()
-	const list = (
-		<React.Fragment>
-		<List onClick={() => toggleDrawer(false)} className={classes.widthAdjust}>
-			{options.map((item, index)=>(
-			<ListItem button key={index}>
-				<ListItemIcon>{icons[index]}</ListItemIcon>
-				<ListItemText primary={item} />
-			</ListItem>
-				))}
-		</List>
-		<Divider />
-		<List onClick={() => toggleDrawer(false)} style={{width:250}}>
-			{options.map((item, index)=>(
-			<ListItem button key={index}>
-				<ListItemIcon>{icons[index]}</ListItemIcon>
-				<ListItemText primary={item} />
-			</ListItem>
-				))}
-		</List>
-		</React.Fragment>
-	)
 
 	return (
 		<div>
@@ -67,7 +47,17 @@ function Drawer(props) {
                 </IconButton>
             </div>
             <Divider />
-				{list}
+			<List onClick={() => toggleDrawer(false)} className={classes.widthAdjust}>
+			{
+				options.map((item, index)=>(
+				<ListItem button key={index}>
+					<ListItemIcon>{item[1]}</ListItemIcon>
+					<ListItemText primary={item[0]} />
+				</ListItem>
+				))
+			}
+			</List>
+			<Divider />
 			</SwipeableDrawer>
 		</div>
 	)
