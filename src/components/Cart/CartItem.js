@@ -1,4 +1,4 @@
-import { Grid, makeStyles, OutlinedInput, Paper, Typography } from '@material-ui/core'
+import { Button, Grid, makeStyles, OutlinedInput, Paper, Typography } from '@material-ui/core'
 import Rating from '@material-ui/lab/Rating';
 import React from 'react'
 const useStyles = makeStyles(theme=>({
@@ -26,6 +26,7 @@ function CartItem({ data }) {
                     <Typography variant="h5">₹ {data.product.price * data.quantity}</Typography>
                     <Rating name="read-only" precision={0.1} value={data.product.avg_rating*5/100} readOnly />
                     <Typography variant="subtitle1">Category: {data.product.category.name}</Typography>
+                    <Button color="secondary" variant="contained" fullWidth> Remove </Button>
                 </Grid>
             </Grid>
             </Paper>

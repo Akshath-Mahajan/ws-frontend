@@ -1,0 +1,7 @@
+Signup btn,
+proceed with checkout,
+remove from cart,
+change quantity update cart price and cart.
+
+Buy now
+add to cart

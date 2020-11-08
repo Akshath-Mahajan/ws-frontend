@@ -9,7 +9,6 @@ const fetchCartItemsSuccess = (data) => {
 const fetchCartItems = () => (dispatch) => {
     axios.get('http://127.0.0.1:8000/api/cart/', {headers: {Authorization: "Token "+localStorage.getItem('token')}})
     .then(res => {
-        console.log(res.data)
         dispatch(fetchCartItemsSuccess(res.data))
     }
     ) 

@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import store from './redux/store'
 import {BrowserRouter, Route} from 'react-router-dom'
 import Cart from './components/Cart/Cart'
+import Wishlist from './components/Wishlist/Wishlist'
 function App() {
     return (
         <Provider store={store}>
@@ -18,7 +19,7 @@ function App() {
                         <Cart />
                     </Route>
                     <Route exact path="/wishlist/">
-                        wishlist
+                        <Wishlist />
                     </Route>
                     <Route exact path="/profile/">
                         [profile]
