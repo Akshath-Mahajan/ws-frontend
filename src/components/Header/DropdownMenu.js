@@ -7,6 +7,7 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../redux';
+import { Link } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
     listWidth: {
         width: 200,
@@ -15,7 +16,8 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     listIcon: {marginRight: theme.spacing(1)},
-    flexGrow: {flexGrow:1}
+    flexGrow: {flexGrow:1},
+    linkText: {color: 'inherit', textDecoration:'None'}
 })
 )
 function Dropdown() {
@@ -63,20 +65,26 @@ function Dropdown() {
                     <Paper>
                         <ClickAwayListener onClickAway={handleClose}>
                         <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown} className={classes.listWidth}>
+                            <Link to="/profile/" className={classes.linkText}>
                             <MenuItem onClick={handleClose}>
                                 <AccountBoxIcon className={classes.listIcon} />
                                 <Typography className={classes.flexGrow}> My account </Typography>
                             </MenuItem>
+                            </Link>
+                            <Link to="/wishlist/" className={classes.linkText}>
                             <MenuItem onClick={handleClose}>
                                 <FavoriteIcon className={classes.listIcon} />
                                 <Typography className={classes.flexGrow}> Wishlist </Typography>
                                 <Badge color="secondary" badgeContent={numOfItemsInWishlist}/>
                             </MenuItem>
+                            </Link>
+                            <Link to="/cart/" className={classes.linkText}>
                             <MenuItem onClick={handleClose}>
                                 <ShoppingCartIcon className={classes.listIcon} />
                                 <Typography className={classes.flexGrow}> Cart </Typography>
                                 <Badge color="secondary" badgeContent={numOfItemsInCart }/>
                             </MenuItem>
+                            </Link>
                             <MenuItem onClick={(e) => {handleClose(e); dispatch(logout())}}>
                                 <PowerSettingsNewIcon className={classes.listIcon} />
                                 <Typography className={classes.flexGrow}> Logout </Typography>

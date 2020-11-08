@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, makeStyles, 
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, makeStyles, 
     OutlinedInput, useMediaQuery, useTheme } from '@material-ui/core'
 import { loginAttempt } from '../../redux/'
 import React, {useState} from 'react'
@@ -32,14 +32,16 @@ function LoginModal() {
                     Login
                 </DialogTitle>
                 <DialogContent>
-                    <OutlinedInput onChange={(e)=>setUser(e.target.value)} value={user} className={classes.margin} color="primary" type="text" placeholder="Username" fullWidth margin="dense" />
-                    <OutlinedInput onChange={(e)=>setPass(e.target.value)} value={pass} type="password" color="primary" placeholder="Password" fullWidth margin="dense"/>
+                    <FormControl fullWidth margin="dense" variant="outlined">
+                        <OutlinedInput onChange={(e)=>setUser(e.target.value)} value={user} color="primary" type="text" placeholder="Username" fullWidth />
+                    </FormControl>
+                    <FormControl fullWidth margin="dense" variant="outlined">
+                        <OutlinedInput onChange={(e)=>setPass(e.target.value)} value={pass} type="password" color="primary" placeholder="Password" fullWidth/>
+                    </FormControl>
                 <DialogActions>
-                    <Button 
-                    className={classes.margin}
-                    variant="contained" color="primary" autoFocus fullWidth
-                    onClick={
-                        ()=>dispatch(loginAttempt({username:user, password:pass}))}>
+                    <Button className={classes.margin} variant="contained" color="primary" 
+                    autoFocus fullWidth 
+                    onClick={()=>dispatch(loginAttempt({username:user, password:pass}))}>
                         Login
                     </Button>
                 </DialogActions>
