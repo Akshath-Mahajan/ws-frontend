@@ -9,6 +9,9 @@ const useStyles = makeStyles((theme) => ({
 	mgnR:{
 		marginRight: theme.spacing(3)
 	},
+	mb: {
+		marginBottom: theme.spacing(1)
+	}
 })
 )
 function Header(props) {

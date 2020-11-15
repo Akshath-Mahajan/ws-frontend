@@ -1,4 +1,5 @@
 import { LOGIN_SUCCESS, LOGOUT } from './types'
+import { DELETE_CART_SUCCESS } from '../Cart/types'
 const initialState = {
     username: localStorage.getItem('username'),
     icon: localStorage.getItem('icon'),
@@ -34,6 +35,14 @@ const userReducer = (state = initialState, action) => {
                 token: localStorage.getItem('token'),
                 numOfItemsInCart: localStorage.getItem('numOfItemsInCart'),
                 numOfItemsInWishlist: localStorage.getItem('numOfItemsInWishlist'), 
+            }
+        }
+        case DELETE_CART_SUCCESS: {
+            const initial_items = localStorage.getItem('numOfItemsInCart')
+            localStorage.setItem('numOfItemsInCart', initial_items - 1)
+            return {
+                ...state,
+                numOfItemsInCart: initial_items - 1
             }
         }
         default: return state

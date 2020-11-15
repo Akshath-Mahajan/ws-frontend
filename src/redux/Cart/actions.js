@@ -1,16 +1,49 @@
 import axios from 'axios'
-import { FETCH_CART_SUCCESS } from './types'
+import { FETCH_CART_SUCCESS, UPDATE_CART_SUCCESS, DELETE_CART_SUCCESS } from './types'
+
+const authHeader = {headers: {Authorization: "Token "+localStorage.getItem('token')}}
+
 const fetchCartItemsSuccess = (data) => {
+    const obj = {}
+    data.map((item)=>{obj[item.id] = {...item}})
     return {
         type: FETCH_CART_SUCCESS,
-        payload: data
+        payload: obj
     }
 }
 const fetchCartItems = () => (dispatch) => {
-    axios.get('http://127.0.0.1:8000/api/cart/', {headers: {Authorization: "Token "+localStorage.getItem('token')}})
+    axios.get('http://127.0.0.1:8000/api/cart/', authHeader)
     .then(res => {
         dispatch(fetchCartItemsSuccess(res.data))
-    }
+        }
     ) 
 }
+const updateCartItemSuccess = (data) => {
+    return {
+        type:UPDATE_CART_SUCCESS,
+        payload: data
+    }
+}
+const updateCartItems = (product_id, quantity) => (dispatch) => {
+    axios.post('http://127.0.0.1:8000/api/cart/', {
+        product_id: product_id,
+        quantity: quantity
+    }, authHeader)
+    .then(res => dispatch(updateCartItemSuccess(res.data)))
+    .catch(err=> console.log(err))
+}
+const deleteCartItemSuccess = (product_id) => {
+    return {
+        type: DELETE_CART_SUCCESS,
+        product_id: product_id
+    }
+}
+const deleteCartItems = (product_id) => (dispatch) => {
+    axios.delete('http://127.0.0.1:8000/api/cart/',{ ...authHeader, data: {product_id:product_id}})
+    .then(res => dispatch(deleteCartItemSuccess(res.data.id)))
+    .catch(err => console.log(err))
+
+}
 export { fetchCartItems }
+export { updateCartItems }
+export { deleteCartItems }

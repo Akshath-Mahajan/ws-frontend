@@ -11,13 +11,13 @@ const useStyles = makeStyles(theme=>({
 function WishlistItem({ data }) {
     const classes = useStyles()
     return (
-        <Grid item xs={6} className={classes.mar}>
+        <Grid container item xs={12} sm={6} className={classes.mar}>
             <Paper variant="outlined" className={`${classes.pad} ${classes.fillHeight}`}>
             <Grid container spacing={4}>
                 <Grid item xs={12} md={4}  xl={3}>
                     <img src={"http://127.0.0.1:8000"+data.image} width='100%' />
                 </Grid>
-                <Grid item md={6} xl={7}>
+                <Grid item xs={12} md={6} xl={7}>
                     <Typography variant="h3">{data.name}</Typography>
                     <Typography variant="subtitle1">{data.description}</Typography>
                     <Typography variant="h5">₹ {data.price}</Typography>
