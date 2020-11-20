@@ -7,6 +7,7 @@ import {BrowserRouter, Route} from 'react-router-dom'
 import Cart from './components/Cart/Cart'
 import Wishlist from './components/Wishlist/Wishlist'
 import Profile from './components/Profile/Profile'
+import Trending from './components/Trending/Trending'
 // import theme from './baseTheme'
 function App() {
     return (
@@ -24,6 +25,16 @@ function App() {
                 </Route>
                 <Route exact path="/profile/">
                     <Profile />
+                </Route>
+
+                <Route exact path="/trending/">
+                    <Trending />
+                </Route>
+                <Route exact path="/collection/">
+                    Collection App
+                </Route>
+                <Route exact path="/new/">
+                    New App
                 </Route>
             </BrowserRouter>
         </Provider>

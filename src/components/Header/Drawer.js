@@ -8,6 +8,7 @@ import WhatshotIcon from '@material-ui/icons/Whatshot';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
 import HomeIcon from '@material-ui/icons/Home';
 import NewReleasesIcon from '@material-ui/icons/NewReleases';
+import { Link } from 'react-router-dom';
 const useStyles = makeStyles((theme)=>({
     drawerHeader: {
         display: 'flex',
@@ -26,16 +27,17 @@ const useStyles = makeStyles((theme)=>({
 		[theme.breakpoints.down('xs')]: {
 			width: '100vw',
 		},
-	}
+	},
+	linkText: {color: 'inherit', textDecoration:'None'}
 }))
 function Drawer(props) {
 	const options = [
-		['Home', <HomeIcon />],
-		['Newly Released', <NewReleasesIcon />],
-		['Collection', <CollectionsIcon />], 
-		['Trending', <WhatshotIcon />],
-		['Contact Us', <AlternateEmailIcon />], 
-		['About us', <InfoIcon />],
+		['Home', <HomeIcon />, ''],
+		['Newly Released', <NewReleasesIcon />, '/new/'],
+		['Collection', <CollectionsIcon />, '/collection/'], 
+		['Trending', <WhatshotIcon />, '/trending/'],
+		['Contact Us', <AlternateEmailIcon />, '/contact-us/'], 
+		['About us', <InfoIcon />, '/about-us/'],
 	]
 	const [open, setOpen] = useState(false)
 	const toggleDrawer = (status) => setOpen(status)
@@ -59,10 +61,12 @@ function Drawer(props) {
 			<List onClick={() => toggleDrawer(false)} className={classes.widthAdjust}>
 			{
 				options.map((item, index)=>(
-				<ListItem button key={index}>
-					<ListItemIcon>{item[1]}</ListItemIcon>
-					<ListItemText primary={item[0]} />
-				</ListItem>
+				<Link key={index} to={item[2]} className={classes.linkText}>
+					<ListItem button>
+							<ListItemIcon>{item[1]}</ListItemIcon>
+							<ListItemText primary={item[0]} />
+					</ListItem>
+				</Link>
 				))
 			}
 			</List>
