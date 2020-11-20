@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { LOGOUT, LOGIN_FAIL, LOGIN_SUCCESS } from './types'
+import { LOGOUT, LOGIN_FAIL, LOGIN_SUCCESS, LOGIN_ATTEMPT } from './types'
 
 const logout = () => {
     return {
@@ -13,16 +13,21 @@ const loginSuccess = (data) => {
         payload: data
     }
 }
-const loginFail = (data) => {
+const loginFail = () => {
     return {
-        type: LOGIN_FAIL,
-        payload: data
+        type: LOGIN_FAIL
     }
 }
 const loginAttempt = (data) => (dispatch) => {
+    dispatch({type: LOGIN_ATTEMPT})
     axios.post("http://127.0.0.1:8000/api/login/", data)
-    .then(res => 
-        dispatch(loginSuccess({...res.data, username:data.username}))
+    .then(res => {
+            if(res.data.token){
+                dispatch(loginSuccess({...res.data, email:data.email}))
+            } else {
+                dispatch(loginFail())   
+            }
+        }
     )
     .catch(err=>console.log(err))
 }

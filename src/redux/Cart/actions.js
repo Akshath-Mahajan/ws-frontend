@@ -1,18 +1,16 @@
 import axios from 'axios'
 import { FETCH_CART_SUCCESS, UPDATE_CART_SUCCESS, DELETE_CART_SUCCESS } from './types'
 
-const authHeader = {headers: {Authorization: "Token "+localStorage.getItem('token')}}
-
 const fetchCartItemsSuccess = (data) => {
     const obj = {}
-    data.map((item)=>{obj[item.id] = {...item}})
+    for(let i = 0; i < data.length; i++){obj[data[i].id] = {...data[i]}}
     return {
         type: FETCH_CART_SUCCESS,
         payload: obj
     }
 }
 const fetchCartItems = () => (dispatch) => {
-    axios.get('http://127.0.0.1:8000/api/cart/', authHeader)
+    axios.get('http://127.0.0.1:8000/api/cart/', {headers: {Authorization: "Token "+localStorage.getItem('token')}})
     .then(res => {
         dispatch(fetchCartItemsSuccess(res.data))
         }
@@ -28,7 +26,7 @@ const updateCartItems = (product_id, quantity) => (dispatch) => {
     axios.post('http://127.0.0.1:8000/api/cart/', {
         product_id: product_id,
         quantity: quantity
-    }, authHeader)
+    }, {headers: {Authorization: "Token "+localStorage.getItem('token')}})
     .then(res => dispatch(updateCartItemSuccess(res.data)))
     .catch(err=> console.log(err))
 }
@@ -39,7 +37,7 @@ const deleteCartItemSuccess = (product_id) => {
     }
 }
 const deleteCartItems = (product_id) => (dispatch) => {
-    axios.delete('http://127.0.0.1:8000/api/cart/',{ ...authHeader, data: {product_id:product_id}})
+    axios.delete('http://127.0.0.1:8000/api/cart/',{ headers: {Authorization: "Token "+localStorage.getItem('token')}, data: {product_id:product_id}})
     .then(res => dispatch(deleteCartItemSuccess(res.data.id)))
     .catch(err => console.log(err))
 

@@ -21,9 +21,9 @@ function CartItem({ data }) {
         <Grid item xs={12}>
             <Paper variant="outlined" className={classes.pad}>
             <Grid container spacing={4}>
-                <Grid container justify="center" alignItems="center" item xs={12} md={4}  xl={3}>
-                    <Grid item xs={12} justify="center" alignItems="center">
-                        <img src={"http://127.0.0.1:8000"+data.product.image} width='100%' />
+                <Grid item container justify="center" alignItems="center" xs={12} md={4}  xl={3}>
+                    <Grid item container xs={12} justify="center" alignItems="center">
+                        <img alt={data.product.name} src={"http://127.0.0.1:8000"+data.product.image} width='100%' />
                     </Grid>
                     <Grid container item xs={12}>
                         <Grid item xs={3} container alignItems="center" justify="center">

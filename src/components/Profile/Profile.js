@@ -1,5 +1,5 @@
-import { Box, Grid, List, ListItem, ListItemIcon, ListItemText, makeStyles, Paper, Tab, Tabs, Typography } from '@material-ui/core'
-import React, { useState } from 'react'
+import { Grid, List, ListItem, ListItemIcon, ListItemText, makeStyles, Paper, Typography } from '@material-ui/core'
+import React from 'react'
 import PersonIcon from '@material-ui/icons/Person';
 import ShopIcon from '@material-ui/icons/Shop';
 import CreditCardIcon from '@material-ui/icons/CreditCard';

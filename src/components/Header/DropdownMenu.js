@@ -41,8 +41,8 @@ function Dropdown() {
         prevOpen.current = open;
     }, [open]);
 
-    const numOfItemsInCart = useSelector(state => state.user.numOfItemsInCart)
-    const numOfItemsInWishlist = useSelector(state => state.user.numOfItemsInWishlist)
+    const numOfItemsInCart = useSelector(state => state.cart.num)
+    const numOfItemsInWishlist = useSelector(state => state.wishlist.num)
     const dispatch = useDispatch()
     return (
         <div>

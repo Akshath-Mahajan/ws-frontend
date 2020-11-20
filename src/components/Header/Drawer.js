@@ -6,6 +6,8 @@ import InfoIcon from '@material-ui/icons/Info';
 import CollectionsIcon from '@material-ui/icons/Collections';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
+import HomeIcon from '@material-ui/icons/Home';
+import NewReleasesIcon from '@material-ui/icons/NewReleases';
 const useStyles = makeStyles((theme)=>({
     drawerHeader: {
         display: 'flex',
@@ -27,7 +29,14 @@ const useStyles = makeStyles((theme)=>({
 	}
 }))
 function Drawer(props) {
-	const options = [['Collection', <CollectionsIcon />], ['Trending', <WhatshotIcon />],['Contact Us', <AlternateEmailIcon />], ['About us', <InfoIcon />],]
+	const options = [
+		['Home', <HomeIcon />],
+		['Newly Released', <NewReleasesIcon />],
+		['Collection', <CollectionsIcon />], 
+		['Trending', <WhatshotIcon />],
+		['Contact Us', <AlternateEmailIcon />], 
+		['About us', <InfoIcon />],
+	]
 	const [open, setOpen] = useState(false)
 	const toggleDrawer = (status) => setOpen(status)
     const classes = useStyles()

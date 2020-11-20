@@ -7,9 +7,8 @@ import {BrowserRouter, Route} from 'react-router-dom'
 import Cart from './components/Cart/Cart'
 import Wishlist from './components/Wishlist/Wishlist'
 import Profile from './components/Profile/Profile'
-import theme from './baseTheme'
+// import theme from './baseTheme'
 function App() {
-    console.log(theme.spacing())
     return (
         <Provider store={store}>
             <BrowserRouter>

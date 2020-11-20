@@ -1,48 +1,43 @@
-import { LOGIN_SUCCESS, LOGOUT } from './types'
-import { DELETE_CART_SUCCESS } from '../Cart/types'
+import { LOGIN_ATTEMPT, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT } from './types'
+
 const initialState = {
-    username: localStorage.getItem('username'),
-    icon: localStorage.getItem('icon'),
+    email: localStorage.getItem('email'),
     token: localStorage.getItem('token'),
-    numOfItemsInCart: localStorage.getItem('numOfItemsInCart'),
-    numOfItemsInWishlist: localStorage.getItem('numOfItemsInWishlist'),
+    login_status: 0,
 }
 
 const userReducer = (state = initialState, action) => {
     switch(action.type){
+        case LOGIN_ATTEMPT: {
+            return {
+                ...state,
+                login_status: 0
+            }
+        }
         case LOGIN_SUCCESS: {
-            localStorage.setItem('username', action.payload.username)
+            localStorage.setItem('email', action.payload.email)
             localStorage.setItem('token', action.payload.token)
-            localStorage.setItem('numOfItemsInWishlist', action.payload.numOfItemsInWishlist)
-            localStorage.setItem('numOfItemsInCart', action.payload.numOfItemsInCart)
             return {
                 ...state,
                 token: action.payload.token,
-                username:action.payload.username,
-                numOfItemsInCart: action.payload.numOfItemsInCart,
-                numOfItemsInWishlist: action.payload.numOfItemsInWishlist
+                email:action.payload.email,
+                login_status: 1
             }
         }
         case LOGOUT: {
-            localStorage.removeItem('username')
+            localStorage.removeItem('email')
             localStorage.removeItem('token')
-            localStorage.removeItem('numOfItemsInCart')
-            localStorage.removeItem('numOfItemsInWishlist')
             return {
                 ...state,
-                username: localStorage.getItem('username'),
-                icon: localStorage.getItem('icon'),
+                email: localStorage.getItem('email'),
                 token: localStorage.getItem('token'),
-                numOfItemsInCart: localStorage.getItem('numOfItemsInCart'),
-                numOfItemsInWishlist: localStorage.getItem('numOfItemsInWishlist'), 
+                login_status: 0
             }
         }
-        case DELETE_CART_SUCCESS: {
-            const initial_items = localStorage.getItem('numOfItemsInCart')
-            localStorage.setItem('numOfItemsInCart', initial_items - 1)
+        case LOGIN_FAIL: {
             return {
                 ...state,
-                numOfItemsInCart: initial_items - 1
+                login_status: -1
             }
         }
         default: return state

@@ -1,15 +1,23 @@
+import { LOGIN_SUCCESS } from '../User/types'
+import { ADD_CART_DELETE_WISHLIST_SUCCESS } from '../Wishlist/types'
 import { FETCH_CART_SUCCESS, UPDATE_CART_SUCCESS, DELETE_CART_SUCCESS } from './types'
 const initialState = {
-    cart: {}
+    cart: {},
+    num: 0
 }
 const cartReducer = (state=initialState, action) => {
     switch(action.type){
+        case LOGIN_SUCCESS: return {
+            ...state,
+            num: action.payload.numOfItemsInCart
+        }
         case FETCH_CART_SUCCESS: return {
             ...state,
-            cart: action.payload
+            cart: action.payload,
+            num: Object.keys(action.payload).length
         }
         case UPDATE_CART_SUCCESS: {
-            let _cart = {... state.cart}
+            let _cart = {...state.cart}
             _cart[action.payload.id] = action.payload
             return {
                 ...state,
@@ -17,13 +25,18 @@ const cartReducer = (state=initialState, action) => {
             }
         }
         case DELETE_CART_SUCCESS: {
-            let _cart = {... state.cart}
+            let _cart = {...state.cart}
             let id = action.product_id
             delete _cart[id]
             return {
                 ...state,
-                cart: _cart
+                cart: _cart,
+                num: state.num - 1
             }
+        }
+        case ADD_CART_DELETE_WISHLIST_SUCCESS: return {
+            ...state,
+            num: state.num+1
         }
         default: return state
     }

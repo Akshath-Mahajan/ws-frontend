@@ -13,25 +13,36 @@ const useStyles = makeStyles(theme=>({
 )
 
 function Cart() { 
-    const classes = useStyles()
     const dispatch = useDispatch()
+    useEffect(()=>dispatch(fetchCartItems()), [])
+    const classes = useStyles()
     const data = useSelector(state=>state.cart.cart)
     const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('xs'), {defaultMatches: true});
-    useEffect(()=>dispatch(fetchCartItems()), [])
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'), {defaultMatches: true});
     let price = 0;
-    Object.keys(data).map((key) => {price+=(data[key].product.price*data[key].quantity)})
+    let okd = Object.keys(data)
+    for(let i = 0; i < okd.length; i++){
+        price+=(data[okd[i]].product.price*data[okd[i]].quantity)
+    }
     return (
         <Grid container spacing={2} alignContent="center">
-            <Grid item container xs={12} lg={8} spacing={isMobile?0:2}>
-            {Object.keys(data).map((key)=><CartItem key={key} data={data[key]}/>)}
+            <Grid item container justify="center" xs={12} md={8} spacing={isMobile?0:2}>
+            {
+            Object.keys(data).length !==0?
+            Object.keys(data).map((key)=><CartItem key={key} data={data[key]}/>): 
+            <Grid item>
+                    <Typography variant="h3">
+                        Your Cart is empty!
+                    </Typography>
+                </Grid>
+            }
             </Grid>
-            <Grid item container xs={12} lg={4} spacing={isMobile?0:2}>
+            <Grid item container xs={12} md={4} spacing={isMobile?0:2}>
                 <Grid item xs={12}>
                     <Paper variant="outlined" className={`${classes.pad}`}>
                         <Typography variant="h2">Total Price</Typography>
                         <Typography variant="h3">₹ {price}</Typography>
-                        <Button color="secondary" variant="contained" fullWidth className={`${classes.mar} ${classes.pad}`}>Proceed to checkout</Button>
+                        <Button color="secondary" disabled={Object.keys(data).length === 0} variant="contained" fullWidth className={`${classes.mar} ${classes.pad}`}>Proceed to checkout</Button>
                     </Paper>
                 </Grid>
             </Grid>
