@@ -8,6 +8,7 @@ import Cart from './components/Cart/Cart'
 import Wishlist from './components/Wishlist/Wishlist'
 import Profile from './components/Profile/Profile'
 import Trending from './components/Trending/Trending'
+import Collection from './components/Collection/Collection'
 // import theme from './baseTheme'
 function App() {
     return (
@@ -31,7 +32,7 @@ function App() {
                     <Trending />
                 </Route>
                 <Route exact path="/collection/">
-                    Collection App
+                    <Collection />
                 </Route>
                 <Route exact path="/new/">
                     New App

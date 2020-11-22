@@ -1,7 +1,5 @@
-import { Grid, Typography } from '@material-ui/core'
-import Rating from '@material-ui/lab/Rating'
+import { Grid } from '@material-ui/core'
 import React from 'react'
-import { useSelector } from 'react-redux'
 import { ProductGridItem } from './ProductGridItem'
 
 function ProductGrid({ data }) {
