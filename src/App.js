@@ -9,6 +9,7 @@ import Wishlist from './components/Wishlist/Wishlist'
 import Profile from './components/Profile/Profile'
 import Trending from './components/Trending/Trending'
 import Collection from './components/Collection/Collection'
+import ContactUs from './components/ContactUs/ContactUs'
 // import theme from './baseTheme'
 function App() {
     return (
@@ -36,6 +37,9 @@ function App() {
                 </Route>
                 <Route exact path="/new/">
                     New App
+                </Route>
+                <Route exact path="/contact-us/">
+                    <ContactUs />
                 </Route>
             </BrowserRouter>
         </Provider>
