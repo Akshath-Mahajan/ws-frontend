@@ -1,7 +1,7 @@
 import { FETCH_TRENDING_SUCCESS } from "./types"
 
 const initialState = {
-    products:{}
+    products:[]
 }
 const trendingReducer = (state=initialState, action) => {
     switch(action.type){

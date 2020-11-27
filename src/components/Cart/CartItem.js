@@ -8,7 +8,15 @@ import { updateCartItems, deleteCartItems } from '../../redux'
 const useStyles = makeStyles(theme=>({
         mar: {margin: theme.spacing(1)},
         pad: { padding : theme.spacing(1) },
-        fitWidth: {width: 'fit-content'}
+        fitWidth: {width: 'fit-content'},
+        img: {
+            margin: theme.spacing(1),
+            width: '100%',
+            [theme.breakpoints.down('xs')]:{
+                width:'auto',
+                height: 275,
+            }
+        }
     })
 )
 function CartItem({ data }) {
@@ -21,9 +29,9 @@ function CartItem({ data }) {
         <Grid item xs={12}>
             <Paper variant="outlined" className={classes.pad}>
             <Grid container spacing={4}>
-                <Grid item container justify="center" alignItems="center" xs={12} md={4}  xl={3}>
+                <Grid item container justify="center" alignItems="center" xs={12} sm={4} xl={3}>
                     <Grid item container xs={12} justify="center" alignItems="center">
-                        <img alt={data.product.name} src={"http://127.0.0.1:8000"+data.product.image} width='100%' />
+                        <img className={classes.img} alt={data.product.name} src={"http://127.0.0.1:8000"+data.product.image} />
                     </Grid>
                     <Grid container item xs={12}>
                         <Grid item xs={3} container alignItems="center" justify="center">

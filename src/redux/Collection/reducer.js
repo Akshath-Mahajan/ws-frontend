@@ -1,7 +1,7 @@
 import { FETCH_COLLECTION_SUCCESS } from "./types"
 
 const initialState = {
-    products:{}
+    products:[]
 }
 const collectionReducer = (state=initialState, action) => {
     switch(action.type){

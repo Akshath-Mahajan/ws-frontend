@@ -5,7 +5,7 @@ import { ProductGridItem } from './ProductGridItem'
 function ProductGrid({ data }) {
     return (
         <Grid container spacing={2}>
-            {Object.keys(data).map(key => <ProductGridItem key={key} data={data[key]} />)}
+            {data.map((item, index) => <ProductGridItem key={index} data={item} />)}
         </Grid>
     )
 }

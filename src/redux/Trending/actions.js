@@ -2,11 +2,11 @@ import axios from 'axios'
 import { FETCH_TRENDING_SUCCESS } from './types'
 
 const fetchTrendingProductsSuccess = (data) => {
-    const obj = {}
-    for(let i = 0; i < data.length; i++){obj[data[i].id] = data[i]}
+    // const obj = {}
+    // for(let i = 0; i < data.length; i++){obj[data[i].id] = data[i]}
     return {
         type: FETCH_TRENDING_SUCCESS,
-        payload: obj
+        payload: data
     }
 }
 const fetchTrendingProducts = () => (dispatch) => {

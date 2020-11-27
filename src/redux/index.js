@@ -5,3 +5,4 @@ export { fetchWishlistItems, addToCartFromWishlist, deleteWishlistItem } from '.
 
 export { fetchTrendingProducts } from './Trending/actions'
 export { fetchCollectionProducts } from './Collection/actions'
+export { fetchNewProducts } from './NewProducts/actions'

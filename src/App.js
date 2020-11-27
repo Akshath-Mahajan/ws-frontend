@@ -10,6 +10,7 @@ import Profile from './components/Profile/Profile'
 import Trending from './components/Trending/Trending'
 import Collection from './components/Collection/Collection'
 import ContactUs from './components/ContactUs/ContactUs'
+import New from './components/NewProducts/New'
 // import theme from './baseTheme'
 function App() {
     return (
@@ -36,7 +37,7 @@ function App() {
                     <Collection />
                 </Route>
                 <Route exact path="/new/">
-                    New App
+                    <New />
                 </Route>
                 <Route exact path="/contact-us/">
                     <ContactUs />
