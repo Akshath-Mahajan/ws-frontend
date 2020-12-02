@@ -5,6 +5,7 @@ import wishlistReducer from './Wishlist/reducer'
 import trendingReducer from './Trending/reducer';
 import collectionReducer from './Collection/reducer'
 import newProductsReducer from './NewProducts/reducer';
+import profileReducer from './Profile/reducer'
 const rootReducer = combineReducers({
     user: userReducer,
     cart: cartReducer,
@@ -12,7 +13,9 @@ const rootReducer = combineReducers({
     trending: trendingReducer,
     collection: collectionReducer,
     new: newProductsReducer,
+    profile: profileReducer,
 })
+
 
 
 export default rootReducer

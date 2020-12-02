@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 )
 function Header(props) {
 	const classes=useStyles()
-	const email = useSelector(state => state.user.email)
+	const token = useSelector(state => state.user.token)
 	return (
 	<React.Fragment>
 	<AppBar>
@@ -26,7 +26,7 @@ function Header(props) {
 				<Typography variant="h6" component="div" className={classes.mgnR}>Company Name</Typography>
 			</Hidden>
 			<Search />
-			{email?<DropdownMenu />:<LoginModal />}
+			{token?<DropdownMenu />:<LoginModal />}
 		</Toolbar>
 	</AppBar>
 	<Toolbar />

@@ -11,7 +11,7 @@ const fetchCollectionProductsSuccess = (data) => {
 }
 
 const fetchCollectionProducts = () => (dispatch) => {
-    axios.get('http://127.0.0.1:8000/api/products/collection/')
+    axios.get('https://webshopbackendtest.herokuapp.com/api/products/collection/')
     .then(res => dispatch(fetchCollectionProductsSuccess(res.data)))
 }
 

@@ -10,7 +10,7 @@ const fetchCartItemsSuccess = (data) => {
     }
 }
 const fetchCartItems = () => (dispatch) => {
-    axios.get('http://127.0.0.1:8000/api/cart/', {headers: {Authorization: "Token "+localStorage.getItem('token')}})
+    axios.get('https://webshopbackendtest.herokuapp.com/api/cart/', {headers: {Authorization: "Token "+localStorage.getItem('token')}})
     .then(res => {
         dispatch(fetchCartItemsSuccess(res.data))
         }
@@ -23,7 +23,7 @@ const updateCartItemSuccess = (data) => {
     }
 }
 const updateCartItems = (product_id, quantity) => (dispatch) => {
-    axios.post('http://127.0.0.1:8000/api/cart/', {
+    axios.post('https://webshopbackendtest.herokuapp.com/api/cart/', {
         product_id: product_id,
         quantity: quantity
     }, {headers: {Authorization: "Token "+localStorage.getItem('token')}})
@@ -37,7 +37,7 @@ const deleteCartItemSuccess = (product_id) => {
     }
 }
 const deleteCartItems = (product_id) => (dispatch) => {
-    axios.delete('http://127.0.0.1:8000/api/cart/',{ headers: {Authorization: "Token "+localStorage.getItem('token')}, data: {product_id:product_id}})
+    axios.delete('https://webshopbackendtest.herokuapp.com/api/cart/',{ headers: {Authorization: "Token "+localStorage.getItem('token')}, data: {product_id:product_id}})
     .then(res => dispatch(deleteCartItemSuccess(res.data.id)))
     .catch(err => console.log(err))
 

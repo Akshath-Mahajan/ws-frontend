@@ -20,10 +20,10 @@ const loginFail = () => {
 }
 const loginAttempt = (data) => (dispatch) => {
     dispatch({type: LOGIN_ATTEMPT})
-    axios.post("http://127.0.0.1:8000/api/login/", data)
+    axios.post("https://webshopbackendtest.herokuapp.com/api/login/", data)
     .then(res => {
             if(res.data.token){
-                dispatch(loginSuccess({...res.data, email:data.email}))
+                dispatch(loginSuccess(res.data))
             } else {
                 dispatch(loginFail())   
             }
@@ -31,7 +31,6 @@ const loginAttempt = (data) => (dispatch) => {
     )
     .catch(err=>console.log(err))
 }
-
 
 
 export { loginAttempt }

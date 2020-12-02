@@ -11,7 +11,7 @@ const fetchWishlistItemsSuccess = (data) => {
 }
 
 const fetchWishlistItems = () => (dispatch) => {
-    axios.get('http://127.0.0.1:8000/api/wishlist/', {headers: {Authorization: "Token "+localStorage.getItem('token')}})
+    axios.get('https://webshopbackendtest.herokuapp.com/api/wishlist/', {headers: {Authorization: "Token "+localStorage.getItem('token')}})
     .then(res => {
             dispatch(fetchWishlistItemsSuccess(res.data.products))
         }
@@ -26,12 +26,12 @@ const addToCartdeleteWishlistItemSuccess = (product_id) => {
 }
 
 const addToCartFromWishlist = (product_id) => (dispatch) => {
-    axios.post('http://127.0.0.1:8000/api/cart/', {
+    axios.post('https://webshopbackendtest.herokuapp.com/api/cart/', {
         product_id: product_id,
         quantity: 1
     }, {headers: {Authorization: "Token "+localStorage.getItem('token')}})
     .then(
-        axios.delete('http://127.0.0.1:8000/api/wishlist/', { headers: {Authorization: "Token "+localStorage.getItem('token')}, data: {product_id:product_id}})
+        axios.delete('https://webshopbackendtest.herokuapp.com/api/wishlist/', { headers: {Authorization: "Token "+localStorage.getItem('token')}, data: {product_id:product_id}})
         .then(dispatch(addToCartdeleteWishlistItemSuccess(product_id)))
     )
 }
@@ -42,7 +42,7 @@ const deleteWishlistItemSuccess = (product_id) => {
     }
 }
 const deleteWishlistItem = (product_id) => (dispatch) => {
-    axios.delete('http://127.0.0.1:8000/api/wishlist/', { headers: {Authorization: "Token "+localStorage.getItem('token')}, data: {product_id:product_id}})
+    axios.delete('https://webshopbackendtest.herokuapp.com/api/wishlist/', { headers: {Authorization: "Token "+localStorage.getItem('token')}, data: {product_id:product_id}})
     .then(
         dispatch(deleteWishlistItemSuccess(product_id))
     )

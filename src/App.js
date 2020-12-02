@@ -11,6 +11,8 @@ import Trending from './components/Trending/Trending'
 import Collection from './components/Collection/Collection'
 import ContactUs from './components/ContactUs/ContactUs'
 import New from './components/NewProducts/New'
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
 // import theme from './baseTheme'
 function App() {
     return (

@@ -4,6 +4,10 @@ import PersonIcon from '@material-ui/icons/Person';
 import ShopIcon from '@material-ui/icons/Shop';
 import CreditCardIcon from '@material-ui/icons/CreditCard';
 import HelpIcon from '@material-ui/icons/Help';
+import ProfileInfo from './ProfileInfo'
+import DeliveryAddress from './DeliveryAddress'
+import { useSelector, useDispatch } from 'react-redux'
+import { changePane } from '../../redux'
 const useStyles = makeStyles((theme) => ({
 	root: {
 		flexGrow: 1,
@@ -12,84 +16,67 @@ const useStyles = makeStyles((theme) => ({
 		display: 'flex',
 	},
 	padTop: {paddingTop: theme.spacing(2)},
+	pad: {padding:theme.spacing(4)},
 }));
 
 function Profile() {
 	const classes = useStyles();
+	const settings = [
+		['Account Settings', -1, <PersonIcon color="primary" />],
+		['Profile Information', 0, null],
+		['Delivery Address', 1, null],
+		['Password Reset', 2, null],
+		['My Orders', -1, <ShopIcon color="primary" /> ],
+		['All Orders', 3, null],
+		['Live Orders', 4, null],
+		['Delivered Orders', 5, null],
+		['Payments', -1, <CreditCardIcon color="primary" />],
+		['All Transactions', 6, null],
+		['Payments Made', 7, null],
+		['Refunds', 8, null],
+		['Help', -1, <HelpIcon color="primary" />],
+	]
+	const panes = {
+		0: <ProfileInfo />,
+		1: <DeliveryAddress />,
+		2: <ProfileInfo />,
+		3: <ProfileInfo />,
+		4: <ProfileInfo />,
+		5: <ProfileInfo />,
+		6: <ProfileInfo />,
+		7: <ProfileInfo />,
+		8: <ProfileInfo />,
+	}
+	const activeIdx = useSelector(state=>state.profile.pane)
+	const dispatch = useDispatch()
 	return (
 	<div className={classes.root}>
 		<Grid container justify="center" spacing={2}>
 			<Grid item xs={12} sm={5} md={4} lg={3} className={classes.listGrid}>
 				<List className={classes.padTop}>
 					<Paper>
-					<ListItem button>
-						<ListItemIcon>
-							<ShopIcon color="primary" />
-						</ListItemIcon>
-						<Typography variant="h6">My Orders</Typography>
-					</ListItem>
-						<ListItem button>
-							<ListItemIcon />
-							<ListItemText primaryTypographyProps={{variant:'button'}} primary="All Orders" />
-						</ListItem>
-						<ListItem button>
-							<ListItemIcon />
-							<ListItemText primaryTypographyProps={{variant:'button'}} primary="Live Orders" />
-						</ListItem>
-						<ListItem button>
-							<ListItemIcon />
-							<ListItemText primaryTypographyProps={{variant:'button'}} primary="Delivered Orders" />
-						</ListItem>
+					{
+						settings.map((item, idx)=>(
+							<ListItem key={idx} disableTouchRipple={item[2]?true:false} button
+							onClick={() => {if(!item[2]){ dispatch(changePane(item[1])) } }}
+							>
+								<ListItemIcon>{item[2]}</ListItemIcon>
+								{
+								item[2]?
+								<Typography variant="h6">{item[0]}</Typography>:
+								<ListItemText primaryTypographyProps={{variant:'button'}} primary={item[0]} />
+								}
 
-					<ListItem button>
-						<ListItemIcon>
-							<PersonIcon color="primary" />
-						</ListItemIcon>
-						<Typography variant="h6">Account Settings</Typography>
-					</ListItem>
-						<ListItem button>
-							<ListItemIcon />
-							<ListItemText primaryTypographyProps={{variant:'button'}} primary="Profile Information" />
-						</ListItem>
-						<ListItem button>
-							<ListItemIcon />
-							<ListItemText primaryTypographyProps={{variant:'button'}} primary="Delivery Address" />
-						</ListItem>
-						<ListItem button>
-							<ListItemIcon />
-							<ListItemText primaryTypographyProps={{variant:'button'}} primary="Password Reset" />
-						</ListItem>
-					<ListItem button>
-						<ListItemIcon>
-							<CreditCardIcon color="primary" />
-						</ListItemIcon>
-						<Typography variant="h6">Payments</Typography>
-					</ListItem>
-						<ListItem button>
-							<ListItemIcon />
-							<ListItemText primaryTypographyProps={{variant:'button'}} primary="All Transactions" />
-						</ListItem>
-						<ListItem button>
-							<ListItemIcon />
-							<ListItemText primaryTypographyProps={{variant:'button'}} primary="Payments Made" />
-						</ListItem>
-						<ListItem button>
-							<ListItemIcon />
-							<ListItemText primaryTypographyProps={{variant:'button'}} primary="Refunds" />
-						</ListItem>
-					<ListItem button>
-						<ListItemIcon>
-							<HelpIcon color="primary" />
-						</ListItemIcon>
-						<Typography variant="h6">Help</Typography>
-					</ListItem>
+							</ListItem>
+						))
+					}
 					</Paper>
 				</List>
 			</Grid>
 			<Grid item xs={12} sm={7} md={6} lg={7}>
 				<div className={classes.padTop}>
-				<Paper>
-					Test
+				<Paper className={classes.pad}>
+					{panes[activeIdx]}
 				</Paper>
 				</div>
 			</Grid>

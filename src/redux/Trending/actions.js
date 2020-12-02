@@ -10,7 +10,7 @@ const fetchTrendingProductsSuccess = (data) => {
     }
 }
 const fetchTrendingProducts = () => (dispatch) => {
-    axios.get('http://127.0.0.1:8000/api/trending-products/')
+    axios.get('https://webshopbackendtest.herokuapp.com/api/trending-products/')
     .then(res => dispatch(fetchTrendingProductsSuccess(res.data)))
 }
 
