@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { FETCH_CART_SUCCESS, UPDATE_CART_SUCCESS, DELETE_CART_SUCCESS } from './types'
-
+import { DOMAIN } from '../../settings'
 const fetchCartItemsSuccess = (data) => {
     const obj = {}
     for(let i = 0; i < data.length; i++){obj[data[i].id] = {...data[i]}}
@@ -10,7 +10,7 @@ const fetchCartItemsSuccess = (data) => {
     }
 }
 const fetchCartItems = () => (dispatch) => {
-    axios.get('https://webshopbackendtest.herokuapp.com/api/cart/', {headers: {Authorization: "Token "+localStorage.getItem('token')}})
+    axios.get(`${DOMAIN}/api/cart/`, {headers: {Authorization: "Token "+localStorage.getItem('token')}})
     .then(res => {
         dispatch(fetchCartItemsSuccess(res.data))
         }
@@ -23,7 +23,7 @@ const updateCartItemSuccess = (data) => {
     }
 }
 const updateCartItems = (product_id, quantity) => (dispatch) => {
-    axios.post('https://webshopbackendtest.herokuapp.com/api/cart/', {
+    axios.post(`${DOMAIN}/api/cart/`, {
         product_id: product_id,
         quantity: quantity
     }, {headers: {Authorization: "Token "+localStorage.getItem('token')}})
@@ -37,7 +37,7 @@ const deleteCartItemSuccess = (product_id) => {
     }
 }
 const deleteCartItems = (product_id) => (dispatch) => {
-    axios.delete('https://webshopbackendtest.herokuapp.com/api/cart/',{ headers: {Authorization: "Token "+localStorage.getItem('token')}, data: {product_id:product_id}})
+    axios.delete(`${DOMAIN}/api/cart/`, { headers: {Authorization: "Token "+localStorage.getItem('token')}, data: {product_id:product_id}})
     .then(res => dispatch(deleteCartItemSuccess(res.data.id)))
     .catch(err => console.log(err))
 

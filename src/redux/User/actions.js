@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { LOGOUT, LOGIN_FAIL, LOGIN_SUCCESS, LOGIN_ATTEMPT } from './types'
-
+import { DOMAIN } from '../../settings'
 const logout = () => {
     return {
         type: LOGOUT
@@ -20,7 +20,7 @@ const loginFail = () => {
 }
 const loginAttempt = (data) => (dispatch) => {
     dispatch({type: LOGIN_ATTEMPT})
-    axios.post("https://webshopbackendtest.herokuapp.com/api/login/", data)
+    axios.post(`${DOMAIN}/api/login/`, data)
     .then(res => {
             if(res.data.token){
                 dispatch(loginSuccess(res.data))

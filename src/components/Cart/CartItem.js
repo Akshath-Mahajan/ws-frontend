@@ -4,6 +4,7 @@ import React from 'react'
 import RemoveIcon from '@material-ui/icons/Remove';
 import AddIcon from '@material-ui/icons/Add';
 import { useDispatch } from 'react-redux';
+import { DOMAIN } from '../../settings'
 import { updateCartItems, deleteCartItems } from '../../redux'
 const useStyles = makeStyles(theme=>({
         mar: {margin: theme.spacing(1)},
@@ -31,7 +32,7 @@ function CartItem({ data }) {
             <Grid container spacing={4}>
                 <Grid item container justify="center" alignItems="center" xs={12} sm={4} xl={3}>
                     <Grid item container xs={12} justify="center" alignItems="center">
-                        <img className={classes.img} alt={data.product.name} src={"http://127.0.0.1:8000"+data.product.image} />
+                        <img className={classes.img} alt={data.product.name} src={DOMAIN+data.product.image} />
                     </Grid>
                     <Grid container item xs={12}>
                         <Grid item xs={3} container alignItems="center" justify="center">

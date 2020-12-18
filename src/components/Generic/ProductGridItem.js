@@ -1,7 +1,7 @@
 import { Grid, makeStyles, Paper, Typography } from '@material-ui/core'
 import Rating from '@material-ui/lab/Rating'
 import React from 'react'
-
+import { DOMAIN } from '../../settings'
 const useStyles = makeStyles(theme => ({
     pad: {padding: theme.spacing(2)}
     })
@@ -12,7 +12,7 @@ function ProductGridItem({ data }) {
         <Grid key={data.id} item xs={12} sm={6} md={4} lg={3}>
             <Paper variant="outlined" className={classes.pad}>
                 <Grid item align="center">
-                    <img alt={data.name} src={"http://127.0.0.1:8000"+ data.image} height="275px" />
+                    <img alt={data.name} src={DOMAIN+ data.image} height="275px" />
                 </Grid>
                 <Typography variant="h4" align="center">
                     {data.name}

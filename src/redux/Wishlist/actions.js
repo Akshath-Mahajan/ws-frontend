@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { FETCH_WISHLIST_SUCCESS, ADD_CART_DELETE_WISHLIST_SUCCESS, DELETE_WISHLIST_SUCCESS } from './types'
-
+import { DOMAIN } from '../../settings'
 const fetchWishlistItemsSuccess = (data) => {
     const obj = {}
     for(let i = 0; i < data.length; i++){obj[data[i].id] = {...data[i]}}
@@ -11,7 +11,7 @@ const fetchWishlistItemsSuccess = (data) => {
 }
 
 const fetchWishlistItems = () => (dispatch) => {
-    axios.get('https://webshopbackendtest.herokuapp.com/api/wishlist/', {headers: {Authorization: "Token "+localStorage.getItem('token')}})
+    axios.get(`${DOMAIN}/api/wishlist/`, {headers: {Authorization: "Token "+localStorage.getItem('token')}})
     .then(res => {
             dispatch(fetchWishlistItemsSuccess(res.data.products))
         }
@@ -26,12 +26,12 @@ const addToCartdeleteWishlistItemSuccess = (product_id) => {
 }
 
 const addToCartFromWishlist = (product_id) => (dispatch) => {
-    axios.post('https://webshopbackendtest.herokuapp.com/api/cart/', {
+    axios.post(`${DOMAIN}/api/cart/`, {
         product_id: product_id,
         quantity: 1
     }, {headers: {Authorization: "Token "+localStorage.getItem('token')}})
     .then(
-        axios.delete('https://webshopbackendtest.herokuapp.com/api/wishlist/', { headers: {Authorization: "Token "+localStorage.getItem('token')}, data: {product_id:product_id}})
+        axios.delete(`${DOMAIN}/api/wishlist/`, { headers: {Authorization: "Token "+localStorage.getItem('token')}, data: {product_id:product_id}})
         .then(dispatch(addToCartdeleteWishlistItemSuccess(product_id)))
     )
 }
@@ -42,7 +42,7 @@ const deleteWishlistItemSuccess = (product_id) => {
     }
 }
 const deleteWishlistItem = (product_id) => (dispatch) => {
-    axios.delete('https://webshopbackendtest.herokuapp.com/api/wishlist/', { headers: {Authorization: "Token "+localStorage.getItem('token')}, data: {product_id:product_id}})
+    axios.delete(`${DOMAIN}/api/wishlist/`, { headers: {Authorization: "Token "+localStorage.getItem('token')}, data: {product_id:product_id}})
     .then(
         dispatch(deleteWishlistItemSuccess(product_id))
     )

@@ -3,6 +3,7 @@ import Rating from '@material-ui/lab/Rating';
 import React from 'react'
 import { useDispatch } from 'react-redux';
 import { addToCartFromWishlist, deleteWishlistItem } from '../../redux'
+import { DOMAIN } from '../../settings'
 const useStyles = makeStyles(theme=>({
         mar: {marginTop: theme.spacing(2)},
         pad: { padding : theme.spacing(1) },
@@ -28,7 +29,7 @@ function WishlistItem({ data }) {
             <Paper variant="outlined" className={`${classes.pad} ${classes.fillHeight}`}>
             <Grid container spacing={2}>
                 <Grid container justify="center" alignItems="center" item xs={12} md={4} xl={3}>
-                    <img className={classes.img} alt={data.name} src={"http://127.0.0.1:8000"+data.image} />
+                    <img className={classes.img} alt={data.name} src={DOMAIN+data.image} />
                 </Grid>
                 <Grid item xs={12} md={6} xl={7}>
                     <Typography variant="h3">{data.name}</Typography>
