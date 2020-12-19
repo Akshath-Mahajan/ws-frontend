@@ -13,6 +13,7 @@ import ContactUs from './components/ContactUs/ContactUs'
 import New from './components/NewProducts/New'
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
+import Product from './components/Product/Product'
 // import theme from './baseTheme'
 function App() {
     return (
@@ -32,6 +33,9 @@ function App() {
                     <Profile />
                 </Route>
 
+                <Route exact path="/product/:id">
+                    <Product />
+                </Route>
                 <Route exact path="/trending/">
                     <Trending />
                 </Route>

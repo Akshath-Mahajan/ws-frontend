@@ -6,6 +6,7 @@ import AddIcon from '@material-ui/icons/Add';
 import { useDispatch } from 'react-redux';
 import { DOMAIN } from '../../settings'
 import { updateCartItems, deleteCartItems } from '../../redux'
+import { Link } from 'react-router-dom';
 const useStyles = makeStyles(theme=>({
         mar: {margin: theme.spacing(1)},
         pad: { padding : theme.spacing(1) },
@@ -17,7 +18,8 @@ const useStyles = makeStyles(theme=>({
                 width:'auto',
                 height: 275,
             }
-        }
+        },
+        link: {textDecoration: 'None', color: 'initial'}
     })
 )
 function CartItem({ data }) {
@@ -28,12 +30,15 @@ function CartItem({ data }) {
     const removeItem = () => { dispatch(deleteCartItems(data.product.id)) }
     return (
         <Grid item xs={12}>
+            
             <Paper variant="outlined" className={classes.pad}>
             <Grid container spacing={4}>
                 <Grid item container justify="center" alignItems="center" xs={12} sm={4} xl={3}>
-                    <Grid item container xs={12} justify="center" alignItems="center">
-                        <img className={classes.img} alt={data.product.name} src={DOMAIN+data.product.image} />
-                    </Grid>
+                    <Link className={classes.link} to={`/product/${data.product.id}`}>
+                        <Grid item container xs={12} justify="center" alignItems="center">
+                            <img className={classes.img} alt={data.product.name} src={DOMAIN+data.product.image} />
+                        </Grid>
+                    </Link>
                     <Grid container item xs={12}>
                         <Grid item xs={3} container alignItems="center" justify="center">
                             <Grid item>
@@ -60,11 +65,13 @@ function CartItem({ data }) {
                     </Grid>
                 </Grid>
                 <Grid item md={6} xl={7}>
-                    <Typography variant="h3">{data.product.name}</Typography>
-                    <Typography variant="subtitle1">{data.product.description}</Typography>
-                    <Typography variant="h5">₹ {data.product.price * data.quantity}</Typography>
-                    <Rating name="read-only" precision={0.1} value={data.product.avg_rating*5/100} readOnly />
-                    <Typography variant="subtitle1">Category: {data.product.category.name}</Typography>
+                    <Link className={classes.link} to={`/product/${data.product.id}`}>
+                        <Typography variant="h3">{data.product.name}</Typography>
+                        <Typography variant="subtitle1">{data.product.description}</Typography>
+                        <Typography variant="h5">₹ {data.product.price * data.quantity}</Typography>
+                        <Rating name="read-only" precision={0.1} value={data.product.avg_rating*5/100} readOnly />
+                        <Typography variant="subtitle1">Category: {data.product.category.name}</Typography>
+                    </Link>
                     <Button onClick={removeItem} color="secondary" variant="contained" fullWidth> Remove </Button>
                 </Grid>
             </Grid>
