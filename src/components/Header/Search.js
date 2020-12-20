@@ -1,6 +1,7 @@
-import { fade, InputBase, makeStyles } from '@material-ui/core'
+import { Button, fade, InputAdornment, makeStyles, TextField } from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search';
-import React from 'react'
+import React, { useState } from 'react'
+import { Link, useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     outerRoot:{ // To push the right icon to right most side
@@ -27,21 +28,24 @@ const useStyles = makeStyles((theme) => ({
     },
     input:{
         color:'inherit',
-    }
+    },
+    link: {textDecoration: 'None', color:'initial'}
 })
 );
 
 function Search(props) {
     const classes = useStyles()
+    const [q, setQ] = useState(null)
     return (
         <div className={classes.outerRoot}>
-            <div className={classes.root}>
-            <SearchIcon className={classes.icon}/>
-            <InputBase
-            placeholder="Search..."
-            className={classes.input}
-            />
-            </div>
+            <TextField className={classes.root} variant="outlined" fullWidth
+            placeholder="Search.." margin="dense" value={q} onChange={(e) => setQ(e.target.value)}
+            InputProps={{
+                startAdornment: <InputAdornment position="start"><SearchIcon /> </InputAdornment>,
+                endAdornment: <InputAdornment position="end"><Link className={classes.link} to={`/search/${q}`}><Button>Go</Button></Link></InputAdornment>
+            }}
+        />
+        
         </div>
     )
 }

@@ -6,6 +6,7 @@ import { DOMAIN } from '../../settings'
 const useStyles = makeStyles(theme => ({
     pad: {padding: theme.spacing(2)},
     link: {textDecoration: 'None'},
+    img: {height: "275px", maxWidth: '100%'}
     })
 )
 function ProductGridItem({ data }) {
@@ -15,7 +16,7 @@ function ProductGridItem({ data }) {
             <Link className={classes.link} to={`/product/${data.id}`}>
             <Paper variant="outlined" className={classes.pad}>
                 <Grid item align="center">
-                    <img alt={data.name} src={DOMAIN+ data.image} height="275px" />
+                    <img alt={data.name} src={DOMAIN+ data.image} className={classes.img} />
                 </Grid>
                 <Typography variant="h4" align="center">
                     {data.name}

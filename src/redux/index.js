@@ -7,3 +7,5 @@ export { fetchTrendingProducts } from './Trending/actions'
 export { fetchCollectionProducts } from './Collection/actions'
 export { fetchNewProducts } from './NewProducts/actions'
 export { changePane } from './Profile/actions'
+
+export {changePriceRange, changeRating, clearFilters, sortBy, toggleROpen, togglePOpen, toggleSOpen} from './Filters/actions'

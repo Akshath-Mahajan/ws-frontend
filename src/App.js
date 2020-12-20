@@ -14,6 +14,7 @@ import New from './components/NewProducts/New'
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 import Product from './components/Product/Product'
+import SearchQ from './components/SearchQ/SearchQ'
 // import theme from './baseTheme'
 function App() {
     return (
@@ -47,6 +48,9 @@ function App() {
                 </Route>
                 <Route exact path="/contact-us/">
                     <ContactUs />
+                </Route>
+                <Route exact path="/search/:query">
+                    <SearchQ />
                 </Route>
             </BrowserRouter>
         </Provider>

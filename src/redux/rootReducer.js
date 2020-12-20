@@ -6,6 +6,7 @@ import trendingReducer from './Trending/reducer';
 import collectionReducer from './Collection/reducer'
 import newProductsReducer from './NewProducts/reducer';
 import profileReducer from './Profile/reducer'
+import filterReducer from './Filters/reducer'
 const rootReducer = combineReducers({
     user: userReducer,
     cart: cartReducer,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
     collection: collectionReducer,
     new: newProductsReducer,
     profile: profileReducer,
+    filter: filterReducer
 })
 
 

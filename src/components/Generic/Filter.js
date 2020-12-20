@@ -1,35 +1,41 @@
 import { ListItem, ListItemIcon, ListItemText, Slider, Paper, TextField, InputAdornment, makeStyles, Radio, 
     RadioGroup, FormControlLabel, Typography, Collapse, List } from '@material-ui/core'
-import React from 'react'
+import React, { useEffect } from 'react'
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import StarIcon from '@material-ui/icons/Star';
 import ImportExportIcon from '@material-ui/icons/ImportExport';
-import Rating from '@material-ui/lab/Rating';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import LayersClearIcon from '@material-ui/icons/LayersClear';
+import {useDispatch, useSelector} from 'react-redux'
+import { changePriceRange, sortBy, changeRating, toggleROpen, togglePOpen, toggleSOpen, clearFilters } from '../../redux/';
 const useStyles = makeStyles((theme)=>({
     nested: {paddingLeft: theme.spacing(6)},
     fullWidth: {width:'100%'}
 }))
 function Filter() {
-    const [range, setRange] = React.useState([0, 10000])
+    const dispatch = useDispatch()
+    useEffect(()=>{dispatch(clearFilters())},[])
+    const rOpen = useSelector(state => state.filter.rOpen) //rating
+    const pOpen = useSelector(state => state.filter.pOpen) //price
+    const sOpen = useSelector(state => state.filter.sOpen) //sort
+    const rating = useSelector(state=>state.filter.rating)
+    const order = useSelector(state=>state.filter.sortBy)
+    const classes = useStyles()
+    const setRating=(newRating) => { dispatch(changeRating(newRating)) }
+    const setOrder = (order) => {dispatch(sortBy(order))}
+    const range = useSelector(state => state.filter.priceRange)
     const changeRange = (event, newValue) => { 
         if(newValue[1] >= newValue[0])
-        setRange(newValue)
+            dispatch(changePriceRange(newValue))
         else
-        setRange([newValue[0], newValue[0]])
+            dispatch(changePriceRange([newValue[0], newValue[0]]))
     }
-    const [rOpen, setROpen] = React.useState(false) //r = rating
-    const [pOpen, setPOpen] = React.useState(true) //p = price
-    const [sOpen, setSOpen] = React.useState(false) //s = sort
     const handleExpandClick = (param) => {
-        if(param==='r'){setROpen(!rOpen)}
-        if(param==='p'){setPOpen(!pOpen)}
-        if(param==='s'){setSOpen(!sOpen)}
+        if(param==='r'){dispatch(toggleROpen())}
+        if(param==='p'){dispatch(togglePOpen())}
+        if(param==='s'){dispatch(toggleSOpen())}
     }
-    const [rating, setRating] = React.useState(0)
-    const [order, setOrder] = React.useState(0)
-    const classes = useStyles()
     return (
         <Paper className={classes.fullWidth}>
             {/* Order By */}
@@ -40,12 +46,12 @@ function Filter() {
             </ListItem>
             <Collapse in={sOpen} timeout="auto" unmountOnExit>
                 <RadioGroup className={classes.nested}>
-                    <FormControlLabel value="1" control={<Radio size="small" checked={1===order}/>} onClick={()=>setOrder(1)} label={<Typography variant="body1">Name A-Z </Typography>} />
-                    <FormControlLabel value="2" control={<Radio size="small" checked={2===order}/>} onClick={()=>setOrder(2)} label={<Typography variant="body1">Name Z-A </Typography>} />
-                    <FormControlLabel value="3" control={<Radio size="small" checked={3===order}/>} onClick={()=>setOrder(3)} label={<Typography variant="body1">Rating Highest to Lowest</Typography>} />    
-                    <FormControlLabel value="4" control={<Radio size="small" checked={4===order}/>} onClick={()=>setOrder(4)}label={<Typography variant="body1"> Rating Lowest to Highest</Typography>} />
-                    <FormControlLabel value="5" control={<Radio size="small" checked={5===order}/>} onClick={()=>setOrder(5)}label={<Typography variant="body1"> Price Highest to Lowest</Typography>} />
-                    <FormControlLabel value="6" control={<Radio size="small" checked={6===order}/>} onClick={()=>setOrder(6)}label={<Typography variant="body1"> Price Lowest to Highest</Typography>} />
+                    <FormControlLabel value="name-1" control={<Radio size="small" checked={"name-1"===order}/>} onClick={()=>setOrder("name-1")} label={<Typography variant="body1">Name A-Z </Typography>} />
+                    <FormControlLabel value="name-2" control={<Radio size="small" checked={"name-2"===order}/>} onClick={()=>setOrder("name-2")} label={<Typography variant="body1">Name Z-A </Typography>} />
+                    <FormControlLabel value="rating-1" control={<Radio size="small" checked={"rating-1"===order}/>} onClick={()=>setOrder("rating-1")} label={<Typography variant="body1">Rating Lowest to Highest</Typography>} />    
+                    <FormControlLabel value="rating-2" control={<Radio size="small" checked={"rating-2"===order}/>} onClick={()=>setOrder("rating-2")}label={<Typography variant="body1"> Rating Highest to Lowest</Typography>} />
+                    <FormControlLabel value="price-1" control={<Radio size="small" checked={"price-1"===order}/>} onClick={()=>setOrder("price-1")}label={<Typography variant="body1"> Price Lowest to Highest</Typography>} />
+                    <FormControlLabel value="price-2" control={<Radio size="small" checked={"price-2"===order}/>} onClick={()=>setOrder("price-2")}label={<Typography variant="body1"> Price Highest to Lowest</Typography>} />
                 </RadioGroup>
             </Collapse>
             {/* Price Filter */}
@@ -67,12 +73,12 @@ function Filter() {
                 </ListItem>
                 <ListItem>
                     <TextField type="number" placeholder="Min" variant="outlined" 
-                        value={range[0]} onChange={(event)=>{ setRange( [event.target.value, range[1]]) }}
+                        value={range[0]} onChange={(event)=>{ dispatch(changePriceRange( [event.target.value, range[1]])) }}
                         InputProps={{
                         startAdornment: (<InputAdornment position="start">₹</InputAdornment>),
                     }}/>
                     <TextField type="number" placeholder="Max" variant="outlined" 
-                        value={range[1]} onChange={(event)=>{ setRange( [range[0], event.target.value]) }}
+                        value={range[1]} onChange={(event)=>{ dispatch(changePriceRange( [range[0], event.target.value])) }}
                         InputProps={{
                         startAdornment: (<InputAdornment position="start">₹</InputAdornment>),
                     }}/>
@@ -90,8 +96,14 @@ function Filter() {
                     <FormControlLabel value="3" control={<Radio size="small" checked={3===rating}/>} onClick={()=>setRating(3)} label={<Typography variant="body1">3 and above </Typography>} />
                     <FormControlLabel value="2" control={<Radio size="small" checked={2===rating}/>} onClick={()=>setRating(2)} label={<Typography variant="body1">2 and above </Typography>} />    
                     <FormControlLabel value="1" control={<Radio size="small" checked={1===rating}/>} onClick={()=>setRating(1)}label={<Typography variant="body1">1 and above </Typography>} />
+                    <FormControlLabel value="0" control={<Radio size="small" checked={0===rating}/>} onClick={()=>setRating(0)}label={<Typography variant="body1">0 and above </Typography>} />
                 </RadioGroup>
             </Collapse>
+            {/* Clear Filters */}
+            <ListItem button onClick={()=>{dispatch(clearFilters())}}>
+                <ListItemIcon> <LayersClearIcon/> </ListItemIcon>
+                <ListItemText primaryTypographyProps={{variant:'button'}} primary={'Clear Filters'} />
+            </ListItem>
         </Paper>
     )
 }

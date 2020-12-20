@@ -1,0 +1,7 @@
+export const SORT_BY = "SORT_BY"
+export const CHANGE_PRICE_RANGE = "CHANGE_PRICE_RANGE"
+export const CHANGE_RATING = "CHANGE_RATING"
+export const CLEAR_FILTERS = "CLEAR_FILTERS"
+export const TOGGLE_R_OPEN = "TOGGLE_R_OPEN"
+export const TOGGLE_P_OPEN = "TOGGLE_P_OPEN"
+export const TOGGLE_S_OPEN = "TOGGLE_S_OPEN"
