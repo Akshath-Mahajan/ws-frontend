@@ -2,6 +2,7 @@ import { LOGIN_ATTEMPT, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT } from './types'
 
 const initialState = {
     token: localStorage.getItem('token'),
+    name: localStorage.getItem('name'),
     login_status: 0,
 }
 
@@ -15,17 +16,21 @@ const userReducer = (state = initialState, action) => {
         }
         case LOGIN_SUCCESS: {
             localStorage.setItem('token', action.payload.token)
+            localStorage.setItem('name', action.payload.full_name)
             return {
                 ...state,
                 token: action.payload.token,
+                name: action.payload.full_name,
                 login_status: 1
             }
         }
         case LOGOUT: {
             localStorage.removeItem('token')
+            localStorage.removeItem('name')
             return {
                 ...state,
                 token: localStorage.getItem('token'),
+                name: localStorage.getItem('name'),
                 login_status: 0
             }
         }

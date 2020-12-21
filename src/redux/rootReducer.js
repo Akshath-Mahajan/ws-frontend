@@ -7,6 +7,7 @@ import collectionReducer from './Collection/reducer'
 import newProductsReducer from './NewProducts/reducer';
 import profileReducer from './Profile/reducer'
 import filterReducer from './Filters/reducer'
+import productReducer from './Product/reducer';
 const rootReducer = combineReducers({
     user: userReducer,
     cart: cartReducer,
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
     collection: collectionReducer,
     new: newProductsReducer,
     profile: profileReducer,
-    filter: filterReducer
+    filter: filterReducer,
+    product: productReducer,
 })
 
 

@@ -9,3 +9,4 @@ export { fetchNewProducts } from './NewProducts/actions'
 export { changePane } from './Profile/actions'
 
 export {changePriceRange, changeRating, clearFilters, sortBy, toggleROpen, togglePOpen, toggleSOpen} from './Filters/actions'
+export { fetchProductDetails, changeProductComment, changeProductRating, saveReview, editReview, deleteReview, addToCart } from './Product/actions'
