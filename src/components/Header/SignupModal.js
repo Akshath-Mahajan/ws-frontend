@@ -1,8 +1,8 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, makeStyles, 
     OutlinedInput, Typography, useMediaQuery, useTheme } from '@material-ui/core'
-import { loginAttempt } from '../../redux/'
-import React, {useState} from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { signupAttempt } from '../../redux'
 
 const useStyles = makeStyles((theme)=>({
     margin:{
@@ -10,14 +10,14 @@ const useStyles = makeStyles((theme)=>({
     }
 })
 )
-function LoginModal({open, handleClose}) {
+
+function SignupModal({open, handleClose}) {
     const classes = useStyles()
     const [email, setEmail] = useState("")
     const [pass, setPass] = useState("")
     const theme = useTheme()
     const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
     const dispatch = useDispatch()
-    const login_status = useSelector(state => state.user.login_status)
     return (
         <Dialog
         fullScreen={fullScreen}
@@ -25,33 +25,28 @@ function LoginModal({open, handleClose}) {
         onClose = {handleClose}
         >
             <DialogTitle>
-                Login
+                Signup
             </DialogTitle>
             <DialogContent>
                 <FormControl fullWidth margin="dense" variant="outlined">
-                    <OutlinedInput error={login_status===-1} onChange={(e)=>setEmail(e.target.value)} value={email} color="primary" type="email" placeholder="Email" fullWidth />
+                    <OutlinedInput error={false} onChange={(e)=>setEmail(e.target.value)} value={email} color="primary" type="email" placeholder="Email" fullWidth />
                 </FormControl>
                 <FormControl fullWidth margin="dense" variant="outlined">
-                    <OutlinedInput error={login_status===-1} onChange={(e)=>setPass(e.target.value)} value={pass} type="password" color="primary" placeholder="Password" fullWidth/>
-                </FormControl>
-                <FormControl fullWidth margin="dense" variant="outlined">
-                    <Typography variant="subtitle2" align="center">
-                        {login_status===-1?"INVALID USERNAME AND PASSWORD":""}
-                    </Typography>
+                    <OutlinedInput error={false} onChange={(e)=>setPass(e.target.value)} value={pass} type="password" color="primary" placeholder="Password" fullWidth/>
                 </FormControl>
             <DialogActions>
                 <Button className={classes.margin} variant="contained" color="primary" 
                 autoFocus fullWidth 
-                onClick={()=>dispatch(loginAttempt({email: email, password:pass}))}>
-                    Login
+                onClick={()=>dispatch(signupAttempt({email: email, password:pass}))}>
+                    Signup
                 </Button>
             </DialogActions>
             <Button fullWidth variant="outlined">
-                Don't have an account? Signup
+                Already have an account? Login
             </Button>  
             </DialogContent>
         </Dialog>
     )
 }
 
-export default LoginModal
+export default SignupModal

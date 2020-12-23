@@ -4,10 +4,14 @@ import PersonIcon from '@material-ui/icons/Person';
 import ShopIcon from '@material-ui/icons/Shop';
 import CreditCardIcon from '@material-ui/icons/CreditCard';
 import HelpIcon from '@material-ui/icons/Help';
+
 import ProfileInfo from './ProfileInfo'
 import DeliveryAddress from './DeliveryAddress'
+import PasswordReset from './PasswordReset'
+
 import { useSelector, useDispatch } from 'react-redux'
 import { changePane } from '../../redux'
+import Orders from './Orders';
 const useStyles = makeStyles((theme) => ({
 	root: {
 		flexGrow: 1,
@@ -39,10 +43,10 @@ function Profile() {
 	const panes = {
 		0: <ProfileInfo />,
 		1: <DeliveryAddress />,
-		2: <ProfileInfo />,
-		3: <ProfileInfo />,
-		4: <ProfileInfo />,
-		5: <ProfileInfo />,
+		2: <PasswordReset />,
+		3: <Orders type={0} />,
+		4: <Orders type={1} />,
+		5: <Orders type={2} />,
 		6: <ProfileInfo />,
 		7: <ProfileInfo />,
 		8: <ProfileInfo />,

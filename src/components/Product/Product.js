@@ -71,16 +71,22 @@ function ImageSlider({width}) {
         slidesToScroll: 1,
         initialSlide: 0,
     }
-    return (
-        <div style={{width: width}}>
-        <Slider {...settings}>
-            <div>
-                <img alt={product.name} src={DOMAIN+product.image} height="500" />
+    if(imgs)
+        return (
+            <div style={{width: width}}>
+            <Slider {...settings}>
+                <div>
+                    <img alt={product.name} src={DOMAIN+product.image} height="500" />
+                </div>
+                {
+                imgs.map(item =><div><img key={item.id} alt={product.name} src={DOMAIN + item.image} height="500" /> </div>)
+                }
+            </Slider>
             </div>
-            {
-            imgs.map(item =><div><img key={item.id} alt={product.name} src={DOMAIN + item.image} height="500" /> </div>)
-            }
-        </Slider>
+        )
+    return (
+        <div>
+            <img alt={product.name} src={DOMAIN+product.image} height="500" />
         </div>
     )
 }

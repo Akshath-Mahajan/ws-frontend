@@ -32,7 +32,11 @@ const loginAttempt = (data) => (dispatch) => {
     .catch(err=>console.log(err))
 }
 
+const signupAttempt = (data) => (dispatch) => {
+    console.log('attempted signup')
+}
 
 export { loginAttempt }
 export { loginFail }
 export { loginSuccess }
+export {signupAttempt}
