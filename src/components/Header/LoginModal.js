@@ -1,6 +1,6 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, makeStyles, 
     OutlinedInput, Typography, useMediaQuery, useTheme } from '@material-ui/core'
-import { loginAttempt } from '../../redux/'
+import { loginAttempt, closeLoginModal, openSignupModal } from '../../redux/'
 import React, {useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -10,23 +10,22 @@ const useStyles = makeStyles((theme)=>({
     }
 })
 )
-function LoginModal({open, handleClose}) {
+function LoginModal() {
     const classes = useStyles()
     const [email, setEmail] = useState("")
     const [pass, setPass] = useState("")
     const theme = useTheme()
     const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
+    
     const dispatch = useDispatch()
     const login_status = useSelector(state => state.user.login_status)
+    const open = useSelector(state=>state.user.login_modal)
+    const handleClose = () => { dispatch(closeLoginModal()) }
+    const switchModals = ()=> { dispatch(openSignupModal()) }
+    const attemptLogin = () => { dispatch(loginAttempt({ email: email, password:pass })) }
     return (
-        <Dialog
-        fullScreen={fullScreen}
-        open = {open}
-        onClose = {handleClose}
-        >
-            <DialogTitle>
-                Login
-            </DialogTitle>
+        <Dialog fullScreen={fullScreen} open={open} onClose={handleClose}>
+            <DialogTitle> Login </DialogTitle>
             <DialogContent>
                 <FormControl fullWidth margin="dense" variant="outlined">
                     <OutlinedInput error={login_status===-1} onChange={(e)=>setEmail(e.target.value)} value={email} color="primary" type="email" placeholder="Email" fullWidth />
@@ -40,13 +39,12 @@ function LoginModal({open, handleClose}) {
                     </Typography>
                 </FormControl>
             <DialogActions>
-                <Button className={classes.margin} variant="contained" color="primary" 
-                autoFocus fullWidth 
-                onClick={()=>dispatch(loginAttempt({email: email, password:pass}))}>
+                <Button className={classes.margin} variant="contained" 
+                color="primary" autoFocus fullWidth onClick={attemptLogin}>
                     Login
                 </Button>
             </DialogActions>
-            <Button fullWidth variant="outlined">
+            <Button fullWidth variant="outlined" onClick={switchModals}>
                 Don't have an account? Signup
             </Button>  
             </DialogContent>

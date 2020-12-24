@@ -1,11 +1,10 @@
-const { CHANGE_PANE } = require("./types")
+const { CHANGE_PANE, PI_EDIT_EMAIL, PI_EDIT_MOBILE, SAVE_PI } = require("./types")
 
 const initialState = {
-    profileInfo: {
-        fname: "", lname: "", mobile: "", email: "",
-        editing: {fname: false, lname: false, mobile: false, email: false}
-    },
-    deliveryAddress: {addresses: []},
+    deliveryAddress: {addresses: [], editingAddressIdx: -1, editingAddressId: -1},
+    passwordReset: {password:"", newPassword: "", confirmNewPassword: ""},
+    orders: {orders: [], openOrderId: -1, openOrderIdx: -1},
+    payments: {payments: [], refunds:[]},
     pane: 0,
 }
 

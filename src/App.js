@@ -15,6 +15,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Product from './components/Product/Product'
 import SearchQ from './components/SearchQ/SearchQ'
+import AuthRoute from './AuthRoute'
 // import theme from './baseTheme'
 function App() {
     return (
@@ -24,15 +25,15 @@ function App() {
                 <Route exact path="/">
                     <Home />
                 </Route>
-                <Route exact path="/cart/">
+                <AuthRoute exact path="/cart/">
                     <Cart />
-                </Route>
-                <Route exact path="/wishlist/">
+                </AuthRoute>
+                <AuthRoute exact path="/wishlist/">
                     <Wishlist />
-                </Route>
-                <Route exact path="/profile/">
+                </AuthRoute>
+                <AuthRoute exact path="/profile/">
                     <Profile />
-                </Route>
+                </AuthRoute>
 
                 <Route exact path="/product/:id">
                     <Product />

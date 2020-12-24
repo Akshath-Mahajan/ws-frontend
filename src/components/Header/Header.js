@@ -1,11 +1,12 @@
 import { AppBar, Button, Hidden, makeStyles, Toolbar, Typography } from '@material-ui/core';
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Drawer from './Drawer';
 import Search from './Search';
 import DropdownMenu from './DropdownMenu';
 import LoginModal from './LoginModal';
-import Modal from './Modal'
+import { openLoginModal } from '../../redux/User/actions';
+import SignupModal from './SignupModal';
 const useStyles = makeStyles((theme) => ({
 	mgnR:{
 		marginRight: theme.spacing(3)
@@ -17,10 +18,10 @@ const useStyles = makeStyles((theme) => ({
 )
 function Header(props) {
 	const classes=useStyles()
+	const dispatch = useDispatch()
 	const token = useSelector(state => state.user.token)
-	const [loginOpen, setLoginOpen] = useState(false)
-	const handleClickOpen = () => {setLoginOpen(true)}
-    const handleClose = () => {setLoginOpen(false)}
+	const handleClickOpen = () => { dispatch(openLoginModal()) }
+    // const handleClose = () => {setLoginOpen(false)}
 	return (
 	<React.Fragment>
 	<AppBar>
@@ -31,7 +32,8 @@ function Header(props) {
 			</Hidden>
 			<Search />
 			{token?<DropdownMenu />:<Button variant="contained" onClick={handleClickOpen}>Login</Button>}
-			<Modal isSignup={false} open={loginOpen} handleClose={handleClose}/>
+			<SignupModal />
+			<LoginModal />
 		</Toolbar>
 	</AppBar>
 	<Toolbar />

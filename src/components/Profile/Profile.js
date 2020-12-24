@@ -8,10 +8,12 @@ import HelpIcon from '@material-ui/icons/Help';
 import ProfileInfo from './ProfileInfo'
 import DeliveryAddress from './DeliveryAddress'
 import PasswordReset from './PasswordReset'
-
+import Payments from './Payments'
+import Orders from './Orders';
+import Refunds from './Refunds';
 import { useSelector, useDispatch } from 'react-redux'
 import { changePane } from '../../redux'
-import Orders from './Orders';
+import HelpPane from './HelpPane';
 const useStyles = makeStyles((theme) => ({
 	root: {
 		flexGrow: 1,
@@ -35,10 +37,9 @@ function Profile() {
 		['Live Orders', 4, null],
 		['Delivered Orders', 5, null],
 		['Payments', -1, <CreditCardIcon color="primary" />],
-		['All Transactions', 6, null],
-		['Payments Made', 7, null],
-		['Refunds', 8, null],
-		['Help', -1, <HelpIcon color="primary" />],
+		['Payments Made', 6, null],
+		['Refunds', 7, null],
+		['Help', 8, <HelpIcon color="primary" />],
 	]
 	const panes = {
 		0: <ProfileInfo />,
@@ -47,9 +48,9 @@ function Profile() {
 		3: <Orders type={0} />,
 		4: <Orders type={1} />,
 		5: <Orders type={2} />,
-		6: <ProfileInfo />,
-		7: <ProfileInfo />,
-		8: <ProfileInfo />,
+		6: <Payments />,
+		7: <Refunds />,
+		8: <HelpPane />
 	}
 	const activeIdx = useSelector(state=>state.profile.pane)
 	const dispatch = useDispatch()
@@ -62,7 +63,7 @@ function Profile() {
 					{
 						settings.map((item, idx)=>(
 							<ListItem key={idx} disableTouchRipple={item[2]?true:false} button
-							onClick={() => {if(!item[2]){ dispatch(changePane(item[1])) } }}
+							onClick={() => {if(item[1]!==-1){ dispatch(changePane(item[1])) } }}
 							>
 								<ListItemIcon>{item[2]}</ListItemIcon>
 								{

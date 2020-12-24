@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { LOGOUT, LOGIN_FAIL, LOGIN_SUCCESS, LOGIN_ATTEMPT } from './types'
+import { LOGOUT, LOGIN_FAIL, LOGIN_SUCCESS, LOGIN_ATTEMPT, OPEN_LOGIN_MODAL, CLOSE_LOGIN_MODAL, OPEN_SIGNUP_MODAL, CLOSE_SIGNUP_MODAL, SIGNUP_SUCCESS, SIGNUP_FAIL } from './types'
 import { DOMAIN } from '../../settings'
 const logout = () => {
     return {
@@ -33,10 +33,36 @@ const loginAttempt = (data) => (dispatch) => {
 }
 
 const signupAttempt = (data) => (dispatch) => {
-    console.log('attempted signup')
+    axios.post(DOMAIN+"/api/signup/", data)
+    .then(res=> {
+        dispatch({type: SIGNUP_SUCCESS})
+    })
+    .catch(err=> dispatch({type: SIGNUP_FAIL}))
 }
 
 export { loginAttempt }
 export { loginFail }
 export { loginSuccess }
 export {signupAttempt}
+
+const openLoginModal = () => {
+    return {
+        type: OPEN_LOGIN_MODAL
+    }
+}
+const closeLoginModal = () => {
+    return {
+        type: CLOSE_LOGIN_MODAL
+    }
+}
+const openSignupModal = () => {
+    return {
+        type: OPEN_SIGNUP_MODAL
+    }
+}
+const closeSignupModal = ()=>{
+    return {
+        type: CLOSE_SIGNUP_MODAL
+    }
+}
+export {openLoginModal, openSignupModal, closeLoginModal, closeSignupModal}
