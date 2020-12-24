@@ -6,16 +6,35 @@ import { DOMAIN } from '../../settings';
 import Axios from 'axios'
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-function Address({data, editing}){
-    const [open, setOpen] = React.useState(false)
-    const handleClick = () => {setOpen(!open)}
+import DoneIcon from '@material-ui/icons/Done';
+function Address({data, edit}){
+    console.log("Address:", data)
+    const [open, setOpen] = React.useState(edit || false)
+    const [editing, setEditing] = React.useState(edit || false)
+    const handleClick = () => {
+        setOpen(!open)
+        if(editing){setEditing(false)}
+    }
+    const toggleEditing = () => {setEditing(!editing)}
     const editClick = (e) => {
         e.stopPropagation()
-        console.log("editing")
+        setOpen(true)
+        toggleEditing()
     }
+    const saveClick = (e) => {
+        e.stopPropagation()
+        toggleEditing()
+        console.log('saved')
+    }
+
     const deleteClick = (e)=>{
         e.stopPropagation()
-        console.log("deleting")
+        Axios.delete(DOMAIN+"/api/address", {
+            headers: {Authorization: "Token "+localStorage.getItem('token')},
+            data: {
+                pk: data.id
+            }
+          });
     } 
     return (
     <Paper variant="outlined" style={{width: '100%', marginBottom: '12px'}}>
@@ -23,7 +42,7 @@ function Address({data, editing}){
             <ListItemText>
                 <Typography button><strong>Name:</strong> {data.name}</Typography>
             </ListItemText>
-            <IconButton onClick={editClick}> <EditIcon/> </IconButton>
+            <IconButton onClick={editing?saveClick:editClick}> {editing?<DoneIcon /> : <EditIcon/>} </IconButton>
             <IconButton onClick={deleteClick}> <DeleteIcon /> </IconButton>
             <IconButton>{open ? <ExpandLess /> : <ExpandMore />}</IconButton>
         </ListItem>
@@ -49,6 +68,7 @@ function Address({data, editing}){
 }
 function DeliveryAddress() {
     const [address, setAddress] = React.useState([])
+    const [form, setForm] = React.useState(false)
     React.useEffect(()=>{
         Axios.get(DOMAIN+'/api/address', {headers: {Authorization: "Token "+localStorage.getItem('token')}})
         .then(res => {
@@ -64,11 +84,18 @@ function DeliveryAddress() {
             :
             <Typography variant="h4" align="center">No address found matching this account!</Typography>
             }
-            <Paper variant="outlined" style={{width: '100%'}}>
-                <Button color="primary" variant="contained" fullWidth>
-                    Add more
-                </Button>
-            </Paper>
+            
+                {
+                    form?
+                <Address data={{}} edit />    
+                :
+                <Paper variant="outlined" style={{width: '100%'}}>
+                    <Button color="primary" variant="contained" fullWidth onClick={()=>setForm(true)}>
+                        Add more
+                    </Button>
+                </Paper>
+                }
+            
         </Grid>
     )
 }
