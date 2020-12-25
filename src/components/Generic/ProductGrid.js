@@ -40,7 +40,7 @@ function ProductGrid({ data }) {
                 {
                     sort_by_key([...data], sortBy).map(
                         (item, index) => {
-                        if(item.avg_rating >= rating && priceRange[1] >= item.price && item.price >= priceRange[0])
+                        if(item.avg_rating >= (rating*20) && priceRange[1] >= item.price && item.price >= priceRange[0])
                             return <ProductGridItem key={index} data={item} />
                     })
                 }
