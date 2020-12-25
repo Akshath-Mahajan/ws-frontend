@@ -5,7 +5,7 @@ export { fetchWishlistItems, addToCartFromWishlist, deleteWishlistItem } from '.
 export { fetchTrendingProducts } from './Trending/actions'
 export { fetchCollectionProducts } from './Collection/actions'
 export { fetchNewProducts } from './NewProducts/actions'
-export { changePane } from './Profile/actions'
+export { changePane, fetchAddress, openAddressForm, deleteAddress, saveAddress, cancelNewAddress } from './Profile/actions'
 
 export {changePriceRange, changeRating, clearFilters, sortBy, toggleROpen, togglePOpen, toggleSOpen} from './Filters/actions'
 export { fetchProductDetails, changeProductComment, changeProductRating, saveReview, editReview, deleteReview, addToCart } from './Product/actions'
