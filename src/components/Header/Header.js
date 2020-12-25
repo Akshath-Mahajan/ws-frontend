@@ -31,9 +31,13 @@ function Header(props) {
 				<Typography variant="h6" component="div" className={classes.mgnR}>Company Name</Typography>
 			</Hidden>
 			<Search />
-			{token?<DropdownMenu />:<Button variant="contained" onClick={handleClickOpen}>Login</Button>}
-			<SignupModal />
-			<LoginModal />
+			{token?<DropdownMenu />:
+			<>
+				<Button variant="contained" onClick={handleClickOpen}>Login</Button>
+				<SignupModal />
+				<LoginModal />
+			</>
+			}
 		</Toolbar>
 	</AppBar>
 	<Toolbar />

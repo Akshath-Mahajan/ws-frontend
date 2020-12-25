@@ -1,5 +1,9 @@
 import axios from 'axios'
-import { LOGOUT, LOGIN_FAIL, LOGIN_SUCCESS, LOGIN_ATTEMPT, OPEN_LOGIN_MODAL, CLOSE_LOGIN_MODAL, OPEN_SIGNUP_MODAL, CLOSE_SIGNUP_MODAL, SIGNUP_SUCCESS, SIGNUP_FAIL } from './types'
+import { LOGOUT, LOGIN_FAIL, LOGIN_SUCCESS, LOGIN_ATTEMPT, 
+    OPEN_LOGIN_MODAL, CLOSE_LOGIN_MODAL, OPEN_SIGNUP_MODAL, 
+    CLOSE_SIGNUP_MODAL, SIGNUP_SUCCESS, SIGNUP_FAIL,
+    SET_DETAILS
+} from './types'
 import { DOMAIN } from '../../settings'
 const logout = () => {
     return {
@@ -66,3 +70,11 @@ const closeSignupModal = ()=>{
     }
 }
 export {openLoginModal, openSignupModal, closeLoginModal, closeSignupModal}
+
+const setDetials = (data) => ({
+    type: SET_DETAILS,
+    payload: data
+}
+)
+
+export {setDetials}

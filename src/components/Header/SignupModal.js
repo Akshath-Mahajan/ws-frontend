@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { closeSignupModal, openLoginModal, signupAttempt } from '../../redux'
 import { CLEAR_SIGNUP, RESET_SIGNUP_TEXT, SIGNUP_INVALID_EMAIL, SIGNUP_INVALID_PHONE, SIGNUP_INVALID_PW } from '../../redux/User/types'
-
+import {ValidateEmail, ValidatePhone, ValidatePW } from '../../formValidators' 
 const useStyles = makeStyles((theme)=>({
     margin:{
         marginBottom: theme.spacing(2),
@@ -23,9 +23,6 @@ function SignupModal() {
     const open = useSelector(state=>state.user.signup_modal)
     const handleClose = () => { dispatch(closeSignupModal()) }
     const switchModals = ()=> { dispatch(openLoginModal()) }
-    const ValidateEmail = (mail) => (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(mail))
-    const ValidatePhone = (mobile) => (/^\d{10}$/.test(mobile))
-    const ValidatePW = (pw) => (pw.length > 7)
     
     const attemptSignup = ()=> {
         dispatch({type: CLEAR_SIGNUP})

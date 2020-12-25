@@ -1,1 +1,1 @@
-export const DOMAIN = "https://webshopbackendtest.herokuapp.com"
+export const DOMAIN = "http://127.0.0.1:8000"

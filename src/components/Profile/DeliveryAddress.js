@@ -8,7 +8,6 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import DoneIcon from '@material-ui/icons/Done';
 function Address({data, edit}){
-    console.log("Address:", data)
     const [open, setOpen] = React.useState(edit || false)
     const [editing, setEditing] = React.useState(edit || false)
     const handleClick = () => {

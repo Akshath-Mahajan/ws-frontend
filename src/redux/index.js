@@ -1,4 +1,4 @@
-export { loginAttempt, signupAttempt, logout, openLoginModal, openSignupModal, closeLoginModal, closeSignupModal  } from './User/actions'
+export { loginAttempt, signupAttempt, logout, openLoginModal, openSignupModal, closeLoginModal, closeSignupModal, setDetials } from './User/actions'
 export { fetchCartItems, updateCartItems, deleteCartItems } from './Cart/actions'
 export { fetchWishlistItems, addToCartFromWishlist, deleteWishlistItem } from './Wishlist/actions'
 

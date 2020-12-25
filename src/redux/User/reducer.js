@@ -1,8 +1,10 @@
-import { CLOSE_LOGIN_MODAL, CLOSE_SIGNUP_MODAL, LOGIN_ATTEMPT, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT, OPEN_LOGIN_MODAL, OPEN_SIGNUP_MODAL, CLEAR_SIGNUP, SIGNUP_INVALID_EMAIL, SIGNUP_INVALID_PHONE, SIGNUP_INVALID_PW, RESET_SIGNUP_TEXT, SIGNUP_SUCCESS } from './types'
+import { CLOSE_LOGIN_MODAL, CLOSE_SIGNUP_MODAL, LOGIN_ATTEMPT, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT, OPEN_LOGIN_MODAL, OPEN_SIGNUP_MODAL, CLEAR_SIGNUP, SIGNUP_INVALID_EMAIL, SIGNUP_INVALID_PHONE, SIGNUP_INVALID_PW, RESET_SIGNUP_TEXT, SIGNUP_SUCCESS, SET_DETAILS } from './types'
 
 const initialState = {
     token: localStorage.getItem('token'),
     name: localStorage.getItem('name'),
+    email: localStorage.getItem('email'),
+    mobile: localStorage.getItem('mobile'),
     login_status: 0,
     login_modal: false,
     signup_modal: false,
@@ -23,10 +25,14 @@ const userReducer = (state = initialState, action) => {
         case LOGIN_SUCCESS: {
             localStorage.setItem('token', action.payload.token)
             localStorage.setItem('name', action.payload.full_name)
+            localStorage.setItem('email', action.payload.email)
+            localStorage.setItem('mobile', action.payload.mobile_no)
             return {
                 ...state,
                 token: action.payload.token,
                 name: action.payload.full_name,
+                email: action.payload.email,
+                mobile: action.payload.mobile_no,
                 login_status: 1,
                 login_modal: false,
                 signup_modal: false,
@@ -35,10 +41,14 @@ const userReducer = (state = initialState, action) => {
         case LOGOUT: {
             localStorage.removeItem('token')
             localStorage.removeItem('name')
+            localStorage.removeItem('email')
+            localStorage.removeItem('mobile')
             return {
                 ...state,
                 token: localStorage.getItem('token'),
-                name: localStorage.getItem('name'),
+                name: "",
+                email: "",
+                mobile: "",
                 login_status: 0
             }
         }
@@ -98,6 +108,17 @@ const userReducer = (state = initialState, action) => {
         }
         case SIGNUP_SUCCESS: return {
             ...state, display_signup_text: true
+        }
+        case SET_DETAILS: {
+            localStorage.setItem('name', action.payload.full_name)
+            localStorage.setItem('email', action.payload.email)
+            localStorage.setItem('mobile', action.payload.mobile_no)
+            return {
+                ...state,
+                name: action.payload.full_name,
+                email: action.payload.email,
+                mobile: action.payload.mobile_no
+            }
         }
         default: return state
     }

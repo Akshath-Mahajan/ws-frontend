@@ -14,3 +14,5 @@ export const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
 export const SIGNUP_FAIL = "SIGNUP_FAIL";
 export const CLEAR_SIGNUP = "CLEAR_SIGNUP";
 export const RESET_SIGNUP_TEXT = "RESET_SIGNUP_TEXT"
+
+export const SET_DETAILS = "SET_DETAILS"
