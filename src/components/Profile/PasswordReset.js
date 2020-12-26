@@ -30,6 +30,7 @@ function PasswordReset() {
             {old_pw: oldPW, new_pw1: newPW1, new_pw2: newPW2}, 
             {headers: {Authorization: "Token "+localStorage.getItem('token')}}
             )
+            .err(setOldErr(true))
         else
             setErr(true)
         

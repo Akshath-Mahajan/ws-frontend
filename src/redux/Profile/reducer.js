@@ -1,4 +1,4 @@
-import { CHANGE_PANE, FETCH_ADDRESS_SUCCESS, DA_OPEN_NEW_ADDRESS_FORM, DA_DELETE_ADDRESS, DA_SAVE_EDIT_ADDRESS, DA_SAVE_NEW_ADDRESS, DA_CANCEL_ADD_NEW } from './types'
+import { CHANGE_PANE, FETCH_ADDRESS_SUCCESS, DA_OPEN_NEW_ADDRESS_FORM, DA_DELETE_ADDRESS, DA_SAVE_EDIT_ADDRESS, DA_SAVE_NEW_ADDRESS, DA_CANCEL_ADD_NEW, O_FETCH_ORDERS_SUCCESS } from './types'
 
 const initialState = {
     deliveryAddress: {addresses: [], addingAddress: false},
@@ -45,6 +45,11 @@ const profileReducer = (state = initialState, action) =>{
         case DA_CANCEL_ADD_NEW: return {
             ...state,
             deliveryAddress: {...state.deliveryAddress, addingAddress: false}
+        }
+
+        case O_FETCH_ORDERS_SUCCESS: return {
+            ...state,
+            orders: {...state.orders, orders: action.payload}
         }
         default: return state
     }

@@ -1,4 +1,4 @@
-import { CHANGE_PANE, FETCH_ADDRESS_SUCCESS, DA_OPEN_NEW_ADDRESS_FORM, DA_SAVE_NEW_ADDRESS, DA_DELETE_ADDRESS, DA_SAVE_EDIT_ADDRESS, DA_CANCEL_ADD_NEW } from './types'
+import { CHANGE_PANE, FETCH_ADDRESS_SUCCESS, DA_OPEN_NEW_ADDRESS_FORM, DA_SAVE_NEW_ADDRESS, DA_DELETE_ADDRESS, DA_SAVE_EDIT_ADDRESS, DA_CANCEL_ADD_NEW, O_FETCH_ORDERS_SUCCESS } from './types'
 import axios from 'axios'
 import { DOMAIN } from '../../settings'
 const changePane = (id) => {
@@ -37,4 +37,15 @@ const deleteAddress = (add_id) => (dispatch) => {
 }
 
 const cancelNewAddress = () => ({type: DA_CANCEL_ADD_NEW})
-export { changePane, fetchAddress, openAddressForm, deleteAddress, saveAddress, cancelNewAddress }
+
+const fetchOrdersSuccess = (data) => {
+    return {
+        type: O_FETCH_ORDERS_SUCCESS,
+        payload: data
+    }
+}
+const fetchOrders = () => (dispatch) => {
+    axios.get(DOMAIN+'/api/user-orders', {headers: {Authorization: "Token "+localStorage.getItem('token')}})
+    .then(res => dispatch(fetchOrdersSuccess(res.data)))
+}
+export { changePane, fetchAddress, openAddressForm, deleteAddress, saveAddress, cancelNewAddress, fetchOrders }
