@@ -31,13 +31,21 @@ const useStyles = makeStyles((theme)=>({
 	linkText: {color: 'inherit', textDecoration:'None'}
 }))
 function Drawer(props) {
+	// const options = [
+	// 	['Home', <HomeIcon />, ''],
+	// 	['Newly Released', <NewReleasesIcon />, '/new/'],
+	// 	['Collection', <CollectionsIcon />, '/collection/'], 
+	// 	['Trending', <WhatshotIcon />, '/trending/'],
+	// 	['Contact Us', <AlternateEmailIcon />, '/contact-us/'], 
+	// 	['About us', <InfoIcon />, '/about-us/'],
+	// ]
 	const options = [
-		['Home', <HomeIcon />, ''],
-		['Newly Released', <NewReleasesIcon />, '/new/'],
-		['Collection', <CollectionsIcon />, '/collection/'], 
-		['Trending', <WhatshotIcon />, '/trending/'],
-		['Contact Us', <AlternateEmailIcon />, '/contact-us/'], 
-		['About us', <InfoIcon />, '/about-us/'],
+		['Home', ''],
+		['Newly Released', '/new/'],
+		['Collection',  '/collection/'], 
+		['Trending', '/trending/'],
+		['Contact Us', '/contact-us/'], 
+		['About us', '/about-us/'],
 	]
 	const [open, setOpen] = useState(false)
 	const toggleDrawer = (status) => setOpen(status)
@@ -61,10 +69,9 @@ function Drawer(props) {
 			<List onClick={() => toggleDrawer(false)} className={classes.widthAdjust}>
 			{
 				options.map((item, index)=>(
-				<Link key={index} to={item[2]} className={classes.linkText}>
+				<Link key={index} to={item[1]} className={classes.linkText}>
 					<ListItem button>
-							<ListItemIcon>{item[1]}</ListItemIcon>
-							<ListItemText primary={item[0]} />
+							<ListItemText style={{textAlign:'center'}} primary={item[0]} />
 					</ListItem>
 				</Link>
 				))

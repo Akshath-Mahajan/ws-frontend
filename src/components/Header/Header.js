@@ -7,12 +7,16 @@ import DropdownMenu from './DropdownMenu';
 import LoginModal from './LoginModal';
 import { openLoginModal } from '../../redux/User/actions';
 import SignupModal from './SignupModal';
+import LOGO from '../../Icons/main.svg'
 const useStyles = makeStyles((theme) => ({
 	mgnR:{
 		marginRight: theme.spacing(3)
 	},
 	mb: {
 		marginBottom: theme.spacing(1)
+	},
+	logo: {
+		height: theme.spacing(5)
 	}
 })
 )
@@ -27,9 +31,7 @@ function Header(props) {
 	<AppBar>
 		<Toolbar>
 			<Drawer />
-			<Hidden xsDown>
-				<Typography variant="h6" component="div" className={classes.mgnR}>Company Name</Typography>
-			</Hidden>
+			
 			<Search />
 			{token?<DropdownMenu />:
 			<>

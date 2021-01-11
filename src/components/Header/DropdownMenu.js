@@ -1,13 +1,14 @@
 import { Button, MenuItem, Avatar, ClickAwayListener, Paper, Grow, Popper, MenuList, makeStyles, Badge, Typography } from '@material-ui/core'
 import React, { useEffect, useRef, useState } from 'react'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import AccountBoxIcon from '@material-ui/icons/AccountBox';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../redux';
 import { Link } from 'react-router-dom';
+import HeartLogo from '../../Icons/Heart.svg'
+import AccountLogo from '../../Icons/Account.svg'
+import CartLogo from '../../Icons/Cart.svg'
+
 const useStyles = makeStyles((theme) => ({
     listWidth: {
         width: 200,
@@ -15,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
             width:150
         }
     },
-    listIcon: {marginRight: theme.spacing(1)},
+    listIcon: {marginRight: theme.spacing(1), height: theme.spacing(4), width: theme.spacing(4), color: 'black'},
     flexGrow: {flexGrow:1},
     linkText: {color: 'inherit', textDecoration:'None'}
 })
@@ -67,20 +68,21 @@ function Dropdown() {
                         <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown} className={classes.listWidth}>
                             <Link to="/profile/" className={classes.linkText}>
                             <MenuItem onClick={handleClose}>
-                                <AccountBoxIcon className={classes.listIcon} />
+                                <img src={AccountLogo} className={classes.listIcon} alt="React Logo" />
                                 <Typography className={classes.flexGrow}> My account </Typography>
                             </MenuItem>
                             </Link>
                             <Link to="/wishlist/" className={classes.linkText}>
                             <MenuItem onClick={handleClose}>
-                                <FavoriteIcon className={classes.listIcon} />
+                                <img src={HeartLogo} className={classes.listIcon} alt="React Logo" />
+                                {/* < className={classes.listIcon} /> */}
                                 <Typography className={classes.flexGrow}> Wishlist </Typography>
                                 <Badge color="secondary" badgeContent={numOfItemsInWishlist}/>
                             </MenuItem>
                             </Link>
                             <Link to="/cart/" className={classes.linkText}>
                             <MenuItem onClick={handleClose}>
-                                <ShoppingCartIcon className={classes.listIcon} />
+                                <img src={CartLogo} className={classes.listIcon} alt="React Logo" />
                                 <Typography className={classes.flexGrow}> Cart </Typography>
                                 <Badge color="secondary" badgeContent={numOfItemsInCart }/>
                             </MenuItem>
