@@ -1,4 +1,4 @@
-import { CLOSE_LOGIN_MODAL, CLOSE_SIGNUP_MODAL, LOGIN_ATTEMPT, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT, OPEN_LOGIN_MODAL, OPEN_SIGNUP_MODAL, CLEAR_SIGNUP, SIGNUP_INVALID_EMAIL, SIGNUP_INVALID_PHONE, SIGNUP_INVALID_PW, RESET_SIGNUP_TEXT, SIGNUP_SUCCESS, SET_DETAILS } from './types'
+import { CLOSE_LOGIN_MODAL, CLOSE_SIGNUP_MODAL, LOGIN_ATTEMPT, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT, OPEN_LOGIN_MODAL, OPEN_SIGNUP_MODAL, CLEAR_SIGNUP, SIGNUP_INVALID_EMAIL, SIGNUP_INVALID_PHONE, SIGNUP_INVALID_PW, RESET_SIGNUP_TEXT, SIGNUP_SUCCESS, SET_DETAILS, SIGNUP_INVALID_PW2 } from './types'
 
 const initialState = {
     token: localStorage.getItem('token'),
@@ -9,6 +9,7 @@ const initialState = {
     login_modal: false,
     signup_modal: false,
     error_pw: false,
+    error_pw2: false,
     error_mob: false,
     error_email: false,
     display_signup_text: false,
@@ -70,7 +71,7 @@ const userReducer = (state = initialState, action) => {
                 ...state,
                 signup_modal: true,
                 login_modal: false,
-                error_mob: false, error_email: false, error_pw: false,
+                error_mob: false, error_email: false, error_pw: false, error_pw2: false,
                 display_signup_text: false,
             }
         }
@@ -84,12 +85,12 @@ const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 signup_modal: false,
-                error_mob: false, error_email: false, error_pw: false
+                error_mob: false, error_email: false, error_pw: false, error_pw2: false
             }
         }
         case CLEAR_SIGNUP: return {
             ...state,
-            error_mob: false, error_email: false, error_pw: false
+            error_mob: false, error_email: false, error_pw: false, error_pw2: false
         }
         case SIGNUP_INVALID_EMAIL: return {
             ...state,
@@ -103,6 +104,10 @@ const userReducer = (state = initialState, action) => {
             ...state,
             error_pw: true
         }
+        case SIGNUP_INVALID_PW2: return {
+                ...state, 
+                error_pw2: true
+            }
         case RESET_SIGNUP_TEXT: return {
             ...state, display_signup_text: false
         }
@@ -120,6 +125,7 @@ const userReducer = (state = initialState, action) => {
                 mobile: action.payload.mobile_no
             }
         }
+        
         default: return state
     }
 }

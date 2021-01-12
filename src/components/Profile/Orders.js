@@ -12,13 +12,21 @@ function O({data}){
     const handleClick = () => {
         if(!open)
         axios.get(DOMAIN+"/api/order/"+data.id, { headers: {Authorization: "Token "+localStorage.getItem('token')}})
-        .then(res=>setItemData(res.data.order_items))
+        .then(res=>{
+            setItemData(res.data.order_items)
+        })
         
         setOpen(!open)
     }
     const created_date = new Date(data.created_at.split("T")[0])
     const today = new Date();
-    const diffDays = Math.ceil(Math.abs(created_date - today)/ (1000 * 60 * 60 * 24)); 
+    const diffDays = Math.ceil(Math.abs(created_date - today)/ (1000 * 60 * 60 * 24));
+    const refundReq = (id) => {
+        setItemData(itemData.map(item=>item.id===id?{...item, refund_requested:true}:item))
+        axios.post(`${DOMAIN}/api/refund/`, {
+            order_item_id: id
+        }, {headers: {Authorization: "Token "+localStorage.getItem('token')}})
+    }
     return (
         <>
         <Button onClick={handleClick} fullWidth style={{padding:0, marginTop: 12, marginBottom: 12}}>
@@ -44,7 +52,7 @@ function O({data}){
                                 </ListItemText>
                                 <ListItemText>
                                     <Typography>
-                                        <strong>Price: </strong>{item.final_price}
+                                        <strong>Price: </strong>{item.final_price} each
                                     </Typography>
                                 </ListItemText>
                                 <ListItemText>
@@ -53,14 +61,20 @@ function O({data}){
                                     </Typography>
                                 </ListItemText>
                                 {
-                                diffDays <= 1?
+                                (!item.refund_requested) && data.delivered && diffDays <= 1?
                                     <ListItemText>
-                                            <Button variant="outlined">
+                                            <Button variant="outlined" onClick={()=>refundReq(item.id)}>
                                                 Refund
                                             </Button>
                                     </ListItemText>
                                 :
-                                    ""
+                                    item.refund_requested?
+                                    <ListItemText>
+                                        <Button variant="outlined" disabled>
+                                            Requested
+                                        </Button>
+                                    </ListItemText>
+                                    :""
                                 }
                             </ListItem>
                         )

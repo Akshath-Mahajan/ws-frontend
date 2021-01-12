@@ -9,9 +9,8 @@ const useStyles = makeStyles(theme=>({
         mar: {marginTop: theme.spacing(2)},
         pad: { padding : theme.spacing(1) },
         fitWidth: {width: 'fit-content'},
-        fillHeight: {height: '100%'},
+        fill: {height: '100%', width: '100%'},
         img: {
-            margin: theme.spacing(1),
             width: '100%',
             [theme.breakpoints.down('sm')]:{
                 width:'auto',
@@ -28,29 +27,29 @@ function WishlistItem({ data }) {
     const removeItem = () => {dispatch(deleteWishlistItem(data.id))}
     return (
         <Grid container item xs={12} sm={6} className={classes.mar}>
-            
-            <Paper variant="outlined" className={`${classes.pad} ${classes.fillHeight}`}>
-            <Grid container spacing={2}>
-                <Link to={`/product/${data.id}`} className={classes.link}>
-                    <Grid container justify="center" alignItems="center" item xs={12} md={4} xl={3}>
-                        <img className={classes.img} alt={data.name} src={DOMAIN+data.image} />
+            <Paper variant="outlined" className={`${classes.pad} ${classes.fill}`}>
+                <Grid justify="space-around" container xs={12} className={classes.fill}>
+                    <Grid item container justify="center" alignItems="center"  xs={12} md={4} xl={3}>
+                        <Link to={`/product/${data.id}`} className={classes.link}>
+                                <img className={classes.img} alt={data.name} src={DOMAIN+data.image} />
+                        </Link>
                     </Grid>
-                </Link>
-                <Grid item xs={12} md={6} xl={7}>
-                    <Link to={`/product/${data.id}`} className={classes.link}>
-                        <Typography variant="h3">{data.name}</Typography>
-                        <Typography variant="subtitle1">{data.description}</Typography>
-                        <Typography variant="h5">₹ {data.price}</Typography>
-                        <Rating name="read-only" precision={0.1} value={data.avg_rating*5/100} readOnly />
-                        <Typography variant="subtitle1">Category: {data.category.name}</Typography>
-                    </Link>
+                    <Grid item container xs={12} md={6} xl={7} alignItems="space-between">
+                        
+                        <Link to={`/product/${data.id}`} className={classes.link}>
+                            <Typography variant="h3">{data.name}</Typography>
+                            <Typography variant="subtitle1">{data.description}</Typography>
+                            <Typography variant="h5">₹ {data.price}</Typography>
+                            <Rating name="read-only" precision={0.1} value={data.avg_rating*5/100} readOnly />
+                            <Typography variant="subtitle1">Category: {data.category.name}</Typography>
+                        </Link>
                         <Button color="primary" className={classes.mar} variant="contained" fullWidth> Buy Now </Button>
                         <Button onClick={addToCart} color="secondary" className={classes.mar} variant="contained" fullWidth> Add To Cart </Button>
                         <Button onClick={removeItem} color="secondary" className={classes.mar} variant="contained" fullWidth> Remove from wishlist </Button>
+                        
+                    </Grid>
                 </Grid>
-            </Grid>
             </Paper>
-            
         </Grid>
     )
 }

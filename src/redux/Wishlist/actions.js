@@ -26,13 +26,13 @@ const addToCartdeleteWishlistItemSuccess = (product_id) => {
 }
 
 const addToCartFromWishlist = (product_id) => (dispatch) => {
+    dispatch(addToCartdeleteWishlistItemSuccess(product_id))
     axios.post(`${DOMAIN}/api/cart/`, {
         product_id: product_id,
         quantity: 1
     }, {headers: {Authorization: "Token "+localStorage.getItem('token')}})
     .then(
         axios.delete(`${DOMAIN}/api/wishlist/`, { headers: {Authorization: "Token "+localStorage.getItem('token')}, data: {product_id:product_id}})
-        .then(dispatch(addToCartdeleteWishlistItemSuccess(product_id)))
     )
 }
 const deleteWishlistItemSuccess = (product_id) => {
@@ -42,10 +42,8 @@ const deleteWishlistItemSuccess = (product_id) => {
     }
 }
 const deleteWishlistItem = (product_id) => (dispatch) => {
+    dispatch(deleteWishlistItemSuccess(product_id))
     axios.delete(`${DOMAIN}/api/wishlist/`, { headers: {Authorization: "Token "+localStorage.getItem('token')}, data: {product_id:product_id}})
-    .then(
-        dispatch(deleteWishlistItemSuccess(product_id))
-    )
 }
 export { fetchWishlistItems }
 export { addToCartFromWishlist }

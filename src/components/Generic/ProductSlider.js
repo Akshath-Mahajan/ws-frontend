@@ -24,11 +24,11 @@ const useStyles = makeStyles(theme=>({
     p: {paddingTop: theme.spacing(2), paddingBottom:theme.spacing(2)}
 })
 )
-function ProductSlider({className}) {
+function ProductSlider({data, className}) {
     const theme = useTheme();
     const classes = useStyles();
     const [sliderRef] = useKeenSlider({
-        slidesPerView: 4,
+        slidesPerView: 1,
         mode: "snap",
         breakpoints: {
           "(min-width: 768px)": {
@@ -41,7 +41,6 @@ function ProductSlider({className}) {
           },
         },
       })
-    const data =  useSelector(state=>state.trending.products)
     return (
         <div ref={sliderRef} className={`keen-slider ${classes.p}`}>
         {

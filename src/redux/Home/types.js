@@ -1,0 +1,1 @@
+export const FETCH_HOME_SUCCESS = "FETCH_HOME_SUCCESS"

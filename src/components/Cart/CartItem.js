@@ -25,9 +25,12 @@ const useStyles = makeStyles(theme=>({
 function CartItem({ data }) {
     const classes = useStyles()
     const dispatch = useDispatch()
-    const handleDecrement = () => { dispatch(updateCartItems(data.product.id, data.quantity - 1)) }
-    const handleIncrement = () => { dispatch(updateCartItems(data.product.id, data.quantity + 1)) }
-    const removeItem = () => { dispatch(deleteCartItems(data.product.id)) }
+    const handleDecrement = () => { 
+        if(data.quantity - 1 > 0)
+            dispatch(updateCartItems(data.product.id, data.quantity - 1, data.id)) 
+    }
+    const handleIncrement = () => { dispatch(updateCartItems(data.product.id, data.quantity + 1, data.id)) }
+    const removeItem = () => { dispatch(deleteCartItems(data.product.id, data.id)) }
     return (
         <Grid item xs={12}>
             

@@ -7,7 +7,7 @@ import { DOMAIN } from '../../settings'
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeProductComment, changeProductRating, deleteReview, editReview, fetchProductDetails, saveReview, addToCart } from '../../redux';
+import { changeProductComment, changeProductRating, deleteReview, editReview, fetchProductDetails, saveReview, addToCart, addToWishlist } from '../../redux';
 import Slider from "react-slick"
 import { useKeenSlider } from "keen-slider/react"
 import "keen-slider/keen-slider.min.css"
@@ -124,6 +124,7 @@ function Product() {
     const reviews = useSelector(state=>state.product.reviews)
     const editingReview = useSelector(state=>state.product.editingReview)
     const inCart = useSelector(state=>state.product.inCart)
+    const inWishlist = useSelector(state=>state.product.inWishlist)
     const classes = useStyles()
     return Object.keys(product).length ? (
         <Grid container spacing={1}>
@@ -143,7 +144,18 @@ function Product() {
                             }
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <Button fullWidth color="primary" size="large" variant="contained">Buy</Button>    
+                            {
+                            inWishlist?
+                            <Button fullWidth color="primary" size="large" variant="contained" disabled> In Wishlist </Button>
+                            :
+                            <Button fullWidth color="primary" size="large" variant="contained" onClick={()=>{dispatch(addToWishlist(product.id)) }}>Wishlist</Button>
+                            }
+                                
+                        </Grid>
+                    </Grid>
+                    <Grid item container xs={12} className={classes.padTop}>
+                        <Grid item xs={12}>
+                            <Button fullWidth color="primary" size="large" variant="contained">Buy Now</Button>    
                         </Grid>
                     </Grid>
                 </Paper>

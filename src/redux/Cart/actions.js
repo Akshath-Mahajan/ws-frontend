@@ -22,23 +22,23 @@ const updateCartItemSuccess = (data) => {
         payload: data
     }
 }
-const updateCartItems = (product_id, quantity) => (dispatch) => {
+const updateCartItems = (product_id, quantity, item_id) => (dispatch) => {
+    dispatch(updateCartItemSuccess({item_id, quantity}))
     axios.post(`${DOMAIN}/api/cart/`, {
         product_id: product_id,
         quantity: quantity
     }, {headers: {Authorization: "Token "+localStorage.getItem('token')}})
-    .then(res => dispatch(updateCartItemSuccess(res.data)))
     .catch(err=> console.log(err))
 }
-const deleteCartItemSuccess = (product_id) => {
+const deleteCartItemSuccess = (item_id) => {
     return {
         type: DELETE_CART_SUCCESS,
-        product_id: product_id
+        item_id: item_id
     }
 }
-const deleteCartItems = (product_id) => (dispatch) => {
+const deleteCartItems = (product_id, item_id) => (dispatch) => {
+    dispatch(deleteCartItemSuccess(item_id))
     axios.delete(`${DOMAIN}/api/cart/`, { headers: {Authorization: "Token "+localStorage.getItem('token')}, data: {product_id:product_id}})
-    .then(res => dispatch(deleteCartItemSuccess(res.data.id)))
     .catch(err => console.log(err))
 
 }

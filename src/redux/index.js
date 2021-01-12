@@ -8,4 +8,6 @@ export { fetchNewProducts } from './NewProducts/actions'
 export { changePane, fetchAddress, openAddressForm, deleteAddress, saveAddress, cancelNewAddress } from './Profile/actions'
 
 export {changePriceRange, changeRating, clearFilters, sortBy, toggleROpen, togglePOpen, toggleSOpen} from './Filters/actions'
-export { fetchProductDetails, changeProductComment, changeProductRating, saveReview, editReview, deleteReview, addToCart } from './Product/actions'
+export { fetchProductDetails, changeProductComment, changeProductRating, saveReview, editReview, deleteReview, addToCart, addToWishlist } from './Product/actions'
+
+export { fetchHome } from './Home/actions'

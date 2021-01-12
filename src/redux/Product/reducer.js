@@ -1,4 +1,4 @@
-import { ADD_TO_CART, CHANGE_PRODUCT_COMMENT, CHANGE_PRODUCT_RATING, CLEAR_PRODUCT, DELETE_REVIEW, EDIT_REVIEW, FETCH_PRODUCT_DETAILS_SUCCESS, SAVE_REVIEW } from "./types"
+import { ADD_TO_CART, ADD_TO_WISHLIST, CHANGE_PRODUCT_COMMENT, CHANGE_PRODUCT_RATING, CLEAR_PRODUCT, DELETE_REVIEW, EDIT_REVIEW, FETCH_PRODUCT_DETAILS_SUCCESS, SAVE_REVIEW } from "./types"
 
 const initialState = {
     product: {},
@@ -6,7 +6,7 @@ const initialState = {
     reviews: [],
     userReview: {},
     editingReview: true,
-    inCart: false
+    inCart: false, inWishlist: false
 }
 const productReducer = (state=initialState, action) => {
     switch(action.type){
@@ -17,7 +17,8 @@ const productReducer = (state=initialState, action) => {
             reviews: action.payload.reviews,
             userReview: action.payload.user_review,
             editingReview: action.payload.user_review?action.payload.user_review.id?false:true : false,
-            inCart: action.payload.in_cart?true:false
+            inCart: action.payload.in_cart?true:false,
+            inWishlist: action.payload.in_wishlist?true:false
         }
         case CLEAR_PRODUCT: return { ...initialState }
         case CHANGE_PRODUCT_COMMENT: return {
@@ -45,6 +46,10 @@ const productReducer = (state=initialState, action) => {
         case ADD_TO_CART: return {
             ...state,
             inCart: true,
+        }
+        case ADD_TO_WISHLIST: return {
+            ...state,
+            inWishlist: true,
         }
         default: return state
     }

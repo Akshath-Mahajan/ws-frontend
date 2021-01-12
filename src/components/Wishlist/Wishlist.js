@@ -20,7 +20,7 @@ function Wishlist() {
     const isMobile = useMediaQuery(theme.breakpoints.down('xs'), {defaultMatches: true});
     const data = useSelector(state=>state.wishlist.wishlist)
     return (
-        <Grid container justify="center" spacing={isMobile?0:2}>
+        <Grid container justify="space-around" spacing={1}>
             {   Object.keys(data).length !==0?
                 Object.keys(data).map((key)=><WishlistItem key={key} data={data[key]}/>): 
                 <Grid item>

@@ -18,7 +18,7 @@ const cartReducer = (state=initialState, action) => {
         }
         case UPDATE_CART_SUCCESS: {
             let _cart = {...state.cart}
-            _cart[action.payload.id] = action.payload
+            _cart[action.payload.item_id].quantity = action.payload.quantity
             return {
                 ...state,
                 cart: _cart
@@ -26,7 +26,7 @@ const cartReducer = (state=initialState, action) => {
         }
         case DELETE_CART_SUCCESS: {
             let _cart = {...state.cart}
-            let id = action.product_id
+            let id = action.item_id
             delete _cart[id]
             return {
                 ...state,

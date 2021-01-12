@@ -8,6 +8,7 @@ import newProductsReducer from './NewProducts/reducer';
 import profileReducer from './Profile/reducer'
 import filterReducer from './Filters/reducer'
 import productReducer from './Product/reducer';
+import homeReducer from './Home/reducer'
 const rootReducer = combineReducers({
     user: userReducer,
     cart: cartReducer,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
     profile: profileReducer,
     filter: filterReducer,
     product: productReducer,
+    home: homeReducer
 })
 
 

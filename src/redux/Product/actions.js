@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { DOMAIN } from '../../settings'
-import { ADD_TO_CART, CHANGE_PRODUCT_COMMENT, CHANGE_PRODUCT_RATING, CLEAR_PRODUCT, DELETE_REVIEW, EDIT_REVIEW, FETCH_PRODUCT_DETAILS_SUCCESS, SAVE_REVIEW } from './types'
+import { ADD_TO_CART, ADD_TO_WISHLIST, CHANGE_PRODUCT_COMMENT, CHANGE_PRODUCT_RATING, CLEAR_PRODUCT, DELETE_REVIEW, EDIT_REVIEW, FETCH_PRODUCT_DETAILS_SUCCESS, SAVE_REVIEW } from './types'
 
 const fetchProductDetailsSuccess = (data) => {
     return {
@@ -60,4 +60,10 @@ const addToCart = (product_id) => (dispatch) => {
         quantity: 1
     }, {headers: {Authorization: "Token "+localStorage.getItem('token')}})
 }
-export {addToCart}
+const addToWishlist = (product_id) => (dispatch) => {
+    dispatch({type: ADD_TO_WISHLIST})
+    axios.post(`${DOMAIN}/api/wishlist/`, {
+        product_id: product_id
+    }, {headers: {Authorization: "Token "+localStorage.getItem('token')}})
+}
+export {addToCart, addToWishlist}

@@ -34,8 +34,8 @@ function LoginModal() {
                     <OutlinedInput error={login_status===-1} onChange={(e)=>setPass(e.target.value)} value={pass} type="password" color="primary" placeholder="Password" fullWidth/>
                 </FormControl>
                 <FormControl fullWidth margin="dense" variant="outlined">
-                    <Typography variant="subtitle2" align="center">
-                        {login_status===-1?"INVALID USERNAME AND PASSWORD":""}
+                    <Typography variant="h6" align="center">
+                        {login_status===-1?"Invalid Credentials":""}
                     </Typography>
                 </FormControl>
             <DialogActions>

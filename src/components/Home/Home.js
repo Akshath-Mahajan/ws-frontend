@@ -1,5 +1,7 @@
 import { Button, Card, CardMedia, makeStyles, Typography } from '@material-ui/core'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchHome } from '../../redux'
 // import { useSelector } from 'react-redux'
 // import { ProductGrid, ProductGridItem } from '../Generic/'
 import ProductSlider from '../Generic/ProductSlider'
@@ -26,6 +28,11 @@ function Home(props) {
     const classes = useStyles()
     /* GO OVER HOOKS USAGE WARNINGS IN REDUX DOCS, 
     OTHERWISE USE MAPSTATETOPROPS AND MAPDISPATCHTOPROPS WITH CONNECTOR */
+    const dispatch = useDispatch()
+    useEffect(()=>{dispatch(fetchHome())}, [])
+    const trending_products = useSelector(state=>state.home.trending)
+    const new_products = useSelector(state=>state.home.new)
+
     return (
         <div>
             <Card className={`${classes.cardRoot}`}>
@@ -52,7 +59,7 @@ function Home(props) {
                     <Button variant="outlined" color="inherit"  className={classes.cardBtn}>Order Now</Button>
                 </div>
             </Card>
-            <ProductSlider className={classes.mb} />
+            <ProductSlider className={classes.mb} data={trending_products}/>
             <div>
                 <div style={{display: 'flex', flexDirection:'row', justifyContent:'space-evenly'}}>
                     <Typography variant="h2">
@@ -77,7 +84,7 @@ function Home(props) {
                     </Typography>
                 </div>
             </div>
-            <ProductSlider className={classes.mb} />
+            <ProductSlider className={classes.mb} data={new_products}/>
             <Card className={`${classes.cardRoot} ${classes.mb} ${classes.cardContainer}`}>
                 <CardMedia className={classes.cardMedia}
                     component="img"
