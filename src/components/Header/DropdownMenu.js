@@ -42,8 +42,6 @@ function Dropdown() {
         prevOpen.current = open;
     }, [open]);
 
-    const numOfItemsInCart = useSelector(state => state.cart.num)
-    const numOfItemsInWishlist = useSelector(state => state.wishlist.num)
     const dispatch = useDispatch()
     return (
         <div>
@@ -77,14 +75,12 @@ function Dropdown() {
                                 <img src={HeartLogo} className={classes.listIcon} alt="React Logo" />
                                 {/* < className={classes.listIcon} /> */}
                                 <Typography className={classes.flexGrow}> Wishlist </Typography>
-                                <Badge color="secondary" badgeContent={numOfItemsInWishlist}/>
                             </MenuItem>
                             </Link>
-                            <Link to="/cart/" className={classes.linkText}>
+                            <Link to="/bag/" className={classes.linkText}>
                             <MenuItem onClick={handleClose}>
                                 <img src={CartLogo} className={classes.listIcon} alt="React Logo" />
-                                <Typography className={classes.flexGrow}> Cart </Typography>
-                                <Badge color="secondary" badgeContent={numOfItemsInCart }/>
+                                <Typography className={classes.flexGrow}> Bag </Typography>
                             </MenuItem>
                             </Link>
                             <MenuItem onClick={(e) => {handleClose(e); dispatch(logout())}}>

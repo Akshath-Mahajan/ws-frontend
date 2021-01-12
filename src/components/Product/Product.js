@@ -1,7 +1,7 @@
 import { Button, Grid, Typography, Paper, makeStyles, Box, IconButton, TextField, InputAdornment } from '@material-ui/core'
 import Axios from 'axios'
 import Rating from '@material-ui/lab/Rating';
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { DOMAIN } from '../../settings'
 import EditIcon from '@material-ui/icons/Edit';
@@ -9,7 +9,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeProductComment, changeProductRating, deleteReview, editReview, fetchProductDetails, saveReview, addToCart } from '../../redux';
 import Slider from "react-slick"
-
+import { useKeenSlider } from "keen-slider/react"
+import "keen-slider/keen-slider.min.css"
+import '../../App.css'
 const useStyles = makeStyles((theme)=>({
     container: {padding: theme.spacing(2)},
     outlinedPaper: {padding:theme.spacing(2), marginBottom:theme.spacing(2)},
@@ -17,7 +19,13 @@ const useStyles = makeStyles((theme)=>({
     fR: {float: 'right'},
     padY: {paddingBottom: theme.spacing(2), paddingTop: theme.spacing(2)},
     padB: {paddingBottom: theme.spacing(2)},
-    padTop: {paddingTop: theme.spacing(4)}
+    padTop: {paddingTop: theme.spacing(4)},
+    item: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        maxHeight: '100vh',
+    },
 }))
 function Review({item, editable}){
     const classes = useStyles()
@@ -59,30 +67,47 @@ function AddReview({ editing }){
 }
 function ImageSlider({width}) {
     const classes = useStyles();
+    const [currentSlide, setCurrentSlide] = useState(0)
     const imgs = useSelector(state=>state.product.images)
     const product = useSelector(state=>state.product.product)
-    const settings = {
-        arrows: false,
-        dots: true,
-        autoplay: true,
-        infinte: false,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        initialSlide: 0,
-    }
+    const [sliderRef, slider] = useKeenSlider({
+        initial: 0,
+        slideChanged(s) {
+            setCurrentSlide(s.details().relativeSlide)
+        },
+    })
     if(imgs)
         return (
-            <div style={{width: width}}>
-            <Slider {...settings}>
-                <div>
+            <>
+            <div ref={sliderRef} className={`keen-slider`}>
+                <div className={`keen-slider__slide ${classes.item}`}>
                     <img alt={product.name} src={DOMAIN+product.image} height="500" />
                 </div>
                 {
-                imgs.map(item =><div><img key={item.id} alt={product.name} src={DOMAIN + item.image} height="500" /> </div>)
+                imgs.map(item =>(
+                    <div className={`keen-slider__slide ${classes.item}`}>
+                        <img key={item.id} alt={product.name} src={DOMAIN + item.image} height="500" /> 
+                    </div>
+                    )
+                )
                 }
-            </Slider>
             </div>
+            {slider && (
+                <div className="dots">
+                    {[...Array(slider.details().size).keys()].map((idx) => {
+                    return (
+                        <button
+                        key={idx}
+                        onClick={() => {
+                            slider.moveToSlideRelative(idx)
+                        }}
+                        className={"dot" + (currentSlide === idx ? " active" : "")}
+                        />
+                    )
+                    })}
+                </div>
+            )}
+            </>
         )
     return (
         <div>

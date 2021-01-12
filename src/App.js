@@ -25,7 +25,7 @@ function App() {
                 <Route exact path="/">
                     <Home />
                 </Route>
-                <AuthRoute exact path="/cart/">
+                <AuthRoute exact path="/bag/">
                     <Cart />
                 </AuthRoute>
                 <AuthRoute exact path="/wishlist/">

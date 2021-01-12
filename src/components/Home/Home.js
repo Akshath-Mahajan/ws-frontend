@@ -4,11 +4,23 @@ import React from 'react'
 // import { ProductGrid, ProductGridItem } from '../Generic/'
 import ProductSlider from '../Generic/ProductSlider'
 const useStyles = makeStyles(theme=>({
-    cardRoot: {width: '100%'},
+    cardRoot: { position: 'relative', width: '100%' },
     mb: {marginBottom: theme.spacing(5)},
-    cardContainer: {display: 'grid'},
-    cardMedia: {gridArea: '1/1'},
-    cardBtn: {marginTop: 200, marginLeft: 300, height: 80, width: 250}
+    m: {marginBottom: theme.spacing(5), marginTop: theme.spacing(5)},
+    cardContainer: { display: 'grid' },
+    cardMedia: { gridArea: '1/1' },
+    cardBtn: {marginTop: 390, marginLeft: '55vw', height: 80, width: '20vw'},
+    
+    overlay: {
+        position: 'absolute',
+        top: '1px',
+        left: '1px',
+        right: '1px',
+        bottom: '1px',
+        color: '#F8F8FF',
+    },
+    dark : {backgroundColor: 'rgba(0,0,0,0.35)',},
+    light : {backgroundColor: 'rgba(0,0,0,0.15)',}
 }))
 function Home(props) {
     const classes = useStyles()
@@ -20,36 +32,62 @@ function Home(props) {
                 <CardMedia className={classes.cardMedia}
                     component="img"
                     alt="something"
-                    height={350}
-                    image="https://www.teahub.io/photos/full/7-76929_82-4k-hd-wallpapers-hd-wallpapers-laptop.jpg"
+                    style={{height: '75vh'}}
+                    image="https://i.pinimg.com/originals/ee/81/99/ee819909e5ca2476ef0cfcc626f4ead7.jpg"
                 />
-            </Card>
-            <Typography variant="h1" align="center" className={classes.mb}>Quotes</Typography>
-            <ProductSlider className={classes.mb} data={["hello there", "Heylo", "this is just a test", 'Hello bro', 'mic test', 'all these', 'are gonna be', 'replaced with cards', 'so yeah']} />
-            <Card className={`${classes.cardRoot} ${classes.mb} ${classes.cardContainer}`}>
-                <CardMedia className={classes.cardMedia}
-                    component="img"
-                    alt="collection image"
-                    height={350}
-                    image="https://www.hdwallpapers.in/download/cars_3_2017_4k_8k-2560x1440.jpg"
-                />
-                <div className={`${classes.cardMedia}`}>
-                    <Button variant="outlined" className={classes.cardBtn}>Order Now</Button>
+                <div className={`${classes.overlay} ${classes.dark}`}>
+                    <Typography variant="h1" align="center" className={classes.mb}>Video</Typography>
                 </div>
             </Card>
-            <ProductSlider className={classes.mb} data={["hello there", "Heylo", "this is just a test", 'Hello bro', 'mic test', 'all these', 'are gonna be', 'replaced with cards', 'so yeah']} />
-            <Typography variant="h1" align="center">Discover You</Typography>
-            <ProductSlider className={classes.mb} data={["hello there", "Heylo", "this is just a test", 'Hello bro', 'mic test', 'all these', 'are gonna be', 'replaced with cards', 'so yeah']} />
+            <Typography variant="h3" align="center" className={classes.m}>Quotes</Typography>
             <Card className={`${classes.cardRoot} ${classes.mb} ${classes.cardContainer}`}>
                 <CardMedia className={classes.cardMedia}
                     component="img"
                     alt="collection image"
-                    height={350}
-                    image="https://www.hdwallpapers.in/download/cars_3_2017_4k_8k-2560x1440.jpg"
+                    style={{height: '75vh'}}
+                    image="https://www.itl.cat/pngfile/big/210-2102958_dark-desk-laptop-macbook-room-table-technology-desk.jpg"
                 />
-                <div className={`${classes.cardMedia}`}>
+                <div className={`${classes.overlay} ${classes.light}`}>
+                    <Typography variant="h2" style={{position:'absolute', right: 50, top: 40}}>Quote</Typography>
+                    <Button variant="outlined" color="inherit"  className={classes.cardBtn}>Order Now</Button>
+                </div>
+            </Card>
+            <ProductSlider className={classes.mb} />
+            <div>
+                <div style={{display: 'flex', flexDirection:'row', justifyContent:'space-evenly'}}>
+                    <Typography variant="h2">
+                        DI
+                    </Typography>
+                    <Typography variant="h2">
+                        SCOV
+                    </Typography>
+                    <Typography variant="h2">
+                        ER
+                    </Typography>
+                </div>
+                <div style={{display: 'flex', flexDirection:'row', justifyContent:'space-evenly'}}>
+                    <Typography variant="h2" align="left">
+                        Y
+                    </Typography>
+                    <Typography variant="h2" align="center">
+                        O
+                    </Typography>
+                    <Typography variant="h2" align="right">
+                        U
+                    </Typography>
+                </div>
+            </div>
+            <ProductSlider className={classes.mb} />
+            <Card className={`${classes.cardRoot} ${classes.mb} ${classes.cardContainer}`}>
+                <CardMedia className={classes.cardMedia}
+                    component="img"
+                    alt="collection image"
+                    style={{height: '75vh'}}
+                    image="https://www.itl.cat/pngfile/big/210-2102958_dark-desk-laptop-macbook-room-table-technology-desk.jpg"
+                />
+                <div className={`${classes.overlay} ${classes.light}`}>
                     <Typography variant="h3">This should be swipable, swipe to open full collection</Typography>
-                    <Button variant="outlined" className={classes.cardBtn}>Order Now</Button>
+                    <Button variant="outlined" color="inherit" className={classes.cardBtn}>Order Now</Button>
                 </div>
             </Card>
         </div>

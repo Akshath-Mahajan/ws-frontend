@@ -3,60 +3,55 @@ import React from 'react'
 import Slider from "react-slick"
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import { useKeenSlider } from "keen-slider/react"
+import {ProductGridItem} from './ProductGridItem'
+import {useSelector} from 'react-redux'
+import "keen-slider/keen-slider.min.css"
 
 const useStyles = makeStyles(theme=>({
-        center: {display: 'flex', 
+    center: {
+        display: 'flex', 
         justifyContent:'center', 
         height: 250, 
         alignItems: 'center',
     },
-        root: {border: '1px solid #333'},
-        arrow: {position: 'absolute', top: '500px', left: -25}
-    })
+    item: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        maxHeight: '100vh',
+    },
+    p: {paddingTop: theme.spacing(2), paddingBottom:theme.spacing(2)}
+})
 )
-function ProductSlider({data, className}) {
+function ProductSlider({className}) {
     const theme = useTheme();
     const classes = useStyles();
-    const settings = {
-        arrows: false,
-        dots: true,
-        autoplay: true,
-        infinte: false,
-        speed: 500,
-        slidesToShow: 4,
-        slidesToScroll: 4,
-        initialSlide: 0,
-        responsive: [
-            {
-                breakpoint: theme.breakpoints.values.md,
-                settings: {slidesToShow: 3, slidesToScroll: 3}
-            },
-            {
-                breakpoint: theme.breakpoints.values.sm,
-                settings: {slidesToShow: 2, slidesToScroll: 2}
-            },
-            {
-                breakpoint: theme.breakpoints.values.xs,
-                settings: {slidesToShow: 1, slidesToScroll: 1}
-            },
-        ]
-    }
+    const [sliderRef] = useKeenSlider({
+        slidesPerView: 4,
+        mode: "snap",
+        breakpoints: {
+          "(min-width: 768px)": {
+            slidesPerView: 2,
+            mode: "free-snap",
+          },
+          "(min-width: 1200px)": {
+            slidesPerView: 4,
+            mode: "free-snap",
+          },
+        },
+      })
+    const data =  useSelector(state=>state.trending.products)
     return (
-        <div className={`${className} ${classes.root}`}>
-        {/* <NavigateBeforeIcon className={classes.arrow} /> */}
-        <div>
-        <Slider {...settings}>
-            {
-            data.map(item =>( 
-                <div className={classes.center}>
-                    <Typography variant="h5" align="center">{item}</Typography>
-                </div>
-                )
-            )
-            }
-        </Slider>
-        </div>
-        {/* <NavigateNextIcon className={classes.arrow}/> */}
+        <div ref={sliderRef} className={`keen-slider ${classes.p}`}>
+        {
+          data.map((item, idx) =>( 
+              <div key={idx} className={`keen-slider__slide number-slide ${classes.item}`}>
+                  <ProductGridItem data={item} full/>
+              </div>
+              )
+          )
+        }
         </div>
       );
 }
