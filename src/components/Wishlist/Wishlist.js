@@ -22,7 +22,7 @@ function Wishlist() {
     return (
         <Grid container justify="space-around" spacing={1}>
             {   Object.keys(data).length !==0?
-                Object.keys(data).map((key)=><WishlistItem key={key} data={data[key]}/>): 
+                Object.keys(data).map((key)=><WishlistItem key={key} data={data[key].product} inCart={data[key].in_cart}/>): 
                 <Grid item>
                     <Typography variant="h3">
                         Your wishlist is empty!

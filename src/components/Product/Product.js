@@ -12,6 +12,7 @@ import Slider from "react-slick"
 import { useKeenSlider } from "keen-slider/react"
 import "keen-slider/keen-slider.min.css"
 import '../../App.css'
+import PaymentModal from './PaymentModal';
 const useStyles = makeStyles((theme)=>({
     container: {padding: theme.spacing(2)},
     outlinedPaper: {padding:theme.spacing(2), marginBottom:theme.spacing(2)},
@@ -126,6 +127,7 @@ function Product() {
     const inCart = useSelector(state=>state.product.inCart)
     const inWishlist = useSelector(state=>state.product.inWishlist)
     const classes = useStyles()
+    const [paymentOpen, setPaymentOpen] = useState(false)
     return Object.keys(product).length ? (
         <Grid container spacing={1}>
             <Grid item xs={12} sm={6} md={3} container>
@@ -155,7 +157,8 @@ function Product() {
                     </Grid>
                     <Grid item container xs={12} className={classes.padTop}>
                         <Grid item xs={12}>
-                            <Button fullWidth color="primary" size="large" variant="contained">Buy Now</Button>    
+                            <Button fullWidth color="primary" size="large" variant="contained" onClick = {() => setPaymentOpen(true)}>Buy Now</Button>
+                            <PaymentModal open={paymentOpen} handleClose={()=>setPaymentOpen(false)}/> 
                         </Grid>
                     </Grid>
                 </Paper>

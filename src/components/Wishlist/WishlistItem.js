@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme=>({
         link: {textDecoration: 'None', color: 'initial'},
     })
 )
-function WishlistItem({ data }) {
+function WishlistItem({ data, inCart}) {
     const classes = useStyles()
     const dispatch = useDispatch()
     const addToCart = () => {dispatch(addToCartFromWishlist(data.id))}
@@ -44,7 +44,7 @@ function WishlistItem({ data }) {
                             <Typography variant="subtitle1">Category: {data.category.name}</Typography>
                         </Link>
                         <Button color="primary" className={classes.mar} variant="contained" fullWidth> Buy Now </Button>
-                        <Button onClick={addToCart} color="secondary" className={classes.mar} variant="contained" fullWidth> Add To Cart </Button>
+                        <Button disabled={inCart} onClick={addToCart} color="secondary" className={classes.mar} variant="contained" fullWidth>{inCart?"Already in Cart": "Add To Cart"} </Button>
                         <Button onClick={removeItem} color="secondary" className={classes.mar} variant="contained" fullWidth> Remove from wishlist </Button>
                         
                     </Grid>

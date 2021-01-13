@@ -3,7 +3,7 @@ import { FETCH_WISHLIST_SUCCESS, ADD_CART_DELETE_WISHLIST_SUCCESS, DELETE_WISHLI
 import { DOMAIN } from '../../settings'
 const fetchWishlistItemsSuccess = (data) => {
     const obj = {}
-    for(let i = 0; i < data.length; i++){obj[data[i].id] = {...data[i]}}
+    for(let i = 0; i < data.length; i++){obj[data[i].product.id] = {...data[i]}}
     return {
         type: FETCH_WISHLIST_SUCCESS,
         payload: obj
@@ -13,7 +13,7 @@ const fetchWishlistItemsSuccess = (data) => {
 const fetchWishlistItems = () => (dispatch) => {
     axios.get(`${DOMAIN}/api/wishlist/`, {headers: {Authorization: "Token "+localStorage.getItem('token')}})
     .then(res => {
-            dispatch(fetchWishlistItemsSuccess(res.data.products))
+            dispatch(fetchWishlistItemsSuccess(res.data))
         }
     ) 
 }

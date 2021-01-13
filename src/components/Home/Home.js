@@ -6,9 +6,9 @@ import { fetchHome } from '../../redux'
 // import { ProductGrid, ProductGridItem } from '../Generic/'
 import ProductSlider from '../Generic/ProductSlider'
 const useStyles = makeStyles(theme=>({
-    cardRoot: { position: 'relative', width: '100%' },
     mb: {marginBottom: theme.spacing(5)},
     m: {marginBottom: theme.spacing(5), marginTop: theme.spacing(5)},
+    cardRoot: { position: 'relative', width: '100%' },
     cardContainer: { display: 'grid' },
     cardMedia: { gridArea: '1/1' },
     cardBtn: {marginTop: 390, marginLeft: '55vw', height: 80, width: '20vw'},
