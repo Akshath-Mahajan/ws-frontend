@@ -16,7 +16,13 @@ import "slick-carousel/slick/slick-theme.css";
 import Product from './components/Product/Product'
 import SearchQ from './components/SearchQ/SearchQ'
 import AuthRoute from './AuthRoute'
+import Verify from './Verify'
+import AboutUs from './components/AboutUs/AboutUs'
 // import theme from './baseTheme'
+// <ThemeProvider theme={theme}>
+//   <CustomCheckbox />
+// </ThemeProvider>
+
 function App() {
     return (
         <Provider store={store}>
@@ -50,8 +56,14 @@ function App() {
                 <Route exact path="/contact-us/">
                     <ContactUs />
                 </Route>
+                <Route exact path="/about-us/">
+                    <AboutUs />
+                </Route>
                 <Route exact path="/search/:query">
                     <SearchQ />
+                </Route>
+                <Route exact path="/verify-user/:str">
+                    <Verify />
                 </Route>
             </BrowserRouter>
         </Provider>

@@ -1,4 +1,4 @@
-import { Button, Grid, Typography, Paper, makeStyles, Box, IconButton, TextField, InputAdornment } from '@material-ui/core'
+import { Button, Grid, Typography, Paper, makeStyles, Box, IconButton, TextField, InputAdornment, OutlinedInput } from '@material-ui/core'
 import Axios from 'axios'
 import Rating from '@material-ui/lab/Rating';
 import React, { useEffect, useState } from 'react'
@@ -7,11 +7,13 @@ import { DOMAIN } from '../../settings'
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeProductComment, changeProductRating, deleteReview, editReview, fetchProductDetails, saveReview, addToCart, addToWishlist } from '../../redux';
+import { changeProductComment, changeProductRating, deleteReview, editReview, fetchProductDetails, saveReview, addToCart, addToWishlist, openAddress, closeModals, openPayments } from '../../redux';
 import Slider from "react-slick"
 import { useKeenSlider } from "keen-slider/react"
 import "keen-slider/keen-slider.min.css"
 import '../../App.css'
+import RemoveIcon from '@material-ui/icons/Remove';
+import AddIcon from '@material-ui/icons/Add';
 import PaymentModal from './PaymentModal';
 const useStyles = makeStyles((theme)=>({
     container: {padding: theme.spacing(2)},
@@ -20,7 +22,7 @@ const useStyles = makeStyles((theme)=>({
     fR: {float: 'right'},
     padY: {paddingBottom: theme.spacing(2), paddingTop: theme.spacing(2)},
     padB: {paddingBottom: theme.spacing(2)},
-    padTop: {paddingTop: theme.spacing(4)},
+    padTop: {paddingTop: theme.spacing(2)},
     item: {
         display: 'flex',
         alignItems: 'center',
@@ -127,14 +129,53 @@ function Product() {
     const inCart = useSelector(state=>state.product.inCart)
     const inWishlist = useSelector(state=>state.product.inWishlist)
     const classes = useStyles()
-    const [paymentOpen, setPaymentOpen] = useState(false)
+    const [quantity, setQuantity] = useState(1)
+    const handleIncrement = () => {setQuantity(quantity+1)}
+    const handleDecrement = () => {if(quantity-1 > 0){setQuantity(quantity-1)}}
+    const [open, setOpen] = useState(false)
+    
     return Object.keys(product).length ? (
         <Grid container spacing={1}>
             <Grid item xs={12} sm={6} md={3} container>
-                <Paper className={classes.container} style={{overflow: 'hidden'}}>
+                <Paper className={`${classes.container} ${classes.fullWidth}`} style={{overflow: 'hidden'}}>
                     <Grid item xs={12}>
                         {/* <img alt={product.name} src={DOMAIN + product.image} width="100%" /> */}
                         <ImageSlider  />
+                    </Grid>
+                    <Grid item container xs={12} className={classes.padTop}>
+                        <Grid container item xs={12}>
+                            <Grid item xs={3} container alignItems="center" justify="center">
+                                <Grid item>
+                                    <IconButton onClick={handleDecrement}>
+                                        <RemoveIcon />
+                                    </IconButton>
+                                </Grid>
+                            </Grid>
+                            <Grid item xs={6} container alignItems="center" justify="center">
+                                <Grid item>
+                                    <TextField 
+                                        variant="outlined" type="text" 
+                                        inputProps={{style:{textAlign:'center'}}}
+                                        margin="dense" fullWidth
+                                        value={quantity} readOnly
+                                    />
+                                </Grid>
+                            </Grid>
+                            <Grid container item xs={3} alignItems="center" justify="center">
+                                <Grid item>
+                                    <IconButton onClick={handleIncrement}>
+                                        <AddIcon />
+                                    </IconButton>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <Grid item container xs={12} className={classes.padTop}>
+                        <Grid item xs={12}>
+                            <Button fullWidth color="primary" size="large" variant="contained" onClick = {() => setOpen(true)}>Buy Now</Button>
+                            {open?<PaymentModal buyNow open handleClose={()=>setOpen(false)} product_id={id} quantity={quantity}/>:""}
+
+                        </Grid>
                     </Grid>
                     <Grid item xs={12} container className={classes.padTop}>
                         <Grid item xs={12} sm={6}>
@@ -142,7 +183,7 @@ function Product() {
                             inCart?
                             <Button fullWidth color="secondary" size="large" variant="contained" disabled> In Cart </Button>
                             :
-                            <Button fullWidth color="secondary" size="large" variant="contained" onClick={()=>{dispatch(addToCart(product.id)) }}>Cart</Button>
+                            <Button fullWidth color="secondary" size="large" variant="contained" onClick={()=>{dispatch(addToCart(product.id, quantity)) }}>Cart</Button>
                             }
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -155,12 +196,7 @@ function Product() {
                                 
                         </Grid>
                     </Grid>
-                    <Grid item container xs={12} className={classes.padTop}>
-                        <Grid item xs={12}>
-                            <Button fullWidth color="primary" size="large" variant="contained" onClick = {() => setPaymentOpen(true)}>Buy Now</Button>
-                            <PaymentModal open={paymentOpen} handleClose={()=>setPaymentOpen(false)}/> 
-                        </Grid>
-                    </Grid>
+                    
                 </Paper>
             </Grid>
             <Grid item xs={12} sm={6} md={9} container>
