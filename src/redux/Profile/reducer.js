@@ -3,7 +3,6 @@ import { CHANGE_PANE, FETCH_ADDRESS_SUCCESS, DA_OPEN_NEW_ADDRESS_FORM, DA_DELETE
 const initialState = {
     deliveryAddress: {addresses: [], addingAddress: false},
     orders: {orders: [], openOrderId: -1, openOrderIdx: -1},
-    payments: {payments: [], refunds:[]},
     pane: 0,
 }
 

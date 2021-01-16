@@ -2,15 +2,12 @@ import { Grid, List, ListItem, ListItemIcon, ListItemText, makeStyles, Paper, Ty
 import React from 'react'
 import PersonIcon from '@material-ui/icons/Person';
 import ShopIcon from '@material-ui/icons/Shop';
-import CreditCardIcon from '@material-ui/icons/CreditCard';
 import HelpIcon from '@material-ui/icons/Help';
 
 import ProfileInfo from './ProfileInfo'
 import DeliveryAddress from './DeliveryAddress'
 import PasswordReset from './PasswordReset'
-import Payments from './Payments'
 import Orders from './Orders';
-import Refunds from './Refunds';
 import { useSelector, useDispatch } from 'react-redux'
 import { changePane } from '../../redux'
 import HelpPane from './HelpPane';
@@ -23,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	padTop: {paddingTop: theme.spacing(2)},
 	pad: {padding:theme.spacing(4)},
+	listGrid: {marginRight: theme.spacing(2)}
 }));
 
 function Profile() {
@@ -36,10 +34,10 @@ function Profile() {
 		['All Orders', 3, null],
 		['Live Orders', 4, null],
 		['Delivered Orders', 5, null],
-		['Payments', -1, <CreditCardIcon color="primary" />],
-		['Payments Made', 6, null],
-		['Refunds', 7, null],
-		['Help', 8, <HelpIcon color="primary" />],
+		// ['Payments', -1, <CreditCardIcon color="primary" />],
+		// ['Payments Made', 6, null],
+		// ['Refunds', 7, null],
+		['Help', 6, <HelpIcon color="primary" />],
 	]
 	const panes = {
 		0: <ProfileInfo />,
@@ -48,16 +46,16 @@ function Profile() {
 		3: <Orders type={0} />,
 		4: <Orders type={1} />,
 		5: <Orders type={2} />,
-		6: <Payments />,
-		7: <Refunds />,
-		8: <HelpPane />
+		// 6: <Payments />,
+		// 7: <Refunds />,
+		6: <HelpPane />
 	}
 	const activeIdx = useSelector(state=>state.profile.pane)
 	const dispatch = useDispatch()
 	return (
 	<div className={classes.root}>
-		<Grid container justify="center" spacing={2} style={{backgroundColor: '#EFE4CB'}}>
-			<Grid item xs={12} sm={5} md={4} lg={3} className={classes.listGrid} style={{backgroundColor: 'transparent'}}>
+		<Grid container justify="center" style={{backgroundColor: '#EFE4CB'}}>
+			<Grid item xs={12} sm={5} md={4} lg={3} className={classes.listGrid}>
 				<List className={classes.padTop}>
 					<Paper>
 					{

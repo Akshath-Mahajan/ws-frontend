@@ -9,12 +9,8 @@ function HelpPane() {
                 <Typography variant="h3" style={{marginBottom:'12px'}}>FAQs:</Typography>
 
                 <Typography style={{marginBottom: 12}}>
-                    <Typography><strong>Q.How to request a refund</strong></Typography>
-                    <Typography> To request a refund, first go to your orders. Then click on the order which has the item to be refunded. Click on the refund button next to the ordered item </Typography>
-                </Typography>
-                <Typography style={{marginBottom: 12}}>
-                    <Typography><strong>Q. I cannot find a refund button next to my order</strong></Typography>
-                    <Typography>Only items that were ordered recently may be refunded. Please contact us for support if you feel like there's an exception.</Typography>
+                    <Typography><strong>Q. How to request a refund or replacement</strong></Typography>
+                    <Typography> To request a refund, please send us an email or call us directly </Typography>
                 </Typography>
                 <Typography style={{marginBottom: 12}}>
                     <Typography><strong>Q. My payment was not recorded</strong></Typography>

@@ -48,4 +48,23 @@ const fetchOrders = () => (dispatch) => {
     axios.get(DOMAIN+'/api/user-orders', {headers: {Authorization: "Token "+localStorage.getItem('token')}})
     .then(res => dispatch(fetchOrdersSuccess(res.data)))
 }
+
+// const fetchPaymentsSuccess = (data) => ({type: P_FETCH_PAYMENTS_SUCCESS, payload: data})
+// const fetchPayments = () => (dispatch) => {
+//     axios.get(DOMAIN+'/api/user-payments', {headers: {Authorization: "Token "+localStorage.getItem('token')}})
+//     .then(res => dispatch(fetchPaymentsSuccess(res.data)))
+// }
+
+/*
+Axios.get(DOMAIN+'/api/user-refunds', {headers: {Authorization: "Token "+localStorage.getItem('token')}})
+        .then(res=>{
+            console.log(res.data)
+            setData(res.data)
+        })
+*/
+// const fetchRefundsSuccess = (data) => ({type: R_FETCH_REFUNDS_SUCCESS, payload: data})
+// const fetchRefunds = () => (dispatch) => {
+//     axios.get(DOMAIN+'/api/user-refunds', {headers: {Authorization: "Token "+localStorage.getItem('token')}})
+//     .then(res => dispatch(fetchRefundsSuccess(res.data)))
+// }
 export { changePane, fetchAddress, openAddressForm, deleteAddress, saveAddress, cancelNewAddress, fetchOrders }
