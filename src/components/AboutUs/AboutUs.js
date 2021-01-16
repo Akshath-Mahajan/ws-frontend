@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme)=>({
 function AboutUs() {
     const classes = useStyles()
     return (
-        <Grid container spacing={2} justify="space-around" className={classes.root}>
+        <Grid container justify="space-around" className={classes.root}>
             <Grid item xs={12}>
                 <Card className={`${classes.cardRoot} ${classes.mb} ${classes.cardContainer}`}>
                     <CardMedia className={classes.cardMedia}

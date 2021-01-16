@@ -3,26 +3,12 @@ import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
 // import grey from '@material-ui/core/colors/grey'
 
 let theme = createMuiTheme({
-    // palette: {
-    //     primary: {main: blue[300]},
-    //     background: {default: '#f4f7f6', paper: grey[50]},
-    //     divider: 'rgba(176, 224, 230, 0.12)',
-    //     text: {
-    //         primary: 'rgba(52, 58, 64, 1)',
-    //         secondary: 'rgba(52, 58, 64, 0.6)',
-    //         disabled: 'rgba(52, 58, 64, 0.4)',
-    //         hint: 'rgba(52, 58, 64, 0.4)',
-    //     }
-    // },
-    // breakpoints: {
-    //     values: {
-    //       xs: 0,
-    //       sm: 576,
-    //       md: 768,
-    //       lg: 992,
-    //       xl: 1200
-    //     }
-    //   }
+    palette: {
+        beige: "#EFE4CB"
+    },
+    typography: {
+        fontFamily: "Open Sans"
+    }
 });
 
 theme = responsiveFontSizes(theme);

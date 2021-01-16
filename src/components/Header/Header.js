@@ -17,7 +17,8 @@ const useStyles = makeStyles((theme) => ({
 	},
 	logo: {
 		height: theme.spacing(5)
-	}
+	},
+	appbar: { backgroundColor: "#EFE4CB"}
 })
 )
 function Header(props) {
@@ -29,7 +30,7 @@ function Header(props) {
 	return (
 	<React.Fragment>
 	<AppBar>
-		<Toolbar>
+		<Toolbar className={classes.appbar}>
 			<Drawer />
 			
 			<Search />

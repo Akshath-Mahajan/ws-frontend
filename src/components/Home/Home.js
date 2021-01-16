@@ -4,7 +4,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchHome } from '../../redux'
 // import { useSelector } from 'react-redux'
 // import { ProductGrid, ProductGridItem } from '../Generic/'
+
 import ProductSlider from '../Generic/ProductSlider'
+import Footer from '../Header/Footer'
 const useStyles = makeStyles(theme=>({
     mb: {marginBottom: theme.spacing(5)},
     m: {marginBottom: theme.spacing(5), marginTop: theme.spacing(5)},
@@ -63,10 +65,10 @@ function Home(props) {
             <div>
                 <div style={{display: 'flex', flexDirection:'row', justifyContent:'space-evenly'}}>
                     <Typography variant="h2">
-                        DI
+                        DIS
                     </Typography>
                     <Typography variant="h2">
-                        SCOV
+                        COV
                     </Typography>
                     <Typography variant="h2">
                         ER
@@ -97,6 +99,8 @@ function Home(props) {
                     <Button variant="outlined" color="inherit" className={classes.cardBtn}>Order Now</Button>
                 </div>
             </Card>
+            
+            <Footer />
         </div>
     )
 }

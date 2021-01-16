@@ -18,13 +18,15 @@ import SearchQ from './components/SearchQ/SearchQ'
 import AuthRoute from './AuthRoute'
 import Verify from './Verify'
 import AboutUs from './components/AboutUs/AboutUs'
-// import theme from './baseTheme'
+import theme from './baseTheme'
+import { ThemeProvider } from '@material-ui/core'
 // <ThemeProvider theme={theme}>
 //   <CustomCheckbox />
 // </ThemeProvider>
 
 function App() {
     return (
+    <ThemeProvider theme={theme}>
         <Provider store={store}>
             <BrowserRouter>
                 <Header/>
@@ -67,6 +69,7 @@ function App() {
                 </Route>
             </BrowserRouter>
         </Provider>
+    </ThemeProvider>
     )
 }
 
