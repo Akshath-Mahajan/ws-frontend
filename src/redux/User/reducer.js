@@ -31,7 +31,7 @@ const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 token: action.payload.token,
-                name: action.payload.full_name,
+                name: action.payload.full_name?action.payload.full_name:"",
                 email: action.payload.email,
                 mobile: action.payload.mobile_no,
                 login_status: 1,
@@ -41,7 +41,7 @@ const userReducer = (state = initialState, action) => {
         }
         case LOGOUT: {
             localStorage.removeItem('token')
-            localStorage.removeItem('name')
+            localStorage.setItem('name', "")
             localStorage.removeItem('email')
             localStorage.removeItem('mobile')
             return {
@@ -120,7 +120,7 @@ const userReducer = (state = initialState, action) => {
             localStorage.setItem('mobile', action.payload.mobile_no)
             return {
                 ...state,
-                name: action.payload.full_name,
+                name: action.payload.full_name?action.payload.full_name:"",
                 email: action.payload.email,
                 mobile: action.payload.mobile_no
             }

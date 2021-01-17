@@ -1,42 +1,33 @@
-import { Button, Collapse, Grid, ListItem, ListItemText, Paper, Typography } from '@material-ui/core'
+import { Button, Collapse, Grid, ListItem, ListItemText, Paper, Typography, ThemeProvider } from '@material-ui/core'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { fetchOrders } from '../../redux/Profile/actions'
 import { DOMAIN } from '../../settings'
 import { useSelector, useDispatch } from 'react-redux'
-
+import { headingFont } from '../../baseTheme'
 function O({data}){
     const [open, setOpen] = useState(false)
     const [itemData, setItemData] = useState([])
-    
     const handleClick = () => {
-        if(!open)
+        if(!open && itemData.length === 0)
         axios.get(DOMAIN+"/api/order/"+data.id, { headers: {Authorization: "Token "+localStorage.getItem('token')}})
         .then(res=>{
             setItemData(res.data.order_items)
         })
-        
         setOpen(!open)
-    }
-    const created_date = new Date(data.created_at.split("T")[0])
-    const today = new Date();
-    const diffDays = Math.ceil(Math.abs(created_date - today)/ (1000 * 60 * 60 * 24));
-    const refundReq = (id) => {
-        setItemData(itemData.map(item=>item.id===id?{...item, refund_requested:true}:item))
-        axios.post(`${DOMAIN}/api/refund/`, {
-            order_item_id: id
-        }, {headers: {Authorization: "Token "+localStorage.getItem('token')}})
     }
     return (
         <>
         <Button onClick={handleClick} fullWidth style={{padding:0, marginTop: 12, marginBottom: 12}}>
             <Paper variant="outlined" style={{width: '100%', padding: '12px'}}>
+            <ThemeProvider theme={headingFont}>
                 <Typography variant="h5" align="left">
                     Order #{data.id}
                     <Typography variant="h5" style={{float: 'right'}}>
                         ₹{data.total}
                     </Typography>
                 </Typography>
+            </ThemeProvider>
             </Paper>
         </Button>
         <Collapse in={open} timeout="auto" unmountOnExit style={{width: '100%'}}>
@@ -52,7 +43,7 @@ function O({data}){
                                 </ListItemText>
                                 <ListItemText>
                                     <Typography>
-                                        <strong>Price: </strong>{item.final_price} each
+                                        <strong>Price: </strong>₹{item.final_price} per
                                     </Typography>
                                 </ListItemText>
                                 <ListItemText>
@@ -60,22 +51,6 @@ function O({data}){
                                         <strong>Quantity: </strong>{item.quantity}
                                     </Typography>
                                 </ListItemText>
-                                {
-                                (!item.refund_requested) && data.delivered && diffDays <= 1?
-                                    <ListItemText>
-                                            <Button variant="outlined" onClick={()=>refundReq(item.id)}>
-                                                Refund
-                                            </Button>
-                                    </ListItemText>
-                                :
-                                    item.refund_requested?
-                                    <ListItemText>
-                                        <Button variant="outlined" disabled>
-                                            Requested
-                                        </Button>
-                                    </ListItemText>
-                                    :""
-                                }
                             </ListItem>
                         )
                     )
@@ -99,12 +74,15 @@ function Orders({ type }) {
         outputs = orders.filter(item => item.delivered)
     
     return (
-        <Grid item container xs={12} spacing={2}>
+        <Grid item container xs={12}>
+            <Grid item xs={12}>
             {
             outputs.length?
             outputs.map(item => <O key={item.id} data={item} />)
             :
+            <ThemeProvider theme={headingFont}>
             <Typography variant="h4" align="center">No orders found matching this account!</Typography>
+            </ThemeProvider>
             }
         </Grid>
     )

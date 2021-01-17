@@ -1,10 +1,10 @@
-import { Button, Card, CardMedia, makeStyles, Typography } from '@material-ui/core'
+import { Button, Card, CardMedia, makeStyles, ThemeProvider, Typography } from '@material-ui/core'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchHome } from '../../redux'
 // import { useSelector } from 'react-redux'
 // import { ProductGrid, ProductGridItem } from '../Generic/'
-
+import { headingFont } from '../../baseTheme'
 import ProductSlider from '../Generic/ProductSlider'
 import Footer from '../Header/Footer'
 const useStyles = makeStyles(theme=>({
@@ -48,7 +48,9 @@ function Home(props) {
                     <Typography variant="h1" align="center" className={classes.mb}>Video</Typography>
                 </div>
             </Card>
-            <Typography variant="h3" align="center" className={classes.m}>Quotes</Typography>
+            <ThemeProvider theme={headingFont}>
+                <Typography variant="h3" align="center" className={classes.m}>Quotes</Typography>
+            </ThemeProvider>
             <Card className={`${classes.cardRoot} ${classes.mb} ${classes.cardContainer}`}>
                 <CardMedia className={classes.cardMedia}
                     component="img"
@@ -57,12 +59,15 @@ function Home(props) {
                     image="https://www.itl.cat/pngfile/big/210-2102958_dark-desk-laptop-macbook-room-table-technology-desk.jpg"
                 />
                 <div className={`${classes.overlay} ${classes.light}`}>
+                <ThemeProvider theme={headingFont}>  
                     <Typography variant="h2" style={{position:'absolute', right: 50, top: 40}}>Quote</Typography>
                     <Button variant="outlined" color="inherit"  className={classes.cardBtn}>Order Now</Button>
+                </ThemeProvider>  
                 </div>
             </Card>
             <ProductSlider className={classes.mb} data={trending_products}/>
             <div>
+            <ThemeProvider theme={headingFont}>
                 <div style={{display: 'flex', flexDirection:'row', justifyContent:'space-evenly'}}>
                     <Typography variant="h2">
                         DIS
@@ -85,6 +90,7 @@ function Home(props) {
                         U
                     </Typography>
                 </div>
+            </ThemeProvider>
             </div>
             <ProductSlider className={classes.mb} data={new_products}/>
             <Card className={`${classes.cardRoot} ${classes.mb} ${classes.cardContainer}`}>
@@ -95,8 +101,10 @@ function Home(props) {
                     image="https://www.itl.cat/pngfile/big/210-2102958_dark-desk-laptop-macbook-room-table-technology-desk.jpg"
                 />
                 <div className={`${classes.overlay} ${classes.light}`}>
-                    <Typography variant="h3">This should be swipable, swipe to open full collection</Typography>
+                <ThemeProvider theme={headingFont}>  
+                    <Typography variant="h3">Some more quotes</Typography>
                     <Button variant="outlined" color="inherit" className={classes.cardBtn}>Order Now</Button>
+                </ThemeProvider>
                 </div>
             </Card>
             

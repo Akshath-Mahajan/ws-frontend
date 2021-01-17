@@ -39,12 +39,16 @@ function WishlistItem({ data, inCart}) {
                         <Link to={`/product/${data.id}`} className={classes.link}>
                             <Typography variant="h3">{data.name}</Typography>
                             <Typography variant="subtitle1">{data.description}</Typography>
-                            <Typography variant="h5">₹ {data.price}</Typography>
+                            {data.discount!==0? <Typography style={{textDecoration:'line-through'}}>
+                                                            ₹ {data.price}
+                                                        </Typography>
+                            :""}
+                            <Typography variant="h5">₹ {data.price * (100-data.discount)/100}</Typography>
                             <Rating name="read-only" precision={0.1} value={data.avg_rating*5/100} readOnly />
                             <Typography variant="subtitle1">Category: {data.category.name}</Typography>
                         </Link>
                         <Button color="primary" className={classes.mar} variant="contained" fullWidth> Buy Now </Button>
-                        <Button disabled={inCart} onClick={addToCart} color="secondary" className={classes.mar} variant="contained" fullWidth>{inCart?"Already in Cart": "Add To Cart"} </Button>
+                        <Button disabled={inCart} onClick={addToCart} color="secondary" className={classes.mar} variant="contained" fullWidth>{inCart?"Already in Bag": "Add To Bag"} </Button>
                         <Button onClick={removeItem} color="secondary" className={classes.mar} variant="contained" fullWidth> Remove from wishlist </Button>
                         
                     </Grid>

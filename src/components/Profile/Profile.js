@@ -1,9 +1,9 @@
-import { Grid, List, ListItem, ListItemIcon, ListItemText, makeStyles, Paper, Typography } from '@material-ui/core'
+import { Grid, List, ListItem, ListItemIcon, ListItemText, makeStyles, Paper, Typography, ThemeProvider } from '@material-ui/core'
 import React from 'react'
 import PersonIcon from '@material-ui/icons/Person';
 import ShopIcon from '@material-ui/icons/Shop';
 import HelpIcon from '@material-ui/icons/Help';
-
+import { headingFont } from '../../baseTheme';
 import ProfileInfo from './ProfileInfo'
 import DeliveryAddress from './DeliveryAddress'
 import PasswordReset from './PasswordReset'
@@ -19,8 +19,18 @@ const useStyles = makeStyles((theme) => ({
 		display: 'flex',
 	},
 	padTop: {paddingTop: theme.spacing(2)},
-	pad: {padding:theme.spacing(4)},
-	listGrid: {marginRight: theme.spacing(2)}
+	pad: {
+		padding:theme.spacing(4),
+		[theme.breakpoints.down('xs')]: {
+			padding: 0
+		}
+	},
+	listGrid: {
+		marginRight: theme.spacing(2),
+		[theme.breakpoints.down('xs')]: {
+			marginRight: 0
+		}
+	}
 }));
 
 function Profile() {
@@ -66,7 +76,7 @@ function Profile() {
 								<ListItemIcon>{item[2]}</ListItemIcon>
 								{
 								item[2]?
-								<Typography variant="h6">{item[0]}</Typography>:
+								<ThemeProvider theme={headingFont}> <Typography variant="h6">{item[0]}</Typography> </ThemeProvider>:
 								<ListItemText primaryTypographyProps={{variant:'button'}} primary={item[0]} />
 								}
 

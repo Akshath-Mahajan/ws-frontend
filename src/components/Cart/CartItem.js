@@ -71,7 +71,13 @@ function CartItem({ data }) {
                     <Link className={classes.link} to={`/product/${data.product.id}`}>
                         <Typography variant="h3">{data.product.name}</Typography>
                         <Typography variant="subtitle1">{data.product.description}</Typography>
-                        <Typography variant="h5">₹ {data.product.price * data.quantity}</Typography>
+                        <Typography variant="h5">
+                            {data.product.discount!==0? <Typography style={{textDecoration:'line-through'}}>
+                                                            ₹ {data.product.price * data.quantity}
+                                                        </Typography>
+                            :""}
+                            ₹ {(100 - data.product.discount)* 0.01 * data.product.price * data.quantity}
+                        </Typography>
                         <Rating name="read-only" precision={0.1} value={data.product.avg_rating*5/100} readOnly />
                         <Typography variant="subtitle1">Category: {data.product.category.name}</Typography>
                     </Link>

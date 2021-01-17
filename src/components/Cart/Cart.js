@@ -1,8 +1,10 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import CartItem from './CartItem'
 import { fetchCartItems } from '../../redux'
 import {useDispatch, useSelector} from 'react-redux'
-import { Button, Grid, makeStyles, Paper, Typography, useMediaQuery, useTheme } from '@material-ui/core'
+import { Button, Grid, makeStyles, Paper, ThemeProvider, Typography, useMediaQuery, useTheme } from '@material-ui/core'
+import PaymentModal from '../PaymentModal/PaymentModal'
+import { headingFont } from '../../baseTheme'
 
 const useStyles = makeStyles(theme=>({
     mar: {marginTop: theme.spacing(2)},
@@ -22,27 +24,36 @@ function Cart() {
     let price = 0;
     let okd = Object.keys(data)
     for(let i = 0; i < okd.length; i++){
-        price+=(data[okd[i]].product.price*data[okd[i]].quantity)
+        price+=((100-data[okd[i]].product.discount)*0.01* data[okd[i]].product.price*data[okd[i]].quantity )
+    }
+    const [open, setOpen] = useState(false);
+    const handleSubmit = () => {
+        setOpen(true)
     }
     return (
         <Grid container spacing={2} alignContent="center">
+            {open?<PaymentModal buyNow={false} open handleClose={()=>setOpen(false)} />:""}
             <Grid item container justify="center" xs={12} md={8} spacing={isMobile?0:2}>
             {
             Object.keys(data).length !==0?
             Object.keys(data).map((key)=><CartItem key={key} data={data[key]}/>): 
             <Grid item>
+                <ThemeProvider theme={headingFont}>    
                     <Typography variant="h3">
-                        Your Cart is empty!
+                        Your Bag is empty!
                     </Typography>
-                </Grid>
+                </ThemeProvider>
+            </Grid>
             }
             </Grid>
             <Grid item container xs={12} md={4} spacing={isMobile?0:2}>
                 <Grid item xs={12}>
                     <Paper variant="outlined" className={`${classes.pad}`}>
+                    <ThemeProvider theme={headingFont}>   
                         <Typography variant="h2">Total Price</Typography>
                         <Typography variant="h3">₹ {price}</Typography>
-                        <Button color="secondary" disabled={Object.keys(data).length === 0} variant="contained" fullWidth className={`${classes.mar} ${classes.pad}`}>Proceed to checkout</Button>
+                        <Button color="secondary" disabled={Object.keys(data).length === 0} variant="contained" fullWidth className={`${classes.mar} ${classes.pad}`} onClick={handleSubmit}>Proceed to checkout</Button>
+                    </ThemeProvider>
                     </Paper>
                 </Grid>
             </Grid>

@@ -13,4 +13,10 @@ let theme = createMuiTheme({
 
 theme = responsiveFontSizes(theme);
 
-export default theme;
+let headingFont = createMuiTheme({
+    typography: {
+        fontFamily: "Arapey"
+    }
+});
+headingFont = responsiveFontSizes(headingFont);
+export { headingFont, theme }

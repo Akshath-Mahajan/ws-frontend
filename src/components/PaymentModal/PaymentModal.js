@@ -1,15 +1,28 @@
 import React, { useEffect, useState } from 'react'
-import {Dialog, DialogTitle, DialogContent, DialogActions, FormControl, Button, useTheme, useMediaQuery, FormLabel, RadioGroup, FormControlLabel, Radio, FormHelperText, Typography} from '@material-ui/core'
+import {Dialog, DialogTitle, DialogContent, DialogActions, FormControl, Button, useTheme, useMediaQuery, FormLabel, RadioGroup, FormControlLabel, Radio, FormHelperText, Typography, makeStyles, Backdrop, CircularProgress, Icon, ThemeProvider} from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAddress } from '../../redux';
 import axios from 'axios';
-import { DOMAIN } from '../../settings';
+import { DOMAIN, STRIPE_PK } from '../../settings';
 import { loadStripe } from '@stripe/stripe-js';
-// Make sure to call `loadStripe` outside of a component’s render to avoid
-// recreating the `Stripe` object on every render.
-const stripePromise = loadStripe('pk_test_51HoSBoEH2zpc9mRP6H0kPlnLL5V82dZSMYqvnl3L9JwnDDo4Rfgr6UNwu9HaMXtI7LwKJaSODX4QZkZYx3596pZz00opn1fib2');
+import { useHistory } from "react-router-dom";
+import { headingFont } from '../../baseTheme'
+
+const stripePromise = loadStripe(STRIPE_PK);
+const useStyles = makeStyles(theme=>({
+    backdrop: {
+        zIndex: theme.zIndex.drawer + 1,
+        color: '#fff',
+    },
+    })
+)
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 function PaymentModal({open, handleClose, product_id, quantity, buyNow}) {
     const dispatch = useDispatch()
+    let history = useHistory();
+    const classes = useStyles()
     const theme = useTheme()
     const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
     const [isAddress, setIsAddress] = useState(true)
@@ -17,6 +30,8 @@ function PaymentModal({open, handleClose, product_id, quantity, buyNow}) {
     const addresses = useSelector(state=>state.profile.deliveryAddress.addresses)
     const [addressOpt, setAddressOpt] = useState(-1)
     const [payOpt, setPayOpt] = useState(-1)
+    const [loading, setLoading] = useState(false)
+
     const handlePayRadioChange = (event) => {setPayOpt(parseInt(event.target.value)) };
     const handleAddressRadioChange = (event) => {setAddressOpt(parseInt(event.target.value))}
     const handleNextBtn = () => {
@@ -26,6 +41,7 @@ function PaymentModal({open, handleClose, product_id, quantity, buyNow}) {
     }
     const handleSubmitBtn = async () => {
         if(payOpt == 1){
+            setLoading(true)
             const stripe = await stripePromise;
             axios.post(`${DOMAIN}/api/checkout/`, {
                 product_id: product_id,
@@ -37,33 +53,63 @@ function PaymentModal({open, handleClose, product_id, quantity, buyNow}) {
                 const result = await stripe.redirectToCheckout({
                     sessionId: res.data.sess_id,
                 });
-                if (result.error) { }
+                if (result.error) {
+                    setLoading(false)
+                    history.push('/order-failure')
+                }
             })
         }
         if(payOpt == 4){ 
-            //COD
+            setLoading(true)
+            axios.post(`${DOMAIN}/api/order/`, {
+                product_id: product_id,
+                quantity: quantity,
+                address_id: addressOpt,
+                buy_now: buyNow
+            }, {headers: {Authorization: "Token "+localStorage.getItem('token')}})
+            .then(res => { setLoading(false); history.push('/order-success') })
+            .catch(err => { setLoading(false); history.push('/order-failure')})
         }
 
     }
     return (
         <Dialog fullScreen={fullScreen} open={open} onClose={handleClose}>
-            {
+            {   loading?
+                <Backdrop className={classes.backdrop} open={loading}>
+                    <CircularProgress color="inherit" />
+                </Backdrop>
+                :
                 isAddress?
                 <>
-                <DialogTitle> Select an address </DialogTitle>
+                <DialogTitle> 
+                    {
+                        addresses.length > 0?"Select address":""
+                    }
+                </DialogTitle>
                 <DialogContent>
                     <FormControl component="fieldset">
-                        <Typography> Please select one of the following addresses to continue placing the order </Typography>
-                        <RadioGroup value={addressOpt} onChange={handleAddressRadioChange}>
-                            {
-                                addresses.map((item, idx)=>(
-                                    <FormControlLabel key={idx} value={item.id} control={<Radio />} label={item.name} />
-                                ))
-                            }
-                        </RadioGroup>
+                        {
+                            addresses.length > 0?
+                        <>
+                            <Typography> Please select one of the following addresses to continue placing the order </Typography>
+                            <RadioGroup value={addressOpt} onChange={handleAddressRadioChange}>
+                                {   
+                                    
+                                    addresses.map((item, idx)=>(
+                                        <FormControlLabel key={idx} value={item.id} control={<Radio />} label={item.name} />
+                                    ))
+                                    
+                                }
+                            </RadioGroup>
+                        </>
+                        :
+                        <ThemeProvider theme={headingFont}> 
+                            <Typography variant="h5" align="center">No addresses found matching this account. Please go to your accounts and add an address before placing an order</Typography>
+                        </ThemeProvider>
+                        }
                     </FormControl>
                     <DialogActions>
-                        <Button variant="outlined" fullWidth onClick={handleNextBtn}>
+                        <Button variant="outlined" fullWidth onClick={handleNextBtn} disabled={addresses.length===0}>
                             Next
                         </Button>
                     </DialogActions> 

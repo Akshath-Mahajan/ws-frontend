@@ -34,7 +34,7 @@ function ProfileInfo() {
         <Grid item container xs={12} spacing={2}>
             <Grid item container xs={12} spacing={1}>
                 {/* Full Name */}
-                <TextField disabled={!editing} variant="outlined" value={fname} onChange={(e)=>{setFName(e.target.value)}} label="Full Name" fullWidth margin="dense"/>
+                <TextField disabled={!editing} variant="outlined" value={fname?fname:""} onChange={(e)=>{setFName(e.target.value)}} label="Full Name" fullWidth margin="dense"/>
             </Grid>
             <Grid item container xs={12} spacing={1}>
                 {/* Email */}

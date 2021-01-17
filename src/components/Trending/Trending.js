@@ -1,6 +1,7 @@
-import { Typography } from '@material-ui/core'
+import { ThemeProvider, Typography } from '@material-ui/core'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { headingFont } from '../../baseTheme'
 import { fetchTrendingProducts } from '../../redux'
 import { ProductGrid } from '../Generic'
 function Trending() {
@@ -10,7 +11,10 @@ function Trending() {
     return (
         <div>
             {
-                Object.keys(data).length?<ProductGrid data={data} />:<Typography variant="h1" align="center">No products found</Typography>
+                Object.keys(data).length?<ProductGrid data={data} />:
+                <ThemeProvider theme={headingFont}>
+                    <Typography variant="h1" align="center">No products found</Typography>
+                </ThemeProvider>
             }
             
         </div>

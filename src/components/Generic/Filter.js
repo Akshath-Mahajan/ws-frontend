@@ -1,5 +1,5 @@
 import { ListItem, ListItemIcon, ListItemText, Slider, Paper, TextField, InputAdornment, makeStyles, Radio, 
-    RadioGroup, FormControlLabel, Typography, Collapse, List } from '@material-ui/core'
+    RadioGroup, FormControlLabel, Typography, Collapse, List, ThemeProvider } from '@material-ui/core'
 import React, { useEffect } from 'react'
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import StarIcon from '@material-ui/icons/Star';
@@ -9,6 +9,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import LayersClearIcon from '@material-ui/icons/LayersClear';
 import {useDispatch, useSelector} from 'react-redux'
 import { changePriceRange, sortBy, changeRating, toggleROpen, togglePOpen, toggleSOpen, clearFilters } from '../../redux/';
+import { headingFont } from '../../baseTheme';
 const useStyles = makeStyles((theme)=>({
     nested: {paddingLeft: theme.spacing(6)},
     fullWidth: {width:'100%'}
@@ -39,11 +40,13 @@ function Filter() {
     return (
         <Paper className={classes.fullWidth}>
             {/* Order By */}
-            <ListItem button onClick={()=>handleExpandClick('s')}>
-                <ListItemIcon>{<ImportExportIcon />}</ListItemIcon>
-                <ListItemText primaryTypographyProps={{variant:'button'}} primary={'Sort By'} />
-                {sOpen ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
+            <ThemeProvider theme={headingFont}>   
+                <ListItem button onClick={()=>handleExpandClick('s')}>
+                    <ListItemIcon>{<ImportExportIcon />}</ListItemIcon>
+                    <ListItemText primaryTypographyProps={{variant:'button'}} primary={'Sort By'} />
+                    {sOpen ? <ExpandLess /> : <ExpandMore />}
+                </ListItem>
+            </ThemeProvider>
             <Collapse in={sOpen} timeout="auto" unmountOnExit>
                 <RadioGroup className={classes.nested}>
                     <FormControlLabel value="name-1" control={<Radio size="small" checked={"name-1"===order}/>} onClick={()=>setOrder("name-1")} label={<Typography variant="body1">Name A-Z </Typography>} />
@@ -55,11 +58,13 @@ function Filter() {
                 </RadioGroup>
             </Collapse>
             {/* Price Filter */}
-            <ListItem button onClick={()=>handleExpandClick('p')}>
-                <ListItemIcon>{<AttachMoneyIcon />}</ListItemIcon>
-                <ListItemText primaryTypographyProps={{variant:'button'}} primary={'Price'} />
-                {pOpen ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
+            <ThemeProvider theme={headingFont}>   
+                <ListItem button onClick={()=>handleExpandClick('p')}>
+                    <ListItemIcon>{<AttachMoneyIcon />}</ListItemIcon>
+                    <ListItemText primaryTypographyProps={{variant:'button'}} primary={'Price'} />
+                    {pOpen ? <ExpandLess /> : <ExpandMore />}
+                </ListItem>
+            </ThemeProvider>
             <Collapse in={pOpen} timeout="auto" unmountOnExit>
                 <ListItem>
                     <Slider
@@ -85,11 +90,13 @@ function Filter() {
                 </ListItem>
             </Collapse>
             {/* Rating Filter */}
-            <ListItem button onClick={()=>{handleExpandClick('r')}}>
-                <ListItemIcon> <StarIcon/> </ListItemIcon>
-                <ListItemText primaryTypographyProps={{variant:'button'}} primary={'Rating'} />
-                {rOpen ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
+            <ThemeProvider theme={headingFont}>   
+                <ListItem button onClick={()=>{handleExpandClick('r')}}>
+                    <ListItemIcon> <StarIcon/> </ListItemIcon>
+                    <ListItemText primaryTypographyProps={{variant:'button'}} primary={'Rating'} />
+                    {rOpen ? <ExpandLess /> : <ExpandMore />}
+                </ListItem>
+            </ThemeProvider>
             <Collapse in={rOpen} timeout="auto" unmountOnExit>
                 <RadioGroup className={classes.nested}>
                     <FormControlLabel value="4" control={<Radio size="small" checked={4===rating}/>} onClick={()=>setRating(4)} label={<Typography variant="body1">4 and above </Typography>} />
@@ -100,10 +107,12 @@ function Filter() {
                 </RadioGroup>
             </Collapse>
             {/* Clear Filters */}
-            <ListItem button onClick={()=>{dispatch(clearFilters())}}>
-                <ListItemIcon> <LayersClearIcon/> </ListItemIcon>
-                <ListItemText primaryTypographyProps={{variant:'button'}} primary={'Clear Filters'} />
-            </ListItem>
+            <ThemeProvider theme={headingFont}>   
+                <ListItem button onClick={()=>{dispatch(clearFilters())}}>
+                    <ListItemIcon> <LayersClearIcon/> </ListItemIcon>
+                    <ListItemText primaryTypographyProps={{variant:'button'}} primary={'Clear Filters'} />
+                </ListItem>
+            </ThemeProvider>
         </Paper>
     )
 }

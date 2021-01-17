@@ -1,9 +1,11 @@
 import React from 'react'
-import { Redirect, Route } from 'react-router-dom'
+import { Redirect, Route, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { openLoginModal } from './redux'
 function T(){
     const dispatch = useDispatch()
+    let history = useHistory()
+    history.push('/')
     dispatch(openLoginModal())
     return <></>
 }

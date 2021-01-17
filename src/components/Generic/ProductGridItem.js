@@ -20,7 +20,12 @@ function ProductGridItem({ data, full }) {
             <Typography variant="h4" align="center">
                 {data.name}
             </Typography>
-            <Typography variant="h5">₹ {data.price}</Typography>
+            <Typography variant="h5">
+            {data.discount!==0? <Typography style={{display: 'inline', textDecoration:'line-through'}}>
+                                    ₹ {data.price}
+                                </Typography>
+            :""}
+            &nbsp; ₹ {data.price * (100-data.discount)*0.01}</Typography>
             <Rating size="small" name="read-only" precision={0.1} value={data.avg_rating*5/100} readOnly />
         </Paper>
         </Link>

@@ -12,6 +12,7 @@ const logout = () => {
 }
 export { logout }
 const loginSuccess = (data) => {
+    if(data.full_name===null){data.full_name = ""}
     return {
         type: LOGIN_SUCCESS, 
         payload: data

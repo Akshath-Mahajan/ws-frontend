@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardMedia, FormControl, Grid, IconButton, makeStyles, Snackbar, TextField, Typography } from '@material-ui/core'
+import { Box, Button, Card, CardMedia, FormControl, Grid, IconButton, makeStyles, Snackbar, TextField, ThemeProvider, Typography } from '@material-ui/core'
 import React, { useState } from 'react'
 import axios from 'axios'
 import InstagramIcon from '@material-ui/icons/Instagram';
@@ -8,6 +8,8 @@ import { ValidateEmail } from '../../formValidators';
 import {DOMAIN} from '../../settings'
 import CloseIcon from '@material-ui/icons/Close';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import { headingFont } from '../../baseTheme'
+
 const useStyles = makeStyles(theme => ({
         root: {},
         icon: {fontSize:'inherit', verticalAlign: -6, marginRight: theme.spacing(1)},
@@ -25,6 +27,7 @@ const useStyles = makeStyles(theme => ({
         bigMarginTop: {
             marginTop: theme.spacing(5)
         },
+        mr: {marginRight: theme.spacing(2)},
         smallMarginTop: {marginTop: theme.spacing(1)},
         dark : {backgroundColor: 'rgba(0,0,0,0.35)',},
         light : {backgroundColor: 'rgba(0,0,0,0.15)',}
@@ -64,9 +67,9 @@ function ContactUs() {
         setSnack(false);
     };
     return (
-        <Grid container spacing={2} justify="space-around" className={classes.root}>
+        <Grid container justify="space-between" className={classes.root}>
             <Grid container item xs={12} sm={6}>
-            <Card className={`${classes.cardRoot} ${classes.mb} ${classes.cardContainer}`}>
+                <Card className={`${classes.cardRoot} ${classes.mr} ${classes.cardContainer}`}>
                 <CardMedia className={classes.cardMedia}
                     component="img"
                     alt="collection image"
@@ -74,7 +77,10 @@ function ContactUs() {
                     image="https://www.itl.cat/pngfile/big/210-2102958_dark-desk-laptop-macbook-room-table-technology-desk.jpg"
                 />
                 <div className={`${classes.overlay} ${classes.dark}`}>
-                    <Typography variant="h2" align="center" style={{marginTop: '30vh'}}>Find us on</Typography>
+                    <ThemeProvider theme={headingFont}>
+                        <Typography variant="h2" align="center" style={{marginTop: '30vh'}}>Find us on</Typography>
+                    </ThemeProvider>
+                    
                     <Typography variant="h5" align="center">
                         <MailOutlineIcon className={classes.icon} /> 
                         <Typography variant="h6" style={{display:'inline'}}>
@@ -98,7 +104,9 @@ function ContactUs() {
             </Grid>
             <Grid container item xs={12} sm={6}>
                 <form>
-                    <Typography variant="h3" align="center">Send us something directly</Typography>
+                    <ThemeProvider theme={headingFont}>
+                        <Typography variant="h3" align="center">Send us something directly</Typography>
+                    </ThemeProvider>
                     <FormControl fullWidth className={classes.bigMarginTop}>
                         <Grid container item xs={12} spacing={1}>
                             <Grid item xs={6}>

@@ -18,8 +18,10 @@ import SearchQ from './components/SearchQ/SearchQ'
 import AuthRoute from './AuthRoute'
 import Verify from './Verify'
 import AboutUs from './components/AboutUs/AboutUs'
-import theme from './baseTheme'
+import { theme } from './baseTheme'
 import { ThemeProvider } from '@material-ui/core'
+import Success from './components/OrderResults/Success'
+import Reject from './components/OrderResults/Reject'
 // <ThemeProvider theme={theme}>
 //   <CustomCheckbox />
 // </ThemeProvider>
@@ -66,6 +68,12 @@ function App() {
                 </Route>
                 <Route exact path="/verify-user/:str">
                     <Verify />
+                </Route>
+                <Route exact path="/order-success">
+                    <Success />
+                </Route>
+                <Route exact path="/order-failure">
+                    <Reject />
                 </Route>
             </BrowserRouter>
         </Provider>

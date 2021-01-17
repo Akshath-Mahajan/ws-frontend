@@ -1,8 +1,9 @@
 import React, {useEffect} from 'react'
 import { fetchWishlistItems } from '../../redux'
 import {useDispatch, useSelector} from 'react-redux'
-import { Grid, Typography, useMediaQuery, useTheme } from '@material-ui/core'
+import { Grid, ThemeProvider, Typography, useMediaQuery, useTheme } from '@material-ui/core'
 import WishlistItem from './WishlistItem'
+import { headingFont } from '../../baseTheme'
 
 // const useStyles = makeStyles(theme=>({
 //     mar: {marginTop: theme.spacing(2)},
@@ -24,9 +25,11 @@ function Wishlist() {
             {   Object.keys(data).length !==0?
                 Object.keys(data).map((key)=><WishlistItem key={key} data={data[key].product} inCart={data[key].in_cart}/>): 
                 <Grid item>
+                <ThemeProvider theme={headingFont}>
                     <Typography variant="h3">
                         Your wishlist is empty!
                     </Typography>
+                </ThemeProvider>
                 </Grid>
             }
         </Grid>

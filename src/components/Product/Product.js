@@ -1,4 +1,4 @@
-import { Button, Grid, Typography, Paper, makeStyles, Box, IconButton, TextField, InputAdornment, OutlinedInput } from '@material-ui/core'
+import { Button, Grid, Typography, Paper, makeStyles, Box, IconButton, TextField, InputAdornment, OutlinedInput, ThemeProvider } from '@material-ui/core'
 import Axios from 'axios'
 import Rating from '@material-ui/lab/Rating';
 import React, { useEffect, useState } from 'react'
@@ -14,7 +14,8 @@ import "keen-slider/keen-slider.min.css"
 import '../../App.css'
 import RemoveIcon from '@material-ui/icons/Remove';
 import AddIcon from '@material-ui/icons/Add';
-import PaymentModal from './PaymentModal';
+import PaymentModal from '../PaymentModal/PaymentModal';
+import { headingFont } from '../../baseTheme';
 const useStyles = makeStyles((theme)=>({
     container: {padding: theme.spacing(2)},
     outlinedPaper: {padding:theme.spacing(2), marginBottom:theme.spacing(2)},
@@ -23,6 +24,7 @@ const useStyles = makeStyles((theme)=>({
     padY: {paddingBottom: theme.spacing(2), paddingTop: theme.spacing(2)},
     padB: {paddingBottom: theme.spacing(2)},
     padTop: {paddingTop: theme.spacing(2)},
+    m1: {margin: theme.spacing(1)},
     item: {
         display: 'flex',
         alignItems: 'center',
@@ -135,9 +137,9 @@ function Product() {
     const [open, setOpen] = useState(false)
     
     return Object.keys(product).length ? (
-        <Grid container spacing={1}>
-            <Grid item xs={12} sm={6} md={3} container>
-                <Paper className={`${classes.container} ${classes.fullWidth}`} style={{overflow: 'hidden'}}>
+        <Grid container>
+            <Grid item xs={12} sm={6} md={5} lg={3} container>
+                <Paper className={`${classes.container} ${classes.fullWidth} ${classes.m1}`} style={{overflow: 'hidden'}}>
                     <Grid item xs={12}>
                         {/* <img alt={product.name} src={DOMAIN + product.image} width="100%" /> */}
                         <ImageSlider  />
@@ -181,9 +183,9 @@ function Product() {
                         <Grid item xs={12} sm={6}>
                             {
                             inCart?
-                            <Button fullWidth color="secondary" size="large" variant="contained" disabled> In Cart </Button>
+                            <Button fullWidth color="secondary" size="large" variant="contained" disabled> In Bag </Button>
                             :
-                            <Button fullWidth color="secondary" size="large" variant="contained" onClick={()=>{dispatch(addToCart(product.id, quantity)) }}>Cart</Button>
+                            <Button fullWidth color="secondary" size="large" variant="contained" onClick={()=>{dispatch(addToCart(product.id, quantity)) }}>Add to bag</Button>
                             }
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -191,7 +193,7 @@ function Product() {
                             inWishlist?
                             <Button fullWidth color="primary" size="large" variant="contained" disabled> In Wishlist </Button>
                             :
-                            <Button fullWidth color="primary" size="large" variant="contained" onClick={()=>{dispatch(addToWishlist(product.id)) }}>Wishlist</Button>
+                            <Button fullWidth color="primary" size="large" variant="contained" onClick={()=>{dispatch(addToWishlist(product.id)) }}>Add to Wishlist</Button>
                             }
                                 
                         </Grid>
@@ -199,19 +201,27 @@ function Product() {
                     
                 </Paper>
             </Grid>
-            <Grid item xs={12} sm={6} md={9} container>
-                <Paper className={`${classes.container} ${classes.fullWidth}`}>
-                    <Typography variant="h2" gutterBottom>{product.name}</Typography>
+            <Grid item xs={12} sm={6} md={7} lg={9} container>
+                <Paper className={`${classes.container} ${classes.fullWidth} ${classes.m1}`}>
+                    <ThemeProvider theme={headingFont}>
+                        <Typography variant="h2" gutterBottom>{product.name}</Typography>
+                    </ThemeProvider>
                     <Paper variant="outlined" className={classes.outlinedPaper}>
-                        <Typography variant="h5"><strong>Price:</strong> ₹{product.price}</Typography>
-                    </Paper>
-                    <Paper variant="outlined" className={classes.outlinedPaper}>
+                        <Typography variant="h5" style={{marginBottom: 24}}><strong>Price:</strong>&nbsp; 
+                        {product.discount!==0? <Typography style={{display: 'inline', textDecoration:'line-through'}}>
+                                                ₹ {product.price}
+                                            </Typography>
+                        :""}
+                        &nbsp;₹{product.price * (100-product.discount) * 0.01} per item
+                        </Typography>
                         <Typography variant="body1" gutterBottom><strong>Category:</strong> {product.category.name}</Typography>
                         <Typography variant="body1" gutterBottom><strong>Description:</strong> {product.description}</Typography>
                     </Paper>
                     {/* Reviews */}
                     <Box>
-                        <Typography variant="h5">Reviews</Typography>
+                        <ThemeProvider theme={headingFont}>
+                            <Typography variant="h5">Reviews</Typography>
+                        </ThemeProvider>
                         <AddReview editing={editingReview} />
                         { reviews.map((item, idx)=><Review key={idx} item={item} />) }
                     </Box>

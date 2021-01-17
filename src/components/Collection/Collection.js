@@ -1,6 +1,7 @@
-import { Typography } from '@material-ui/core'
+import { ThemeProvider, Typography } from '@material-ui/core'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { headingFont } from '../../baseTheme'
 import { fetchCollectionProducts } from '../../redux'
 import { ProductGrid } from '../Generic'
 function Collection() {
@@ -12,7 +13,9 @@ function Collection() {
             {
             Object.keys(data).length?
             <ProductGrid data={data} />:
-            <Typography variant="h1" align="center">No products found</Typography>
+            <ThemeProvider theme={headingFont}>
+                    <Typography variant="h1" align="center">No products found</Typography>
+                </ThemeProvider>
             }
 
         </div>
