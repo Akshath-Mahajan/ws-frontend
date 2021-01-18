@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { closeSignupModal, openLoginModal, signupAttempt } from '../../redux'
 import { CLEAR_SIGNUP, RESET_SIGNUP_TEXT, SIGNUP_INVALID_EMAIL, SIGNUP_INVALID_PHONE, SIGNUP_INVALID_PW, SIGNUP_INVALID_PW2 } from '../../redux/User/types'
 import {ValidateEmail, ValidatePhone, ValidatePW } from '../../formValidators' 
+import {Link} from 'react-router-dom'
 const useStyles = makeStyles((theme)=>({
     margin:{
         marginBottom: theme.spacing(2),
@@ -99,7 +100,7 @@ function SignupModal() {
                 </FormControl>
                 <FormControl fullWidth margin="dense" variant="outlined">
                     <Typography variant="h6" align="center">
-                        {display?"Signup successful! Please confirm your email and login":"By signing up you agree to our terms of service"}
+                        {display?"Signup successful! Please confirm your email and login":<Typography>By signing up you agree to our <Link to="/terms-of-service">terms of service</Link></Typography>}
                     </Typography>
                 </FormControl>
             <DialogActions>

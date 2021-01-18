@@ -79,7 +79,7 @@ function Search(props) {
     return (
         <div className={classes.outerRoot}>
             <Link className={classes.link} to = "">
-                <img src={LOGO} className={`${classes.mgnR} ${classes.logo}`} alt="React Logo" />
+                <img src={LOGO} className={`${classes.mgnR} ${classes.logo}`} alt="Logo" />
             </Link>
             <TextField  className={classes.root} variant="outlined"
             placeholder="Search.." margin="dense" value={q} onChange={(e) => setQ(e.target.value)}

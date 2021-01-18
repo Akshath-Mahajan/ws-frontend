@@ -1,8 +1,6 @@
 import { makeStyles, useTheme, Paper, Typography } from '@material-ui/core';
 import React from 'react'
 import Slider from "react-slick"
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import { useKeenSlider } from "keen-slider/react"
 import {ProductGridItem} from './ProductGridItem'
 import {useSelector} from 'react-redux'
@@ -27,25 +25,28 @@ const useStyles = makeStyles(theme=>({
 function ProductSlider({data, className}) {
     const theme = useTheme();
     const classes = useStyles();
-    const [sliderRef] = useKeenSlider({
-        slidesPerView: 1,
-        mode: "snap",
-        breakpoints: {
-          "(min-width: 768px)": {
-            slidesPerView: 2,
-            mode: "free-snap",
-          },
-          "(min-width: 1200px)": {
-            slidesPerView: 4,
-            mode: "free-snap",
-          },
+    const [sliderRef, slider] = useKeenSlider({
+      spacing: 10,
+      slidesPerView: 1,
+      centered: true,
+      loop: true,
+      mode: "snap",
+      breakpoints: {
+        "(min-width: 600px)": {
+          slidesPerView: 2,
+          mode: "free-snap",
         },
+        "(min-width: 960px)": {
+          slidesPerView: 3,
+          mode: "free-snap",
+        },
+      },
       })
     return (
         <div ref={sliderRef} className={`keen-slider ${classes.p}`}>
         {
           data.map((item, idx) =>( 
-              <div key={idx} className={`keen-slider__slide number-slide ${classes.item}`}>
+              <div key={idx} className={`keen-slider__slide ${classes.item}`} style={{}}>
                   <ProductGridItem data={item} full/>
               </div>
               )

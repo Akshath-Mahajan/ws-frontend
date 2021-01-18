@@ -1,4 +1,4 @@
-import { Button, Grid, Collapse, TextField, Typography, IconButton, Paper, Box, ListItem, ListItemText } from '@material-ui/core'
+import { Button, Grid, Collapse, TextField, Typography, IconButton, Paper, Box, ListItem, ListItemText, CircularProgress } from '@material-ui/core'
 import React, { useState, useEffect } from 'react'
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -9,6 +9,7 @@ import DoneIcon from '@material-ui/icons/Done';
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchAddress, openAddressForm, deleteAddress, saveAddress, cancelNewAddress } from '../../redux'
 import { notEmpty, ValidatePin } from '../../formValidators'
+import LoadingBackdrop from '../Generic/LoadingBackdrop';
 function Address({data, isNew}){
     const dispatch = useDispatch()
     const [open, setOpen] = useState(isNew || false)
@@ -100,7 +101,13 @@ function DeliveryAddress() {
     const addresses = useSelector(state=>state.profile.deliveryAddress.addresses)
     const addingAddress = useSelector(state=>state.profile.deliveryAddress.addingAddress)
     const addAddress = () => { dispatch(openAddressForm()) }
-
+    const loading = useSelector(state=>state.profile.deliveryAddress.loading)
+    if(loading)
+        return <Grid item container xs={12} spacing={2} justify="center" align="center">
+            <Grid item>
+                <CircularProgress />
+            </Grid>
+        </Grid>
     return (
         <Grid item container xs={12} spacing={2}>
             <Grid item xs={12}>

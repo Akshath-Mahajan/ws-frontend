@@ -7,6 +7,8 @@ import { fetchHome } from '../../redux'
 import { headingFont } from '../../baseTheme'
 import ProductSlider from '../Generic/ProductSlider'
 import Footer from '../Header/Footer'
+import { home_quotes, YT_VIDEO_CODE, home_img1_quote, home_img2_quote, home_img1_url, home_img2_url, home_img1_btn_redirect, home_img2_btn_redirect} from '../../settings'
+import { useHistory } from 'react-router-dom'
 const useStyles = makeStyles(theme=>({
     mb: {marginBottom: theme.spacing(5)},
     m: {marginBottom: theme.spacing(5), marginTop: theme.spacing(5)},
@@ -34,34 +36,39 @@ function Home(props) {
     useEffect(()=>{dispatch(fetchHome())}, [])
     const trending_products = useSelector(state=>state.home.trending)
     const new_products = useSelector(state=>state.home.new)
-
+    let history = useHistory()
     return (
         <div>
             <Card className={`${classes.cardRoot}`}>
                 <CardMedia className={classes.cardMedia}
-                    component="img"
-                    alt="something"
+                    component="iframe"
+                    alt="video"
                     style={{height: '75vh'}}
-                    image="https://i.pinimg.com/originals/ee/81/99/ee819909e5ca2476ef0cfcc626f4ead7.jpg"
+                    src={`https://www.youtube.com/embed/${YT_VIDEO_CODE}`}      
                 />
-                <div className={`${classes.overlay} ${classes.dark}`}>
-                    <Typography variant="h1" align="center" className={classes.mb}>Video</Typography>
-                </div>
             </Card>
             <ThemeProvider theme={headingFont}>
-                <Typography variant="h3" align="center" className={classes.m}>Quotes</Typography>
+                {
+                    home_quotes.map(item=>(
+                        <Typography variant="h3" align="center" className={classes.m}>{item}</Typography>
+                    )
+                )
+                }
+                
             </ThemeProvider>
             <Card className={`${classes.cardRoot} ${classes.mb} ${classes.cardContainer}`}>
                 <CardMedia className={classes.cardMedia}
                     component="img"
                     alt="collection image"
                     style={{height: '75vh'}}
-                    image="https://www.itl.cat/pngfile/big/210-2102958_dark-desk-laptop-macbook-room-table-technology-desk.jpg"
+                    image={home_img1_url}
                 />
                 <div className={`${classes.overlay} ${classes.light}`}>
                 <ThemeProvider theme={headingFont}>  
-                    <Typography variant="h2" style={{position:'absolute', right: 50, top: 40}}>Quote</Typography>
-                    <Button variant="outlined" color="inherit"  className={classes.cardBtn}>Order Now</Button>
+                    <Typography variant="h2" style={{position:'absolute', right: 50, top: 40}}>{home_img1_quote}</Typography>
+                    <Button variant="outlined" color="inherit"  className={classes.cardBtn} onClick={()=>{history.push(home_img1_btn_redirect)}}>
+                        Order Now
+                    </Button>
                 </ThemeProvider>  
                 </div>
             </Card>
@@ -98,12 +105,12 @@ function Home(props) {
                     component="img"
                     alt="collection image"
                     style={{height: '75vh'}}
-                    image="https://www.itl.cat/pngfile/big/210-2102958_dark-desk-laptop-macbook-room-table-technology-desk.jpg"
+                    image={home_img2_url}
                 />
                 <div className={`${classes.overlay} ${classes.light}`}>
                 <ThemeProvider theme={headingFont}>  
-                    <Typography variant="h3">Some more quotes</Typography>
-                    <Button variant="outlined" color="inherit" className={classes.cardBtn}>Order Now</Button>
+                    <Typography variant="h3">{home_img2_quote}</Typography>
+                    <Button variant="outlined" color="inherit" className={classes.cardBtn} onClick={()=>{history.push(home_img2_btn_redirect)}}>Order Now</Button>
                 </ThemeProvider>
                 </div>
             </Card>

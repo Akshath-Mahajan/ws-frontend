@@ -1,7 +1,8 @@
-import { FETCH_TRENDING_SUCCESS } from "./types"
+import { FETCH_TRENDING_SUCCESS, TOGGLE_TRENDING_LOADING } from "./types"
 
 const initialState = {
-    products:[]
+    products:[],
+    loading: false
 }
 const trendingReducer = (state=initialState, action) => {
     switch(action.type){
@@ -9,6 +10,7 @@ const trendingReducer = (state=initialState, action) => {
             ...state,
             products: action.payload
         }
+        case TOGGLE_TRENDING_LOADING: return {...state, loading: !state.loading}
         default: return state
     }
 }

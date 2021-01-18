@@ -1,9 +1,10 @@
-import { Collapse, Grid, makeStyles, Paper, Typography, Zoom } from '@material-ui/core'
+import { Collapse, Grid, IconButton, makeStyles, Paper, Typography, Zoom } from '@material-ui/core'
 import React from 'react'
 import InstagramIcon from '@material-ui/icons/Instagram';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import { Link } from 'react-router-dom';
 import LOGO from '../../Icons/main.svg'
+import { email_address, instagram_link } from '../../settings';
 const useStyles = makeStyles(theme=>({
         fillWidth: {width: '100%'},
         bgDark: {},
@@ -24,16 +25,24 @@ function Footer() {
             <Collapse in={checked}>
                 <Grid container justify="space-around" alignItems="center" className={classes.collapse}>
                     <Grid item>
-                        <InstagramIcon />
+                        <IconButton>
+                            <a href={instagram_link} className={classes.link}>
+                                <InstagramIcon />
+                            </a>
+                        </IconButton>
                     </Grid>
                     <Grid item>
-                        <MailOutlineIcon />
+                        <IconButton>
+                            <a href={`mailto: ${email_address}`} className={classes.link}>
+                                <MailOutlineIcon />
+                            </a>
+                        </IconButton>
                     </Grid>
                 </Grid>
             </Collapse>
             <Typography variant="h3" align="center" className={classes.title}>
             <Link className={classes.link} to = "">
-                <img src={LOGO} className={`${classes.mgnR} ${classes.logo}`} alt="React Logo" />
+                <img src={LOGO} className={`${classes.mgnR} ${classes.logo}`} alt="Company Logo" />
             </Link>
             </Typography>
             <Grid container className={`${classes.bordered}`}>
@@ -47,7 +56,9 @@ function Footer() {
                 </Grid>
                 <Grid item container xs={4} align="center">
                     <Grid item xs={12} align="center">
-                        <Typography variant="h6" className={classes.link}>Terms of service</Typography>
+                        <Link to="/terms-of-service" className={classes.link}>
+                            <Typography variant="h6" className={classes.link}>Terms of service</Typography>
+                        </Link>
                     </Grid>
                 </Grid>
                 <Grid item container xs={4} align="center">

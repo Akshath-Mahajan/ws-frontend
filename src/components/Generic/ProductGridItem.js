@@ -6,7 +6,7 @@ import { DOMAIN } from '../../settings'
 const useStyles = makeStyles(theme => ({
     pad: {padding: theme.spacing(2)},
     link: {textDecoration: 'None'},
-    img: {height: "275px", maxWidth: '100%'}
+    img: {height: "275px", maxWidth: '100%'},
     })
 )
 function ProductGridItem({ data, full }) {
@@ -38,7 +38,7 @@ function ProductGridItem({ data, full }) {
         )
     }
     return (
-        <Grid key={data.id} item xs={12} sm={6} md={4} lg={3}>
+        <Grid key={data.id} item xs={12} sm={6} md={4} lg={3} className={classes.container}>
             {content}
         </Grid>
     )

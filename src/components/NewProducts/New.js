@@ -4,10 +4,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { headingFont } from '../../baseTheme'
 import { fetchNewProducts } from '../../redux'
 import { ProductGrid } from '../Generic'
+import LoadingBackdrop from '../Generic/LoadingBackdrop'
 function New() {
     const dispatch = useDispatch()
     useEffect(() => {dispatch(fetchNewProducts())} ,[])
     const data = useSelector(state => state.new.products)
+    const loading = useSelector(state=>state.new.loading)
+    if(loading)
+        return <LoadingBackdrop open/>
     return (
         <div>
             {

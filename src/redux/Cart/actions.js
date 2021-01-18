@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { FETCH_CART_SUCCESS, UPDATE_CART_SUCCESS, DELETE_CART_SUCCESS } from './types'
+import { FETCH_CART_SUCCESS, UPDATE_CART_SUCCESS, DELETE_CART_SUCCESS, TOGGLE_CART_LOADING } from './types'
 import { DOMAIN } from '../../settings'
 const fetchCartItemsSuccess = (data) => {
     const obj = {}
@@ -9,12 +9,17 @@ const fetchCartItemsSuccess = (data) => {
         payload: obj
     }
 }
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 const fetchCartItems = () => (dispatch) => {
+    dispatch({type: TOGGLE_CART_LOADING})
     axios.get(`${DOMAIN}/api/cart/`, {headers: {Authorization: "Token "+localStorage.getItem('token')}})
     .then(res => {
         dispatch(fetchCartItemsSuccess(res.data))
+        dispatch({type: TOGGLE_CART_LOADING})
         }
-    ) 
+    )
 }
 const updateCartItemSuccess = (data) => {
     return {

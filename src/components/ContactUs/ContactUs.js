@@ -5,10 +5,11 @@ import InstagramIcon from '@material-ui/icons/Instagram';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import { ValidateEmail } from '../../formValidators';
-import {DOMAIN} from '../../settings'
+import {contact_img_url, DOMAIN, helpline_number, instagram_username} from '../../settings'
 import CloseIcon from '@material-ui/icons/Close';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import { headingFont } from '../../baseTheme'
+import { email_address } from '../../settings'
 
 const useStyles = makeStyles(theme => ({
         root: {},
@@ -74,7 +75,7 @@ function ContactUs() {
                     component="img"
                     alt="collection image"
                     style={{height: '91vh'}}
-                    image="https://www.itl.cat/pngfile/big/210-2102958_dark-desk-laptop-macbook-room-table-technology-desk.jpg"
+                    image={contact_img_url}
                 />
                 <div className={`${classes.overlay} ${classes.dark}`}>
                     <ThemeProvider theme={headingFont}>
@@ -84,19 +85,19 @@ function ContactUs() {
                     <Typography variant="h5" align="center">
                         <MailOutlineIcon className={classes.icon} /> 
                         <Typography variant="h6" style={{display:'inline'}}>
-                            somerandomemail@domain.com
+                            {email_address}
                         </Typography>
                     </Typography>
                     <Typography variant="h5" align="center">
                         <InstagramIcon className={classes.icon} /> 
                         <Typography variant="h6" style={{display:'inline'}}>
-                            @username or @username
+                            {instagram_username}
                         </Typography>
                     </Typography>
                     <Typography variant="h5" align="center">
                         <HelpOutlineIcon className={classes.icon} /> 
                         <Typography variant="h6" style={{display:'inline'}}>
-                            Helpline number or something
+                            {helpline_number}
                         </Typography>
                     </Typography>
                 </div>

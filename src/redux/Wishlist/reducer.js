@@ -1,8 +1,9 @@
 import { LOGIN_SUCCESS } from "../User/types";
-import { ADD_CART_DELETE_WISHLIST_SUCCESS, DELETE_WISHLIST_SUCCESS, FETCH_WISHLIST_SUCCESS } from "./types";
+import { ADD_CART_DELETE_WISHLIST_SUCCESS, DELETE_WISHLIST_SUCCESS, FETCH_WISHLIST_SUCCESS, TOGGLE_WISHLIST_LOADING } from "./types";
 
 const initialState = {
     wishlist:{},
+    loading: false,
     num: 0
 }
 
@@ -28,6 +29,7 @@ const reducer = (state=initialState, action) => {
                 num: state.num - 1
             }
         }
+        case TOGGLE_WISHLIST_LOADING: return {...state, loading: !state.loading}
         default: return state
     }
 }

@@ -1,4 +1,4 @@
-import { Button, Collapse, Grid, ListItem, ListItemText, Paper, Typography, ThemeProvider } from '@material-ui/core'
+import { Button, Collapse, Grid, ListItem, ListItemText, Paper, Typography, ThemeProvider, CircularProgress } from '@material-ui/core'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { fetchOrders } from '../../redux/Profile/actions'
@@ -72,7 +72,13 @@ function Orders({ type }) {
         outputs = orders.filter(item => !item.delivered)
     if(type===2)
         outputs = orders.filter(item => item.delivered)
-    
+    const loading = useSelector(state=>state.profile.deliveryAddress.loading)
+    if(loading)
+        return <Grid item container xs={12} spacing={2} justify="center" align="center">
+            <Grid item>
+                <CircularProgress />
+            </Grid>
+        </Grid>
     return (
         <Grid item container xs={12}>
             <Grid item xs={12}>

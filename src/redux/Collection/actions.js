@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { FETCH_COLLECTION_SUCCESS } from './types'
+import { FETCH_COLLECTION_SUCCESS, TOGGLE_COLLECTION_LOADING } from './types'
 import { DOMAIN } from '../../settings'
 const fetchCollectionProductsSuccess = (data) => {
     // const obj = {}
@@ -11,8 +11,12 @@ const fetchCollectionProductsSuccess = (data) => {
 }
 
 const fetchCollectionProducts = () => (dispatch) => {
+    dispatch({type:TOGGLE_COLLECTION_LOADING})
     axios.get(`${DOMAIN}/api/products/collection/`)
-    .then(res => dispatch(fetchCollectionProductsSuccess(res.data)))
+    .then(res => {
+        dispatch(fetchCollectionProductsSuccess(res.data))
+        dispatch({type:TOGGLE_COLLECTION_LOADING})
+    })
 }
 
 export { fetchCollectionProducts }

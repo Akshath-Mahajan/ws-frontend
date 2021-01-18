@@ -1,4 +1,4 @@
-import { CHANGE_PANE, FETCH_ADDRESS_SUCCESS, DA_OPEN_NEW_ADDRESS_FORM, DA_SAVE_NEW_ADDRESS, DA_DELETE_ADDRESS, DA_SAVE_EDIT_ADDRESS, DA_CANCEL_ADD_NEW, O_FETCH_ORDERS_SUCCESS } from './types'
+import { CHANGE_PANE, FETCH_ADDRESS_SUCCESS, DA_OPEN_NEW_ADDRESS_FORM, DA_SAVE_NEW_ADDRESS, DA_DELETE_ADDRESS, DA_SAVE_EDIT_ADDRESS, DA_CANCEL_ADD_NEW, O_FETCH_ORDERS_SUCCESS, P_FETCH_PAYMENTS_SUCCESS, R_FETCH_REFUNDS_SUCCESS, DA_TOGGLE_LOADING, O_TOGGLE_LOADING } from './types'
 import axios from 'axios'
 import { DOMAIN } from '../../settings'
 const changePane = (id) => {
@@ -10,8 +10,12 @@ const changePane = (id) => {
 
 const fetchAddressSuccess = (data) => ({type: FETCH_ADDRESS_SUCCESS, payload: data})
 const fetchAddress = () => (dispatch) => {
+    dispatch({type: DA_TOGGLE_LOADING})
     axios.get(DOMAIN+'/api/address', {headers: {Authorization: "Token "+localStorage.getItem('token')}})
-        .then(res => dispatch(fetchAddressSuccess(res.data)))
+        .then(res => {
+            dispatch(fetchAddressSuccess(res.data))
+            dispatch({type: DA_TOGGLE_LOADING})
+        })
 } 
 
 const openAddressForm = () => {
@@ -45,8 +49,12 @@ const fetchOrdersSuccess = (data) => {
     }
 }
 const fetchOrders = () => (dispatch) => {
+    dispatch({type: O_TOGGLE_LOADING})
     axios.get(DOMAIN+'/api/user-orders', {headers: {Authorization: "Token "+localStorage.getItem('token')}})
-    .then(res => dispatch(fetchOrdersSuccess(res.data)))
+    .then(res => {
+        dispatch(fetchOrdersSuccess(res.data))
+        dispatch({type: O_TOGGLE_LOADING})   
+    })
 }
 
 // const fetchPaymentsSuccess = (data) => ({type: P_FETCH_PAYMENTS_SUCCESS, payload: data})

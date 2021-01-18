@@ -44,7 +44,7 @@ function Drawer(props) {
 		['Newly Released', '/new/'],
 		['Collection',  '/collection/'], 
 		['Trending', '/trending/'],
-		['Contact Us', '/contact-us/'], 
+		['Contact us', '/contact-us/'], 
 		['About us', '/about-us/'],
 	]
 	const [open, setOpen] = useState(false)

@@ -3,7 +3,7 @@ import Header from './components/Header/Header'
 import Home from './components/Home/Home'
 import { Provider } from 'react-redux'
 import store from './redux/store'
-import {BrowserRouter, Route} from 'react-router-dom'
+import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import Cart from './components/Cart/Cart'
 import Wishlist from './components/Wishlist/Wishlist'
 import Profile from './components/Profile/Profile'
@@ -22,6 +22,8 @@ import { theme } from './baseTheme'
 import { ThemeProvider } from '@material-ui/core'
 import Success from './components/OrderResults/Success'
 import Reject from './components/OrderResults/Reject'
+import NotFound from './NotFound'
+import TermsOfService from './components/TOS/TermsOfService'
 // <ThemeProvider theme={theme}>
 //   <CustomCheckbox />
 // </ThemeProvider>
@@ -31,7 +33,8 @@ function App() {
     <ThemeProvider theme={theme}>
         <Provider store={store}>
             <BrowserRouter>
-                <Header/>
+            <Header/>
+            <Switch>
                 <Route exact path="/">
                     <Home />
                 </Route>
@@ -75,6 +78,11 @@ function App() {
                 <Route exact path="/order-failure">
                     <Reject />
                 </Route>
+                <Route exact path="/terms-of-service">
+                    <TermsOfService />
+                </Route>
+                <Route path="*" exact component={NotFound} />
+            </Switch>
             </BrowserRouter>
         </Provider>
     </ThemeProvider>

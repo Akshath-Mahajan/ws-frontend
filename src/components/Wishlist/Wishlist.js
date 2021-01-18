@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import { Grid, ThemeProvider, Typography, useMediaQuery, useTheme } from '@material-ui/core'
 import WishlistItem from './WishlistItem'
 import { headingFont } from '../../baseTheme'
-
+import LoadingBackdrop from '../Generic/LoadingBackdrop'
 // const useStyles = makeStyles(theme=>({
 //     mar: {marginTop: theme.spacing(2)},
 //     pad: { padding : theme.spacing(2) },
@@ -20,6 +20,10 @@ function Wishlist() {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('xs'), {defaultMatches: true});
     const data = useSelector(state=>state.wishlist.wishlist)
+    const loading = useSelector(state=>state.wishlist.loading)
+    if(loading)
+        return <LoadingBackdrop open/>
+
     return (
         <Grid container justify="space-around" spacing={1}>
             {   Object.keys(data).length !==0?

@@ -1,7 +1,7 @@
-import { FETCH_COLLECTION_SUCCESS } from "./types"
+import { FETCH_COLLECTION_SUCCESS, TOGGLE_COLLECTION_LOADING } from "./types"
 
 const initialState = {
-    products:[]
+    products:[], loading: false
 }
 const collectionReducer = (state=initialState, action) => {
     switch(action.type){
@@ -9,6 +9,7 @@ const collectionReducer = (state=initialState, action) => {
             ...state,
             products: action.payload
         }
+        case TOGGLE_COLLECTION_LOADING: return {...state, loading: !state.loading}
         default: return state
     }
 }

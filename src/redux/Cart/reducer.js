@@ -1,8 +1,9 @@
 import { LOGIN_SUCCESS } from '../User/types'
 import { ADD_CART_DELETE_WISHLIST_SUCCESS } from '../Wishlist/types'
-import { FETCH_CART_SUCCESS, UPDATE_CART_SUCCESS, DELETE_CART_SUCCESS } from './types'
+import { FETCH_CART_SUCCESS, UPDATE_CART_SUCCESS, DELETE_CART_SUCCESS, TOGGLE_CART_LOADING } from './types'
 const initialState = {
     cart: {},
+    loading: false,
     num: 0
 }
 const cartReducer = (state=initialState, action) => {
@@ -38,6 +39,7 @@ const cartReducer = (state=initialState, action) => {
             ...state,
             num: state.num+1
         }
+        case TOGGLE_CART_LOADING: return {...state, loading: !state.loading}
         default: return state
     }
 }

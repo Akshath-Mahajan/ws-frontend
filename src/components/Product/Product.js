@@ -16,6 +16,7 @@ import RemoveIcon from '@material-ui/icons/Remove';
 import AddIcon from '@material-ui/icons/Add';
 import PaymentModal from '../PaymentModal/PaymentModal';
 import { headingFont } from '../../baseTheme';
+import LoadingBackdrop from '../Generic/LoadingBackdrop';
 const useStyles = makeStyles((theme)=>({
     container: {padding: theme.spacing(2)},
     outlinedPaper: {padding:theme.spacing(2), marginBottom:theme.spacing(2)},
@@ -135,7 +136,9 @@ function Product() {
     const handleIncrement = () => {setQuantity(quantity+1)}
     const handleDecrement = () => {if(quantity-1 > 0){setQuantity(quantity-1)}}
     const [open, setOpen] = useState(false)
-    
+    const loading = useSelector(state=>state.product.loading)
+    if(loading)
+        return <LoadingBackdrop open />
     return Object.keys(product).length ? (
         <Grid container>
             <Grid item xs={12} sm={6} md={5} lg={3} container>

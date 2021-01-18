@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { DOMAIN } from '../../settings'
-import { ADD_TO_CART, ADD_TO_WISHLIST, CHANGE_PRODUCT_COMMENT, CHANGE_PRODUCT_RATING, CLEAR_PRODUCT, DELETE_REVIEW, EDIT_REVIEW, FETCH_PRODUCT_DETAILS_SUCCESS, SAVE_REVIEW } from './types'
+import { ADD_TO_CART, ADD_TO_WISHLIST, CHANGE_PRODUCT_COMMENT, CHANGE_PRODUCT_RATING, CLEAR_PRODUCT, DELETE_REVIEW, EDIT_REVIEW, FETCH_PRODUCT_DETAILS_SUCCESS, SAVE_REVIEW, TOGGLE_PRODUCT_INDIVIDUAL_LOADING } from './types'
 
 const fetchProductDetailsSuccess = (data) => {
     return {
@@ -11,12 +11,19 @@ const fetchProductDetailsSuccess = (data) => {
 
 const fetchProductDetails = (product_id) => (dispatch) => {
     dispatch({ type: CLEAR_PRODUCT }) //Remove old product info
+    dispatch({type: TOGGLE_PRODUCT_INDIVIDUAL_LOADING})
     if(localStorage.getItem('token')){
         axios.get(DOMAIN+"/api/products/"+product_id, { headers: {Authorization: "Token "+localStorage.getItem('token')}})
-        .then(res=>dispatch(fetchProductDetailsSuccess(res.data)))
+        .then(res=>{
+            dispatch(fetchProductDetailsSuccess(res.data))
+            dispatch({type: TOGGLE_PRODUCT_INDIVIDUAL_LOADING})
+        })
     }else{
         axios.get(DOMAIN+"/api/products/"+product_id)
-        .then(res=>dispatch(fetchProductDetailsSuccess(res.data)))
+        .then(res=>{
+            dispatch(fetchProductDetailsSuccess(res.data))
+            dispatch({type: TOGGLE_PRODUCT_INDIVIDUAL_LOADING})
+        })
     }
 }
 

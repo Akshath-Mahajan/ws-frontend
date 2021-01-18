@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import { Button, Grid, makeStyles, Paper, ThemeProvider, Typography, useMediaQuery, useTheme } from '@material-ui/core'
 import PaymentModal from '../PaymentModal/PaymentModal'
 import { headingFont } from '../../baseTheme'
-
+import LoadingBackdrop from '../Generic/LoadingBackdrop'
 const useStyles = makeStyles(theme=>({
     mar: {marginTop: theme.spacing(2)},
     pad: { padding : theme.spacing(2) },
@@ -30,6 +30,11 @@ function Cart() {
     const handleSubmit = () => {
         setOpen(true)
     }
+    const loading = useSelector(state=>state.cart.loading)
+    if(loading)
+        return (
+            <LoadingBackdrop open/>
+        )
     return (
         <Grid container spacing={2} alignContent="center">
             {open?<PaymentModal buyNow={false} open handleClose={()=>setOpen(false)} />:""}

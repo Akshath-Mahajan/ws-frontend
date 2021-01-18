@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { FETCH_WISHLIST_SUCCESS, ADD_CART_DELETE_WISHLIST_SUCCESS, DELETE_WISHLIST_SUCCESS } from './types'
+import { FETCH_WISHLIST_SUCCESS, ADD_CART_DELETE_WISHLIST_SUCCESS, DELETE_WISHLIST_SUCCESS, TOGGLE_WISHLIST_LOADING } from './types'
 import { DOMAIN } from '../../settings'
 const fetchWishlistItemsSuccess = (data) => {
     const obj = {}
@@ -11,11 +11,14 @@ const fetchWishlistItemsSuccess = (data) => {
 }
 
 const fetchWishlistItems = () => (dispatch) => {
+    dispatch({type: TOGGLE_WISHLIST_LOADING})
     axios.get(`${DOMAIN}/api/wishlist/`, {headers: {Authorization: "Token "+localStorage.getItem('token')}})
     .then(res => {
             dispatch(fetchWishlistItemsSuccess(res.data))
+            dispatch({type: TOGGLE_WISHLIST_LOADING})
         }
-    ) 
+    )
+    
 }
 
 const addToCartdeleteWishlistItemSuccess = (product_id) => {

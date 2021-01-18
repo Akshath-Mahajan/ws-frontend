@@ -1,7 +1,8 @@
-import { FETCH_NEW_PRODUCTS_SUCCESS } from './types' 
+import { FETCH_NEW_PRODUCTS_SUCCESS, TOGGLE_NEW_PRODUCTS_LOADING } from './types' 
 
 const initialState = {
-    products: []
+    products: [],
+    loading: false,
 }
 
 const newProductsReducer = (state = initialState, action) => {
@@ -10,6 +11,7 @@ const newProductsReducer = (state = initialState, action) => {
             ...state,
             products: action.payload
         }
+        case TOGGLE_NEW_PRODUCTS_LOADING: return {...state, loading: !state.loading}
         default: return state
     }
 }
