@@ -3,12 +3,10 @@ import {Dialog, DialogTitle, DialogContent, DialogActions, FormControl, Button, 
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAddress } from '../../redux';
 import axios from 'axios';
-import { DOMAIN, STRIPE_PK } from '../../settings';
-import { loadStripe } from '@stripe/stripe-js';
+import { DOMAIN, RAZORPAY_PK, razorpay_name, razorpay_desc } from '../../settings';
 import { useHistory } from "react-router-dom";
 import { headingFont } from '../../baseTheme'
 
-const stripePromise = loadStripe(STRIPE_PK);
 const useStyles = makeStyles(theme=>({
     backdrop: {
         zIndex: theme.zIndex.drawer + 1,
@@ -16,9 +14,7 @@ const useStyles = makeStyles(theme=>({
     },
     })
 )
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
+
 function PaymentModal({open, handleClose, product_id, quantity, buyNow}) {
     const dispatch = useDispatch()
     let history = useHistory();
@@ -42,21 +38,27 @@ function PaymentModal({open, handleClose, product_id, quantity, buyNow}) {
     const handleSubmitBtn = async () => {
         if(payOpt == 1){
             setLoading(true)
-            const stripe = await stripePromise;
             axios.post(`${DOMAIN}/api/checkout/`, {
-                product_id: product_id,
-                quantity: quantity,
-                address_id: addressOpt,
-                buy_now: buyNow
-            }, {headers: {Authorization: "Token "+localStorage.getItem('token')}})
+                product_id: product_id, quantity: quantity,
+                address_id: addressOpt, buy_now: buyNow
+            }, { headers: {Authorization: "Token "+localStorage.getItem('token')} })
             .then(async (res) => {
-                const result = await stripe.redirectToCheckout({
-                    sessionId: res.data.sess_id,
-                });
-                if (result.error) {
-                    setLoading(false)
-                    history.push('/order-failure')
+                setLoading(false)
+                handleClose()
+                const options = {
+                    key: RAZORPAY_PK,
+                    name: razorpay_name,
+                    description: razorpay_desc,
+                    order_id: res.data.rzpay.id,
+                    handler: async (response) => {
+                        setLoading(true)
+                        axios.post(`${DOMAIN}/api/rp-success/`, response, { headers: {Authorization: "Token "+localStorage.getItem('token')} })
+                        .then(res=>{ setLoading(false); history.push('/order-success') })
+                        .catch(err => { setLoading(false); history.push('/order-failure')})
+                    }
                 }
+                const rzp1 = new window.Razorpay(options);
+                rzp1.open();
             })
         }
         if(payOpt == 4){ 
@@ -70,7 +72,6 @@ function PaymentModal({open, handleClose, product_id, quantity, buyNow}) {
             .then(res => { setLoading(false); history.push('/order-success') })
             .catch(err => { setLoading(false); history.push('/order-failure')})
         }
-
     }
     return (
         <Dialog fullScreen={fullScreen} open={open} onClose={handleClose}>

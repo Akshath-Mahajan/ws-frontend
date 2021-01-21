@@ -40,7 +40,7 @@ function Review({item, editable}){
     return (
     <Paper variant="outlined" className={classes.outlinedPaper}> 
         {editable? <span className={classes.fR}><IconButton onClick={()=>dispatch(editReview())}> <EditIcon /> </IconButton> <IconButton onClick={()=>dispatch(deleteReview(productId))}><DeleteIcon/></IconButton></span>: ""}
-        <Typography><strong>User: </strong>{item.user}</Typography>
+        <Typography><strong>User: </strong>{item.user !== '' && item.user?item.user:'Anonymous User'}</Typography>
         {item.comment? <Typography variant="body1"><strong>Comment: </strong> {item.comment} </Typography>: "" }
         
         <Rating value={item.rating/20} readOnly precision={0.1} />
@@ -139,7 +139,7 @@ function Product() {
     const loading = useSelector(state=>state.product.loading)
     if(loading)
         return <LoadingBackdrop open />
-    return Object.keys(product).length ? (
+    return (
         <Grid container>
             <Grid item xs={12} sm={6} md={5} lg={3} container>
                 <Paper className={`${classes.container} ${classes.fullWidth} ${classes.m1}`} style={{overflow: 'hidden'}}>
@@ -232,8 +232,6 @@ function Product() {
             </Grid>
         </Grid>
     )
-    :
-    null //Loading...
 }
 
 export default Product

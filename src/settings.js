@@ -1,5 +1,4 @@
 export const DOMAIN = "http://localhost:8000"
-export const STRIPE_PK = "pk_test_51HoSBoEH2zpc9mRP6H0kPlnLL5V82dZSMYqvnl3L9JwnDDo4Rfgr6UNwu9HaMXtI7LwKJaSODX4QZkZYx3596pZz00opn1fib2"
 export const YT_VIDEO_CODE = "z9aAjtmrz90"
 export const home_quotes = ['quote 1', 'quote 2']
 export const home_img1_quote = 'img1 _ quote something random'
@@ -13,3 +12,6 @@ export const instagram_username = "@username"
 export const helpline_number = "9876543210"
 export const instagram_link = "https://www.instagram.com/"
 export const contact_img_url = "https://www.itl.cat/pngfile/big/210-2102958_dark-desk-laptop-macbook-room-table-technology-desk.jpg"
+export const RAZORPAY_PK = "rzp_test_gKZGVUDmysPjSX"
+export const razorpay_name = "Webshop"
+export const razorpay_desc = "Get quality products here"

@@ -29,8 +29,8 @@ function Header(props) {
     // const handleClose = () => {setLoginOpen(false)}
 	return (
 	<React.Fragment>
-	<AppBar>
-		<Toolbar className={classes.appbar}>
+	<AppBar className={classes.appbar}>
+		<Toolbar>
 			<Drawer />
 			
 			<Search />
