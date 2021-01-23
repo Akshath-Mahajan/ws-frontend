@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme=>({
     })
 )
 
-function PaymentModal({open, handleClose, product_id, quantity, buyNow}) {
+function PaymentModal({open, handleClose, product_id, quantity, buyNow, size}) {
     const dispatch = useDispatch()
     let history = useHistory();
     const classes = useStyles()
@@ -40,7 +40,7 @@ function PaymentModal({open, handleClose, product_id, quantity, buyNow}) {
             setLoading(true)
             axios.post(`${DOMAIN}/api/checkout/`, {
                 product_id: product_id, quantity: quantity,
-                address_id: addressOpt, buy_now: buyNow
+                address_id: addressOpt, buy_now: buyNow, size:size
             }, { headers: {Authorization: "Token "+localStorage.getItem('token')} })
             .then(async (res) => {
                 setLoading(false)
@@ -67,7 +67,7 @@ function PaymentModal({open, handleClose, product_id, quantity, buyNow}) {
                 product_id: product_id,
                 quantity: quantity,
                 address_id: addressOpt,
-                buy_now: buyNow
+                buy_now: buyNow, size: size
             }, {headers: {Authorization: "Token "+localStorage.getItem('token')}})
             .then(res => { setLoading(false); history.push('/order-success') })
             .catch(err => { setLoading(false); history.push('/order-failure')})

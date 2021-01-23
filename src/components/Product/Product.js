@@ -1,4 +1,4 @@
-import { Button, Grid, Typography, Paper, makeStyles, Box, IconButton, TextField, InputAdornment, OutlinedInput, ThemeProvider } from '@material-ui/core'
+import { Button, Grid, Typography, Paper, makeStyles, Box, IconButton, TextField, InputAdornment, OutlinedInput, ThemeProvider, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core'
 import Axios from 'axios'
 import Rating from '@material-ui/lab/Rating';
 import React, { useEffect, useState } from 'react'
@@ -7,7 +7,7 @@ import { DOMAIN } from '../../settings'
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeProductComment, changeProductRating, deleteReview, editReview, fetchProductDetails, saveReview, addToCart, addToWishlist, openAddress, closeModals, openPayments } from '../../redux';
+import { changeProductComment, changeProductRating, deleteReview, editReview, fetchProductDetails, saveReview, addToCart, addToWishlist, fetchHome } from '../../redux';
 import Slider from "react-slick"
 import { useKeenSlider } from "keen-slider/react"
 import "keen-slider/keen-slider.min.css"
@@ -31,6 +31,10 @@ const useStyles = makeStyles((theme)=>({
         alignItems: 'center',
         justifyContent: 'center',
         maxHeight: '100vh',
+    },
+    formControl: {
+        margin: 'auto',
+        minWidth: 120,
     },
 }))
 function Review({item, editable}){
@@ -125,7 +129,7 @@ function ImageSlider({width}) {
 function Product() {
     const { id } = useParams()
     const dispatch = useDispatch()
-    useEffect(()=> { dispatch(fetchProductDetails(id)) }, [])
+    useEffect(()=>{ dispatch( fetchProductDetails(id) ) }, [])
     const product = useSelector(state=>state.product.product)
     const reviews = useSelector(state=>state.product.reviews)
     const editingReview = useSelector(state=>state.product.editingReview)
@@ -136,9 +140,12 @@ function Product() {
     const handleIncrement = () => {setQuantity(quantity+1)}
     const handleDecrement = () => {if(quantity-1 > 0){setQuantity(quantity-1)}}
     const [open, setOpen] = useState(false)
+    const [size, setSize] = useState('M')
     const loading = useSelector(state=>state.product.loading)
     if(loading)
         return <LoadingBackdrop open />
+    if(!product.category)
+        return null
     return (
         <Grid container>
             <Grid item xs={12} sm={6} md={5} lg={3} container>
@@ -176,9 +183,28 @@ function Product() {
                         </Grid>
                     </Grid>
                     <Grid item container xs={12} className={classes.padTop}>
+                        <Grid container item xs={12}>
+                            <FormControl variant="outlined" margin="dense" fullWidth className={classes.formControl}>
+                                <InputLabel id="size-label">Size</InputLabel>
+                                <Select
+                                labelId="size-label"
+                                value={size}
+                                onChange={(e) => setSize(e.target.value)}
+                                label="Age"
+                                >
+                                    <MenuItem value='XS'>Extra Small</MenuItem>
+                                    <MenuItem value='S'>Small</MenuItem>
+                                    <MenuItem value='M'>Medium</MenuItem>
+                                    <MenuItem value='L'>Large</MenuItem>
+                                    <MenuItem value='XL'>Extra Large</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                    </Grid>
+                    <Grid item container xs={12} className={classes.padTop}>
                         <Grid item xs={12}>
                             <Button fullWidth color="primary" size="large" variant="contained" onClick = {() => setOpen(true)}>Buy Now</Button>
-                            {open?<PaymentModal buyNow open handleClose={()=>setOpen(false)} product_id={id} quantity={quantity}/>:""}
+                            {open?<PaymentModal buyNow open handleClose={()=>setOpen(false)} product_id={id} quantity={quantity} size={size}/>:""}
 
                         </Grid>
                     </Grid>
@@ -188,7 +214,7 @@ function Product() {
                             inCart?
                             <Button fullWidth color="secondary" size="large" variant="contained" disabled> In Bag </Button>
                             :
-                            <Button fullWidth color="secondary" size="large" variant="contained" onClick={()=>{dispatch(addToCart(product.id, quantity)) }}>Add to bag</Button>
+                            <Button fullWidth color="secondary" size="large" variant="contained" onClick={()=>{dispatch(addToCart(product.id, quantity, size)) }}>Add to bag</Button>
                             }
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -200,8 +226,7 @@ function Product() {
                             }
                                 
                         </Grid>
-                    </Grid>
-                    
+                    </Grid>          
                 </Paper>
             </Grid>
             <Grid item xs={12} sm={6} md={7} lg={9} container>
@@ -220,6 +245,9 @@ function Product() {
                         <Typography variant="body1" gutterBottom><strong>Category:</strong> {product.category.name}</Typography>
                         <Typography variant="body1" gutterBottom><strong>Description:</strong> {product.description}</Typography>
                     </Paper>
+                    {/* <Box style={{textAlign:'center'}}>
+                    
+                    </Box> */}
                     {/* Reviews */}
                     <Box>
                         <ThemeProvider theme={headingFont}>

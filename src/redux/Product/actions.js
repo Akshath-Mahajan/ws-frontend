@@ -60,11 +60,11 @@ const deleteReview = (product_id) => (dispatch) => {
 }
 export { changeProductRating, changeProductComment, saveReview, editReview, deleteReview }
 
-const addToCart = (product_id, quantity) => (dispatch) => {
+const addToCart = (product_id, quantity, size) => (dispatch) => {
     dispatch({type: ADD_TO_CART})
     axios.post(`${DOMAIN}/api/cart/`, {
         product_id: product_id,
-        quantity: quantity
+        quantity: quantity, size:size
     }, {headers: {Authorization: "Token "+localStorage.getItem('token')}})
 }
 const addToWishlist = (product_id) => (dispatch) => {

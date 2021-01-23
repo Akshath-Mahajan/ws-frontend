@@ -51,6 +51,11 @@ function O({data}){
                                         <strong>Quantity: </strong>{item.quantity}
                                     </Typography>
                                 </ListItemText>
+                                <ListItemText>
+                                    <Typography>
+                                        <strong>Size: </strong>{item.size}
+                                    </Typography>
+                                </ListItemText>
                             </ListItem>
                         )
                     )

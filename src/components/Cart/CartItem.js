@@ -80,6 +80,7 @@ function CartItem({ data }) {
                         </Typography>
                         <Rating name="read-only" precision={0.1} value={data.product.avg_rating*5/100} readOnly />
                         <Typography variant="subtitle1">Category: {data.product.category.name}</Typography>
+                        <Typography variant="subtitle1">Size: {data.size}</Typography>
                     </Link>
                     <Button onClick={removeItem} color="secondary" variant="contained" fullWidth> Remove </Button>
                 </Grid>
