@@ -1,5 +1,5 @@
 export const DOMAIN = "http://localhost:8000"
-export const YT_VIDEO_CODE = "z9aAjtmrz90"
+export const YT_VIDEO_CODE = "FSs_JYwnAdI"
 export const home_quotes = ['quote 1', 'quote 2']
 export const home_img1_quote = 'img1 _ quote something random'
 export const home_img2_quote = 'img2 _ random something quote'
