@@ -1,6 +1,5 @@
 import { makeStyles, useTheme, Paper, Typography } from '@material-ui/core';
 import React from 'react'
-import Slider from "react-slick"
 import { useKeenSlider } from "keen-slider/react"
 import {ProductGridItem} from './ProductGridItem'
 import {useSelector} from 'react-redux'
