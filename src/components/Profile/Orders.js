@@ -1,7 +1,7 @@
 import { Button, Collapse, Grid, ListItem, ListItemText, Paper, Typography, ThemeProvider, CircularProgress } from '@material-ui/core'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { fetchOrders } from '../../redux/Profile/actions'
+import { fetchOrders } from '../../redux'
 import { DOMAIN } from '../../settings'
 import { useSelector, useDispatch } from 'react-redux'
 import { headingFont } from '../../baseTheme'
@@ -95,6 +95,7 @@ function Orders({ type }) {
             <Typography variant="h4" align="center">No orders found matching this account!</Typography>
             </ThemeProvider>
             }
+            </Grid>
         </Grid>
     )
 }

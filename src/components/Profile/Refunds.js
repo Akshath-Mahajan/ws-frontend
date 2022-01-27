@@ -1,7 +1,7 @@
 import { Button, Grid, Paper, Typography } from '@material-ui/core'
-import Axios from 'axios'
-import React from 'react'
-import { DOMAIN } from '../../settings'
+import React, { useEffect } from 'react'
+import {useSelector, useDispatch} from 'react-redux'
+import { fetchRefunds } from '../../redux'
 
 function R({data}){
     return (
@@ -28,27 +28,20 @@ function R({data}){
 }
 
 function Refunds() {
-    const [data, setData] = React.useState([])
-    React.useEffect(
-        ()=> {
-            Axios.get(DOMAIN+'/api/user-refunds', {headers: {Authorization: "Token "+localStorage.getItem('token')}})
-            .then(res=>{
-                console.log(res.data)
-                setData(res.data)
-            })
-        }, []
-    )
-    const outputs = data.map((item)=>{
-        return <R data={item} />
-    }).filter(item=>item!=null)
+    const dispatch = useDispatch()
+    useEffect(() => { dispatch(fetchRefunds()) }, [])
+
+    const data = useSelector(state=>state.profile.payments.refunds)
     return (
         <Grid item container xs={12} spacing={2}>
+            <Grid item xs={12}>
             {
-                outputs.length?
-                outputs:
+                data.length?
+                data.map(item=><R data={item} />)
+                :
                 <Typography variant="h4" align="center">No refund requests found matching this account!</Typography>
             }
-            
+            </Grid>
         </Grid>
     )
 }

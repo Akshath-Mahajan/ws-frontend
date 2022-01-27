@@ -75,28 +75,12 @@ function Home(props) {
             <ProductSlider className={classes.mb} data={trending_products}/>
             <div>
             <ThemeProvider theme={headingFont}>
-                <div style={{display: 'flex', flexDirection:'row', justifyContent:'space-evenly'}}>
-                    <Typography variant="h2">
-                        DIS
-                    </Typography>
-                    <Typography variant="h2">
-                        COV
-                    </Typography>
-                    <Typography variant="h2">
-                        ER
-                    </Typography>
-                </div>
-                <div style={{display: 'flex', flexDirection:'row', justifyContent:'space-evenly'}}>
-                    <Typography variant="h2" align="left">
-                        Y
-                    </Typography>
-                    <Typography variant="h2" align="center">
-                        O
-                    </Typography>
-                    <Typography variant="h2" align="right">
-                        U
-                    </Typography>
-                </div>
+                {
+                    home_quotes.map(item=>(
+                        <Typography variant="h3" align="center" className={classes.m}>{item}</Typography>
+                    )
+                )
+                }
             </ThemeProvider>
             </div>
             <ProductSlider className={classes.mb} data={new_products}/>

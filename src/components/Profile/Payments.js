@@ -1,9 +1,9 @@
 import { Button, Grid, Paper, Typography } from '@material-ui/core'
-import Axios from 'axios'
-import React from 'react'
-import { DOMAIN } from '../../settings'
-
+import React, { useEffect } from 'react'
+import { fetchPayments } from '../../redux'
+import { useDispatch, useSelector } from 'react-redux'
 function P({data}){
+
     return (
     <Button fullWidth style={{padding:0, marginTop: 12, marginBottom: 12, textTransform: "None"}}>
         <Paper variant="outlined" style={{width: '100%', padding: '12px'}}>
@@ -26,26 +26,20 @@ function P({data}){
     )
 }
 function Payments() {
-    const [data, setData] = React.useState([])
-    React.useEffect(
-        ()=> {
-            Axios.get(DOMAIN+'/api/user-payments', {headers: {Authorization: "Token "+localStorage.getItem('token')}})
-            .then(res=>{
-                console.log(res.data)
-                setData(res.data)
-            })
-        }, []
-    )
-    const outputs = data.map((item)=>{
-        return <P data={item} />
-    }).filter(item=>item!=null)
+    const dispatch = useDispatch()
+    useEffect(()=> { dispatch(fetchPayments()) }, [])
+    
+    const data = useSelector(state=>state.profile.payments.payments)
     return (
         <Grid item container xs={12} spacing={2}>
+            <Grid item xs={12}>
             {
-                outputs.length?
-                outputs:
+                data.length?
+                data.map(item => <P data={item} />)
+                :
                 <Typography variant="h4" align="center">No payments found matching this account!</Typography>
             }
+            </Grid>
         </Grid>
     )
 }

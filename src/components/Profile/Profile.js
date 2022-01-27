@@ -64,7 +64,7 @@ function Profile() {
 	const dispatch = useDispatch()
 	return (
 	<div className={classes.root}>
-		<Grid container justify="center" style={{backgroundColor: '#EFE4CB'}}>
+		<Grid container justify="center">
 			<Grid item xs={12} sm={5} md={4} lg={3} className={classes.listGrid}>
 				<List className={classes.padTop}>
 					<Paper>

@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 	logo: {
 		height: theme.spacing(5)
 	},
-	appbar: { backgroundColor: "#EFE4CB"}
+	appbar: { }
 })
 )
 function Header(props) {
